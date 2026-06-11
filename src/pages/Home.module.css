@@ -1,0 +1,27 @@
+/* Home page styles */
+.newsEventsSection {
+  padding: var(--space-16) 0;
+  background: var(--color-bg-page);
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.newsEventsGrid {
+  display: grid;
+  grid-template-columns: 65% 35%;
+  gap: var(--space-8);
+}
+
+@media (max-width: 768px) {
+  .newsEventsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .newsEventsSection {
+    padding: var(--space-8) 0;
+  }
+}

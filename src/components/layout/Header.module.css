@@ -1,0 +1,225 @@
+.header {
+  position: relative;
+  height: 140px;
+  background-color: #f7f9fc;
+  border-bottom: 1px solid var(--color-border);
+  overflow: hidden;
+  width: 100%;
+}
+
+.gridBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: var(--space-6);
+}
+
+.logoContainer {
+  height: 100%;
+  width: 240px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Slanted diagonal right edge */
+  clip-path: polygon(0 0, 100% 0, 82% 100%, 0 100%);
+  padding-right: 35px;
+  flex-shrink: 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition);
+}
+
+.logoLink:hover {
+  transform: scale(1.02);
+}
+
+.logoSvg {
+  max-width: 100%;
+  height: auto;
+}
+
+.branding {
+  flex-grow: 1;
+  padding-left: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.labName {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #222222;
+  margin: 0 0 var(--space-1) 0;
+  line-height: 1.25;
+}
+
+/* Colored initial letters */
+.letterL {
+  color: #592e8a; /* Purple */
+  font-weight: 800;
+}
+
+.letterM {
+  color: var(--color-primary); /* Blue */
+  font-weight: 800;
+}
+
+.letterN {
+  color: #009e5b; /* Green */
+  font-weight: 800;
+}
+
+.letterP {
+  color: var(--color-accent); /* Orange */
+  font-weight: 800;
+}
+
+.affiliations {
+  font-size: var(--size-xs);
+  color: var(--color-text-muted);
+  margin: 0;
+  font-weight: 500;
+}
+
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 75%;
+  flex-shrink: 0;
+}
+
+.utilityNav {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.utilityLink {
+  font-family: var(--font-heading);
+  font-size: var(--size-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color var(--transition);
+}
+
+.utilityLink:hover {
+  color: var(--color-primary);
+}
+
+.langSwitcher {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.langBtn {
+  background: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition);
+  opacity: 0.5;
+}
+
+.langBtn:hover {
+  opacity: 0.8;
+  border-color: var(--color-border);
+}
+
+.langBtn.activeLang {
+  opacity: 1;
+  border-color: var(--color-primary);
+  background-color: rgba(0, 108, 181, 0.05);
+}
+
+.langBtn svg {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  border-radius: 1px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .labName {
+    font-size: 1.15rem;
+  }
+  .logoContainer {
+    width: 200px;
+    padding-right: 25px;
+  }
+}
+
+@media (max-width: 900px) {
+  .header {
+    height: auto;
+    min-height: 140px;
+    padding: var(--space-4) 0;
+  }
+  
+  .inner {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    padding: 0 var(--space-4);
+  }
+  
+  .logoContainer {
+    clip-path: none;
+    padding: 0;
+    width: auto;
+    height: auto;
+    box-shadow: none;
+    background: transparent;
+  }
+  
+  .branding {
+    padding-left: 0;
+    text-align: center;
+  }
+  
+  .rightSection {
+    align-items: center;
+    gap: var(--space-3);
+    height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .labName {
+    font-size: 1rem;
+  }
+  .utilityNav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2) var(--space-4);
+  }
+}

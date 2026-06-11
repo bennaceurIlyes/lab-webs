@@ -1,0 +1,54 @@
+/* StatsBar styles — dark primary background with flex row of stats */
+.statsBar {
+  background: var(--color-primary);
+  padding: var(--space-8) 0;
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+  position: relative;
+}
+
+.divider {
+  position: absolute;
+  right: 0;
+  top: 10%;
+  height: 80%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+  .inner {
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .item {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .divider {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .item {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}

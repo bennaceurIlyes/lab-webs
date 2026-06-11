@@ -1,0 +1,60 @@
+/* SectionTitle styles — heading with left accent border */
+.wrapper {
+  margin-bottom: var(--space-8);
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  border-left: 4px solid var(--color-accent);
+  padding-left: var(--space-4);
+}
+
+.centered .titleRow {
+  border-left: none;
+  padding-left: 0;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--size-3xl);
+  color: var(--color-text);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: var(--size-base);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+.rightLink {
+  font-size: var(--size-sm);
+  color: var(--color-accent);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color var(--transition);
+}
+
+.rightLink:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: var(--size-2xl);
+  }
+
+  .titleRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

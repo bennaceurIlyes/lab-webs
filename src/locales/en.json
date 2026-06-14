@@ -156,5 +156,7 @@
   "loginPassword": "Password",
   "loginBtn": "Login",
   "loginError": "Invalid credentials. Please try again.",
-  "unauthorized": "Unauthorized access to this page."
+  "unauthorized": "Unauthorized access to this page.",
+  "footerLegal": "© 2026 LDREAS — Tahri Mohammed University Béchar. All rights reserved.",
+  "pubViewHal": "View on HAL"
 }

@@ -9,15 +9,14 @@
   display: flex;
   background: var(--color-white);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid #E5E7EB;
   overflow: hidden;
   transition: all var(--transition);
   text-decoration: none;
 }
 
 .card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  border-color: var(--color-navy-900);
 }
 
 .card:hover .image {
@@ -87,7 +86,7 @@
   font-family: var(--font-body);
   font-size: var(--size-sm);
   font-weight: 600;
-  color: var(--color-terracotta-500);
+  color: var(--color-accent-500);
   text-decoration: none;
   margin-top: var(--space-4);
   transition: all var(--transition);
@@ -95,7 +94,7 @@
 }
 
 .readMore:hover {
-  color: var(--color-terracotta-600);
+  color: var(--color-accent-600);
   text-decoration: underline;
 }
 

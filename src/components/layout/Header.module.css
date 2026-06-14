@@ -1,197 +1,99 @@
-.header {
-  position: relative;
-  min-height: 120px;
-  background-color: var(--color-sand-50);
-  border-bottom: 1px solid var(--color-border);
-  width: 100%;
+.topBar {
+  height: 36px;
+  background-color: #1A1A1A;
+  color: #FFFFFF;
+  font-family: var(--font-body);
+  font-size: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
 }
 
 .inner {
-  position: relative;
-  z-index: 2;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-4) var(--space-6);
   max-width: var(--max-width);
   margin: 0 auto;
+  padding: 0 var(--space-6);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.logoContainer {
+.leftSection {
   display: flex;
   align-items: center;
-  flex-shrink: 0;
 }
 
-.logoLink {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform var(--transition);
-}
-
-.logoLink:hover {
-  transform: scale(1.02);
-}
-
-.logoSvg {
-  max-width: 100%;
-  height: auto;
-}
-
-.branding {
-  flex-grow: 1;
-  padding-inline-start: var(--space-6);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.labName {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-navy-900);
-  margin: 0 0 var(--space-1) 0;
-  line-height: 1.2;
-}
-
-.affiliations {
-  font-family: var(--font-body);
-  font-size: var(--size-sm);
-  color: var(--color-slate-400);
-  margin: 0;
-}
-
-.directorName {
-  font-family: var(--font-body);
-  font-size: var(--size-xs);
-  color: var(--color-slate-400);
-  margin: var(--space-1) 0 0 0;
-}
-
-
-.affiliations {
-  font-size: var(--size-xs);
-  color: var(--color-text-muted);
-  margin: 0;
-  font-weight: 500;
+.universityName {
+  opacity: 0.9;
+  letter-spacing: 0.02em;
 }
 
 .rightSection {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: space-between;
-  height: 75%;
-  flex-shrink: 0;
-}
-
-.utilityNav {
-  display: flex;
-  gap: var(--space-4);
   align-items: center;
-}
-
-.utilityLink {
-  font-family: var(--font-heading);
-  font-size: var(--size-xs);
-  font-weight: 600;
-  color: var(--color-text-muted);
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: color var(--transition);
-}
-
-.utilityLink:hover {
-  color: var(--color-primary);
+  gap: var(--space-4);
 }
 
 .langSwitcher {
   display: flex;
-  gap: var(--space-2);
   align-items: center;
+  gap: 4px;
 }
 
 .langBtn {
   background: none;
   border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
   cursor: pointer;
-  padding: var(--space-1) var(--space-2);
+  padding: 0;
+  transition: color var(--transition);
+}
+
+.langBtn:hover, .langBtn.activeLang {
+  color: #FFFFFF;
+}
+
+.langSeparator {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 10px;
+}
+
+.iconBtn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-sm);
-  transition: all var(--transition);
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: var(--size-xs);
-  color: var(--color-slate-400);
+  padding: 0;
+  transition: color var(--transition);
 }
 
-.langBtn:hover {
-  color: var(--color-navy-900);
+.iconBtn:hover {
+  color: #FFFFFF;
 }
 
-.langBtn.activeLang {
-  color: var(--color-terracotta-500);
-  background-color: var(--color-sand-100);
+.loginLink {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition);
 }
 
+.loginLink:hover {
+  color: #FFFFFF;
+  text-decoration: underline;
+}
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  .labName {
-    font-size: 1.15rem;
+@media (max-width: 768px) {
+  .universityName {
+    display: none;
   }
-  .logoContainer {
-    width: 200px;
-  }
-}
-
-@media (max-width: 900px) {
-  .header {
-    height: auto;
-    min-height: 140px;
-    padding: var(--space-4) 0;
-  }
-  
   .inner {
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-4);
-    padding: 0 var(--space-4);
-  }
-  
-  .logoContainer {
-    clip-path: none;
-    padding: 0;
-    width: auto;
-    height: auto;
-    box-shadow: none;
-    background: transparent;
-  }
-  
-  .branding {
-    padding-inline-start: 0;
-    text-align: center;
-  }
-  
-  .rightSection {
-    align-items: center;
-    gap: var(--space-3);
-    height: auto;
-  }
-}
-
-@media (max-width: 480px) {
-  .labName {
-    font-size: 1rem;
-  }
-  .utilityNav {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-2) var(--space-4);
+    justify-content: flex-end;
   }
 }

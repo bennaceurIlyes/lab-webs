@@ -156,5 +156,7 @@
   "loginPassword": "Mot de passe",
   "loginBtn": "Se connecter",
   "loginError": "Identifiants incorrects. Veuillez réessayer.",
-  "unauthorized": "Accès non autorisé à cette page."
+  "unauthorized": "Accès non autorisé à cette page.",
+  "footerLegal": "© 2026 LDREAS — Université TAHRI Mohammed Béchar. Tous droits réservés.",
+  "pubViewHal": "Voir sur HAL"
 }

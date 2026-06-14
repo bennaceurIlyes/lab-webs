@@ -38,7 +38,7 @@
 .card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-lg);
-  border-color: var(--color-terracotta-500);
+  border-color: var(--color-accent-500);
 }
 
 /* Scroll animation support */
@@ -95,7 +95,7 @@
 .link {
   font-family: var(--font-body);
   font-size: var(--size-sm);
-  color: var(--color-terracotta-500);
+  color: var(--color-accent-500);
   font-weight: 600;
   text-decoration: none;
   display: inline-flex;
@@ -105,7 +105,7 @@
 }
 
 .link:hover {
-  color: var(--color-terracotta-600);
+  color: var(--color-accent-600);
   text-decoration: underline;
 }
 

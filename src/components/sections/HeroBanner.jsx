@@ -7,22 +7,28 @@ export default function HeroBanner() {
 
   return (
     <section className={styles.hero} aria-label={t('heroTitle')}>
-      {/* Background Image Overlay */}
-      <div className={styles.overlay} />
+      {/* Background container with dark blue gradient */}
+      <div className={styles.background} />
       
       <div className={styles.inner}>
-        <div className={styles.content}>
-          <span className={styles.tag}>{t('heroTag')}</span>
-          <h2 className={styles.title}>{t('heroTitle')}</h2>
-          <p className={styles.subtitle}>{t('heroSubtitle')}</p>
-          
-          <div className={styles.actions}>
-            <Link to="/about" className={styles.ctaPrimary}>
-              {t('heroCta1')}
-            </Link>
-            <Link to="/news" className={styles.ctaSecondary}>
-              {t('heroCta2')}
-            </Link>
+        {/* 60/40 split container */}
+        <div className={styles.splitLayout}>
+          <div className={styles.contentMain}>
+            <span className={styles.tag}>{t('heroTag')}</span>
+            <h2 className={styles.title}>{t('heroTitle')}</h2>
+            <p className={styles.subtitle}>{t('heroSubtitle')}</p>
+            
+            <div className={styles.actions}>
+              <Link to="/about" className={styles.ctaPrimary}>
+                {t('heroCta1') || 'Explore Research Areas'}
+              </Link>
+              <Link to="/articles" className={styles.ctaSecondary}>
+                {t('heroCta2') || 'Read Annual Report'} <span className={styles.arrow}>→</span>
+              </Link>
+            </div>
+          </div>
+          <div className={styles.contentVisual}>
+             <div className={styles.visualGrid}></div>
           </div>
         </div>
       </div>

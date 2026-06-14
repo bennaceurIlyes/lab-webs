@@ -48,6 +48,7 @@ export default function TeamsPreview() {
 
   return (
     <section className={styles.section} aria-label={t('statTeams') || 'Research Teams'}>
+      {/* TODO: Replace with real LDREAS lab photo — see /docs/photo-brief.md */}
       <div className={styles.container}>
         <SectionTitle
           title={t('statTeams') || 'Research Teams'}

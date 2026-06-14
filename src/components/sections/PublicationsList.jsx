@@ -41,7 +41,7 @@ export default function PublicationsList() {
               key={pub.id}
               className={`${styles.row} ${i % 2 === 1 ? styles.altRow : ''} fade-in-up flex-row-reverse-rtl`}
               ref={el => rowsRef.current[i] = el}
-              style={{ animationDelay: `${i * 80}ms`, padding: 'var(--space-4)' }}
+              style={{ animationDelay: `${i * 80}ms` }}
             >
               <p className={styles.authors}>
                 {pub.primary_author_id ? (

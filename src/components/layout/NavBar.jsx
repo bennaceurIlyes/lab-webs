@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from '../../hooks/useTranslation';
 import { dbService } from '../../lib/dbService';
+import LdreasLogo from '../ui/LdreasLogo';
 import styles from './NavBar.module.css';
 
 export default function NavBar() {
@@ -53,10 +54,13 @@ export default function NavBar() {
       aria-label="Main navigation"
     >
       <div className={`${styles.inner} flex-row-reverse-rtl`}>
-        {/* Mobile Logo */}
-        <Link to="/" className={styles.mobileLogo} aria-label="LDREAS Home">
-          <span className={styles.mobileLogoText}>LDREAS</span>
-        </Link>
+        {/* Desktop & Mobile Logo */}
+        <div className={styles.brandContainer}>
+          <Link to="/" className={styles.logoLink} aria-label="LDREAS Home">
+            <LdreasLogo variant="dark" width="36" height="36" className={styles.logoSvg} />
+            <span className={styles.logoText}>LDREAS</span>
+          </Link>
+        </div>
 
         {/* Desktop nav */}
         <ul className={`${styles.navList} flex-row-reverse-rtl`}>

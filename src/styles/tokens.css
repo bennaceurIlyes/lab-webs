@@ -1,15 +1,16 @@
 /* Design tokens — LDREAS Saharan inspired premium aesthetic styling */
 :root {
   /* Color Palette */
-  --color-navy-900:   #0B1830;   /* primary dark - nav bar, headlines on light bg */
-  --color-navy-800:   #122244;   /* hero overlay gradient start */
-  --color-navy-700:   #1B3361;   /* secondary surfaces, hover states */
+  --color-navy-900:   #003366;   /* Deep Institutional Blue */
+  --color-navy-800:   #002244;   
+  --color-navy-700:   #004488;   
   
-  --color-sand-50:    #FAF7F2;   /* page background (warm off-white, NOT pure white) */
-  --color-sand-100:   #F1EBE2;   /* card/section alternate background */
+  --color-sand-50:    #FFFFFF;   /* page background */
+  --color-sand-100:   #F9FAFB;   /* surface/card background */
   
-  --color-terracotta-500: #C9692F; /* primary accent - badges, links, "Read more", section accents */
-  --color-terracotta-600: #B05A24; /* hover state for accent */
+  --color-accent-500: #C84E00; /* Saharan Ochre */
+  --color-accent-600: #A03D00; /* hover state */
+  --color-accent-cool: #F4F4F4; /* accent background */
   
   --color-slate-600:  #5A6678;   /* body text on light backgrounds */
   --color-slate-400:  #8B95A6;   /* muted/secondary text, subtitles */
@@ -23,8 +24,8 @@
   --color-primary:        var(--color-navy-900);
   --color-primary-dark:   var(--color-navy-900);
   --color-primary-light:  var(--color-navy-700);
-  --color-accent:         var(--color-terracotta-500);
-  --color-accent-hover:   var(--color-terracotta-600);
+  --color-accent:         var(--color-accent-500);
+  --color-accent-hover:   var(--color-accent-600);
   --color-sand:           var(--color-sand-100);
   --color-beige:          var(--color-sand-50);
   
@@ -44,9 +45,9 @@
   --color-danger:         #EF4444;
 
   /* Typography */
-  --font-display: "Source Serif 4", "Lora", Georgia, serif;       /* headlines, hero text, section titles */
-  --font-body:    "Inter", "Helvetica Neue", Arial, sans-serif;     /* body copy, nav, UI labels */
-  --font-arabic:  "IBM Plex Sans Arabic", "Noto Naskh Arabic", sans-serif; /* all Arabic content */
+  --font-display: "IBM Plex Serif", Georgia, serif;       /* headlines, hero text, section titles */
+  --font-body:    "Inter", Arial, sans-serif;     /* body copy, nav, UI labels */
+  --font-arabic:  "IBM Plex Sans Arabic", sans-serif; /* all Arabic content */
   
   /* Fallbacks for existing component usage */
   --font-heading: var(--font-display);
@@ -66,10 +67,10 @@
   --space-3:  0.75rem;
   --space-4:  1rem;
   --space-6:  1.5rem;
-  --space-8:  2rem;
-  --space-12: 3rem;
+  --space-8:  1.5rem; /* 24px card gap */
+  --space-12: 2.5rem;
   --space-16: 4rem;
-  --space-24: 6rem;
+  --space-24: 7.5rem; /* 120px Desktop section padding */
 
   --radius-sm: 0.25rem; /* ~4px */
   --radius-md: 0.5rem;  /* 8px */

@@ -15,13 +15,13 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-text-dark);
 }
 
-/* Global utility for section titles with terracotta accent */
+/* Global utility for section titles with accent accent */
 .section-title-accent {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 5vw, 2.25rem);
   font-weight: 600;
   color: var(--color-navy-900);
-  border-inline-start: 4px solid var(--color-terracotta-500);
+  border-inline-start: 4px solid var(--color-accent-500);
   padding-inline-start: 1rem;
   margin-bottom: var(--space-6);
 }
@@ -115,4 +115,17 @@ html[dir="rtl"] body {
 }
 html[dir="rtl"] .flex-row-reverse-rtl {
   flex-direction: row-reverse;
+}
+
+/* Brand Image Treatment */
+.image-brand-filter {
+  filter: saturate(0.9);
+}
+
+.image-brand-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(11, 24, 48, 0.15), rgba(11, 24, 48, 0.05));
+  pointer-events: none;
+  z-index: 1;
 }

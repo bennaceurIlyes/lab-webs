@@ -16,8 +16,8 @@
 }
 
 .row {
-  border-inline-start: 3px solid var(--color-terracotta-500);
-  padding: var(--space-4) var(--space-6);
+  border-inline-start: 3px solid var(--color-accent-500);
+  padding: var(--space-3) var(--space-6);
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
@@ -31,6 +31,7 @@
   font-family: var(--font-body);
   font-size: var(--size-sm);
   color: var(--color-slate-600);
+  font-style: italic;
 }
 
 .title {
@@ -44,7 +45,7 @@
 }
 
 .title:hover {
-  color: var(--color-terracotta-600);
+  color: var(--color-accent-600);
 }
 
 .journal {
@@ -71,15 +72,15 @@
 .doi {
   font-family: var(--font-body);
   font-size: var(--size-xs);
-  color: var(--color-terracotta-500);
+  color: var(--color-accent-500);
   text-decoration: none;
-  border-bottom: 1px solid var(--color-terracotta-500);
+  border-bottom: 1px solid var(--color-accent-500);
   transition: color var(--transition), border-color var(--transition);
 }
 
 .doi:hover {
-  color: var(--color-terracotta-600);
-  border-color: var(--color-terracotta-600);
+  color: var(--color-accent-600);
+  border-color: var(--color-accent-600);
 }
 
 @media (max-width: 768px) {

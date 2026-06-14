@@ -45,6 +45,7 @@ export default function NewsGrid() {
 
   return (
     <div className={styles.newsColumn}>
+      {/* TODO: Replace with real LDREAS lab photo — see /docs/photo-brief.md */}
       {newsItems.map((item, i) => (
         <article
           key={item.id}
@@ -53,13 +54,14 @@ export default function NewsGrid() {
           style={{ animationDelay: `${i * 100}ms` }}
         >
           {item.photo_url && (
-            <div className={styles.imageWrap}>
+            <div className={styles.imageWrap} style={{ position: 'relative' }}>
               <img
                 src={item.photo_url}
                 alt=""
-                className={styles.image}
+                className={`${styles.image} image-brand-filter`}
                 loading="lazy"
               />
+              <div className="image-brand-overlay" />
             </div>
           )}
           <div className={styles.content}>

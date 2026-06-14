@@ -8,7 +8,7 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: var(--space-4);
-  border-inline-start: 4px solid var(--color-terracotta-500);
+  border-inline-start: 4px solid var(--color-accent-500);
   padding-inline-start: var(--space-4);
 }
 
@@ -39,7 +39,7 @@
 .rightLink {
   font-family: var(--font-body);
   font-size: var(--size-sm);
-  color: var(--color-terracotta-500);
+  color: var(--color-accent-500);
   font-weight: 600;
   white-space: nowrap;
   transition: color var(--transition);
@@ -47,7 +47,7 @@
 }
 
 .rightLink:hover {
-  color: var(--color-terracotta-600);
+  color: var(--color-accent-600);
   text-decoration: underline;
 }
 

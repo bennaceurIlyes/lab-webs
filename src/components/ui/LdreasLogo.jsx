@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function LdreasLogo({ variant = 'dark', className = '', ...props }) {
   const isLight = variant === 'light';
-  const color = isLight ? '#FFFFFF' : 'var(--color-navy-900)';
+  const color = isLight ? '#FFFFFF' : '#0056B3';
   
   return (
     <svg 

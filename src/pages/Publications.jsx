@@ -1,40 +1,36 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
-import { dbService } from '../lib/dbService';
+import { usePublications } from '../hooks/usePublications';
+import { useTeams } from '../hooks/useTeams';
 import { Link } from 'react-router-dom';
 import PageHero from '../components/layout/PageHero';
-import styles from './Publications.module.css';
+import { Button } from '../components/ui/Button';
+import { Badge } from '../components/ui/Badge';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '../components/ui/Dialog';
+import { Tabs, TabsList, TabsTrigger } from '../components/ui/Tabs';
 
 export default function Publications() {
   const { t, lang } = useTranslation();
-  const [articles, setArticles] = useState([]);
-  const [members, setMembers] = useState([]);
-  const [teams, setTeams] = useState([]);
+  const { publications, loading, getCitationText } = usePublications();
+  const { teams, members } = useTeams();
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   // Advanced filters state
   const [selectedYears, setSelectedYears] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [selectedAreas, setSelectedAreas] = useState([]);
   const [sortBy, setSortBy] = useState('newest');
-  
+
   // UI states
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [activeCitation, setActiveCitation] = useState(null);
   const [activeTab, setActiveTab] = useState('bibtex');
   const [copied, setCopied] = useState(false);
-
-  useEffect(() => {
-    Promise.all([
-      dbService.getArticles(lang),
-      dbService.getMembers(lang),
-      dbService.getTeams(lang)
-    ]).then(([articlesData, membersData, teamsData]) => {
-      setArticles(articlesData);
-      setMembers(membersData);
-      setTeams(teamsData);
-    });
-  }, [lang]);
 
   const getAuthorName = (authorId) => {
     const member = members.find(m => m.id === authorId);
@@ -46,7 +42,6 @@ export default function Publications() {
     return member ? member.team_id : '';
   };
 
-  // Toggle handlers for multi-select filters
   const toggleFilter = (value, list, setList) => {
     if (list.includes(value)) {
       setList(list.filter(item => item !== value));
@@ -56,37 +51,33 @@ export default function Publications() {
   };
 
   // Filter logic
-  const filteredArticles = articles.filter(art => {
-    // 1. Search Query
+  const filteredArticles = publications.filter(art => {
     const title = (art.name || '').toLowerCase();
     const primaryAuthor = getAuthorName(art.primary_author_id).toLowerCase();
     const coAuthorsStr = (art.coAuthors || []).join(' ').toLowerCase();
     const doiStr = (art.doi || '').toLowerCase();
     const keywordsStr = (art.keywords || []).join(' ').toLowerCase();
     const query = searchQuery.toLowerCase();
-    
-    const matchesQuery = 
-      title.includes(query) || 
-      primaryAuthor.includes(query) || 
-      coAuthorsStr.includes(query) || 
-      doiStr.includes(query) || 
+
+    const matchesQuery =
+      title.includes(query) ||
+      primaryAuthor.includes(query) ||
+      coAuthorsStr.includes(query) ||
+      doiStr.includes(query) ||
       keywordsStr.includes(query);
 
     if (!matchesQuery) return false;
 
-    // 2. Year Filter
     if (selectedYears.length > 0 && art.published_at) {
       const year = new Date(art.published_at).getFullYear().toString();
       if (!selectedYears.includes(year)) return false;
     }
 
-    // 3. Article Type Filter
     if (selectedTypes.length > 0) {
       const type = art.article_type || 'journal';
       if (!selectedTypes.includes(type)) return false;
     }
 
-    // 4. Research Area Filter
     if (selectedAreas.length > 0) {
       const authorTeam = getAuthorTeamId(art.primary_author_id);
       if (!selectedAreas.includes(authorTeam)) return false;
@@ -112,31 +103,9 @@ export default function Publications() {
     return 0;
   });
 
-  // Generate citation strings based on format (BibTeX, RIS, APA, Chicago)
-  const getCitationText = (art, format) => {
-    if (!art) return '';
-    const year = art.published_at ? new Date(art.published_at).getFullYear() : '2026';
-    const primaryName = getAuthorName(art.primary_author_id) || 'LDREAS Researchers';
-    const authors = [primaryName, ...(art.coAuthors || [])].join(', ');
-
-    if (format === 'bibtex') {
-      return `@article{ldreas_${art.id},\n  author = {${authors}},\n  title = {${art.name}},\n  journal = {${art.journal_name || 'Saharan Energy Journal'}},\n  year = {${year}},\n  volume = {${art.volume || '1'}},\n  number = {${art.issue || '1'}},\n  pages = {${art.pages || '1-10'}},\n  doi = {${art.doi || ''}}\n}`;
-    }
-    if (format === 'ris') {
-      const authorBlock = [primaryName, ...(art.coAuthors || [])].map(a => `AU  - ${a}`).join('\n');
-      return `TY  - JOUR\n${authorBlock}\nTI  - ${art.name}\nJO  - ${art.journal_name || 'Saharan Energy Journal'}\nPY  - ${year}\nVL  - ${art.volume || '1'}\nIS  - ${art.issue || '1'}\nSP  - ${art.pages?.split('-')[0] || '1'}\nEP  - ${art.pages?.split('-')[1] || '10'}\nUR  - https://doi.org/${art.doi || ''}\nER  - `;
-    }
-    if (format === 'apa') {
-      return `${authors}. (${year}). ${art.name}. ${art.journal_name || 'Saharan Energy Journal'}, ${art.volume || '1'}(${art.issue || '1'}), ${art.pages || '1-10'}. https://doi.org/${art.doi || ''}`;
-    }
-    if (format === 'chicago') {
-      return `${authors}. "${art.name}." ${art.journal_name || 'Saharan Energy Journal'} ${art.volume || '1'}, no. ${art.issue || '1'} (${year}): ${art.pages || '1-10'}.`;
-    }
-    return '';
-  };
-
   const handleCopyCitation = () => {
-    const text = getCitationText(activeCitation, activeTab);
+    const primaryName = getAuthorName(activeCitation?.primary_author_id) || 'LDREAS Researchers';
+    const text = getCitationText(activeCitation, activeTab, primaryName);
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
@@ -147,109 +116,120 @@ export default function Publications() {
     <main id="main-content">
       <PageHero title={t('publicationsTitle')} subtitle={lang === 'ar' ? 'تصفح المستودع العلمي وأبحاث المختبر الأكاديمية المعتمدة' : (lang === 'fr' ? 'Explorez les travaux et publications de notre laboratoire' : 'Explore the repository of peer-reviewed articles and research papers')}>
         <Link to="/">{t('navHome')}</Link>
-        <span aria-hidden="true"> / </span>
+        <span aria-hidden="true" className="mx-1.5 select-none text-muted-foreground/60"> / </span>
         <span>{t('navPublications')}</span>
       </PageHero>
 
-      <section className={styles.section}>
-        <div className={styles.container}>
-          
-          <div className={styles.layoutGrid}>
+      <section className="py-16 bg-background">
+        <div className="container-custom">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start flex-row-reverse-rtl">
             
-            {/* Sidebar filter options */}
-            <aside className={`${styles.sidebar} ${showMobileFilters ? styles.showMobileFilters : ''}`}>
-              <h2 className={styles.sidebarHeading}>{lang === 'ar' ? 'تصفية النتائج' : (lang === 'fr' ? 'Filtres' : 'Filter Results')}</h2>
-              
+            {/* Sidebar Filters */}
+            <aside className={`space-y-6 lg:block ${showMobileFilters ? 'block bg-secondary/30 p-4' : 'hidden'}`}>
+              <h2 className="text-sm font-bold uppercase tracking-wider text-foreground border-b border-border pb-2">
+                {lang === 'ar' ? 'تصفية النتائج' : (lang === 'fr' ? 'Filtres' : 'Filter Results')}
+              </h2>
+
               {/* Year Filter */}
-              <div className={styles.filterGroup}>
-                <h3 className={styles.filterGroupTitle}>{lang === 'ar' ? 'السنة' : 'Year'}</h3>
-                {['2026', '2025', '2024'].map(year => (
-                  <label key={year} className={styles.filterLabel}>
-                    <input 
-                      type="checkbox"
-                      className={styles.filterCheckbox}
-                      checked={selectedYears.includes(year)}
-                      onChange={() => toggleFilter(year, selectedYears, setSelectedYears)}
-                    />
-                    <span>{year}</span>
-                  </label>
-                ))}
+              <div className="space-y-2">
+                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{lang === 'ar' ? 'السنة' : 'Year'}</h3>
+                <div className="flex flex-col gap-1.5 text-sm">
+                  {['2026', '2025', '2024'].map(year => (
+                    <label key={year} className="flex items-center gap-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        className="rounded border-border text-primary focus:ring-primary h-4 w-4"
+                        checked={selectedYears.includes(year)}
+                        onChange={() => toggleFilter(year, selectedYears, setSelectedYears)}
+                      />
+                      <span className="text-muted-foreground hover:text-foreground transition-colors">{year}</span>
+                    </label>
+                  ))}
+                </div>
               </div>
 
               {/* Article Type Filter */}
-              <div className={styles.filterGroup}>
-                <h3 className={styles.filterGroupTitle}>{lang === 'ar' ? 'نوع المنشور' : 'Publication Type'}</h3>
-                {[
-                  { value: 'journal', label: lang === 'ar' ? 'مقال مجلة' : 'Journal Article' },
-                  { value: 'conference', label: lang === 'ar' ? 'مقال مؤتمر' : 'Conference Paper' }
-                ].map(type => (
-                  <label key={type.value} className={styles.filterLabel}>
-                    <input 
-                      type="checkbox"
-                      className={styles.filterCheckbox}
-                      checked={selectedTypes.includes(type.value)}
-                      onChange={() => toggleFilter(type.value, selectedTypes, setSelectedTypes)}
-                    />
-                    <span>{type.label}</span>
-                  </label>
-                ))}
+              <div className="space-y-2">
+                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{lang === 'ar' ? 'نوع المنشور' : 'Publication Type'}</h3>
+                <div className="flex flex-col gap-1.5 text-sm">
+                  {[
+                    { value: 'journal', label: lang === 'ar' ? 'مقال مجلة' : 'Journal Article' },
+                    { value: 'conference', label: lang === 'ar' ? 'مقال مؤتمر' : 'Conference Paper' }
+                  ].map(type => (
+                    <label key={type.value} className="flex items-center gap-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        className="rounded border-border text-primary focus:ring-primary h-4 w-4"
+                        checked={selectedTypes.includes(type.value)}
+                        onChange={() => toggleFilter(type.value, selectedTypes, setSelectedTypes)}
+                      />
+                      <span className="text-muted-foreground hover:text-foreground transition-colors">{type.label}</span>
+                    </label>
+                  ))}
+                </div>
               </div>
 
               {/* Research Area Filter */}
-              <div className={styles.filterGroup}>
-                <h3 className={styles.filterGroupTitle}>{lang === 'ar' ? 'الفرقة البحثية' : 'Research Team'}</h3>
-                {teams.map(team => (
-                  <label key={team.id} className={styles.filterLabel}>
-                    <input 
-                      type="checkbox"
-                      className={styles.filterCheckbox}
-                      checked={selectedAreas.includes(team.id)}
-                      onChange={() => toggleFilter(team.id, selectedAreas, setSelectedAreas)}
-                    />
-                    <span>{team.acronym}</span>
-                  </label>
-                ))}
+              <div className="space-y-2">
+                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{lang === 'ar' ? 'الفرقة البحثية' : 'Research Team'}</h3>
+                <div className="flex flex-col gap-1.5 text-sm">
+                  {teams.map(team => (
+                    <label key={team.id} className="flex items-center gap-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        className="rounded border-border text-primary focus:ring-primary h-4 w-4"
+                        checked={selectedAreas.includes(team.id)}
+                        onChange={() => toggleFilter(team.id, selectedAreas, setSelectedAreas)}
+                      />
+                      <span className="text-muted-foreground hover:text-foreground transition-colors">{team.acronym}</span>
+                    </label>
+                  ))}
+                </div>
               </div>
 
-              {/* Clear active filters */}
+              {/* Clear filters */}
               {(selectedYears.length > 0 || selectedTypes.length > 0 || selectedAreas.length > 0) && (
-                <button 
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full text-xs font-semibold"
                   onClick={() => {
                     setSelectedYears([]);
                     setSelectedTypes([]);
                     setSelectedAreas([]);
                   }}
-                  className={styles.clearBtn}
                 >
                   {lang === 'ar' ? 'إعادة تعيين الفلاتر' : 'Clear Filters'}
-                </button>
+                </Button>
               )}
             </aside>
 
-            {/* Main Content Pane */}
-            <div className={styles.mainContent}>
+            {/* Main Content Area */}
+            <div className="lg:col-span-3 space-y-6">
               
-              {/* Search Bar + Mobile Filters Button + Sort Select */}
-              <div className={styles.searchBarWrap}>
-                <button 
-                  onClick={() => setShowMobileFilters(!showMobileFilters)} 
-                  className={styles.mobileFilterBtn}
-                >
-                  Filters
-                </button>
+              {/* Search Bar & Mobile toggle / Sorting select */}
+              <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div className="flex gap-2 w-full md:w-auto md:flex-1">
+                  <Button
+                    variant="outline"
+                    className="lg:hidden shrink-0 text-xs font-semibold"
+                    onClick={() => setShowMobileFilters(!showMobileFilters)}
+                  >
+                    Filters
+                  </Button>
+                  <input
+                    type="text"
+                    className="border border-border bg-background px-4 py-2 text-sm w-full focus:ring-2 focus:ring-primary focus:outline-none"
+                    placeholder={lang === 'ar' ? 'البحث عن عنوان، مؤلف، كلمة مفتاحية أو معرف DOI...' : 'Search by title, author, keyword or DOI...'}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
 
-                <input
-                  type="text"
-                  className={styles.searchInput}
-                  placeholder={lang === 'ar' ? 'البحث عن عنوان، مؤلف، كلمة مفتاحية أو معرف DOI...' : 'Search by title, author, keyword or DOI...'}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-
-                <select 
+                <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className={styles.sortSelect}
+                  className="border border-border bg-background p-2 text-sm font-medium focus:ring-2 focus:ring-primary focus:outline-none shrink-0 cursor-pointer"
                   aria-label="Sort publications"
                 >
                   <option value="newest">{lang === 'ar' ? 'الأحدث أولاً' : 'Newest First'}</option>
@@ -259,137 +239,111 @@ export default function Publications() {
                 </select>
               </div>
 
-              {/* Publications Reference List */}
-              <div className={styles.list}>
-                {sortedArticles.length > 0 ? (
-                  sortedArticles.map((art) => {
+              {/* Publications list */}
+              {loading ? (
+                <div className="flex items-center justify-center py-20">
+                  <div className="h-6 w-6 animate-spin border-2 border-primary border-t-transparent" />
+                </div>
+              ) : sortedArticles.length > 0 ? (
+                <div className="divide-y divide-border border-y border-border">
+                  {sortedArticles.map((art) => {
                     const primaryName = getAuthorName(art.primary_author_id) || 'LDREAS';
-                    const authorsList = [primaryName, ...(art.coAuthors || [])].join(', ');
-                    const year = art.published_at ? new Date(art.published_at).getFullYear() : '2026';
+                    const secondAuthor = art.coAuthors && art.coAuthors[0];
+                    const authorsText = secondAuthor ? `${primaryName}, ${secondAuthor}` : primaryName;
 
                     return (
-                      <article key={art.id} className={styles.row}>
-                        {/* Reference Text */}
-                        <div className={styles.referenceText}>
-                          <span className={styles.authors}>{authorsList}</span> ({year}). 
-                          <Link to={`/articles/${art.id}`} className={styles.titleSerif}>
-                            {" "}{art.name}
-                          </Link>.{" "}
-                          <span className={styles.journalItalic}>{art.journal_name || 'Saharan Energy Journal'}</span>
-                          {art.volume && `, ${art.volume}`}
-                          {art.issue && `(${art.issue})`}
-                          {art.pages && `, ${art.pages}`}.
+                      <article key={art.id} className="py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 flex-row-reverse-rtl">
+                        <div className="space-y-1.5 flex-1 text-start">
+                          <h3 className="text-sm font-bold text-foreground font-serif leading-snug">
+                            {art.journal_link ? (
+                              <a href={art.journal_link} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:underline">
+                                {art.name}
+                              </a>
+                            ) : (
+                              art.name
+                            )}
+                          </h3>
+                          <p className="text-xs text-muted-foreground">
+                            <span className="font-medium">{authorsText}</span>
+                          </p>
                         </div>
-
-                        {/* Short Excerpt */}
-                        {art.description && (
-                          <p className={styles.abstractPreview}>{art.description}</p>
+                        {art.journal_link && (
+                          <div className="flex items-center shrink-0">
+                            <Button variant="outline" size="sm" asChild>
+                              <a href={art.journal_link} target="_blank" rel="noopener noreferrer">
+                                {lang === 'ar' ? 'رابط المجلة' : (lang === 'fr' ? 'Lien de la revue' : 'Journal Link')}
+                              </a>
+                            </Button>
+                          </div>
                         )}
-
-                        {/* Metadata Block */}
-                        <div className={styles.metadataBlock}>
-                          {art.keywords && art.keywords.length > 0 && (
-                            <span className={styles.keywordsBadgeRow}>
-                              {lang === 'ar' ? 'الكلمات المفتاحية: ' : 'Keywords: '}
-                              {art.keywords.join(', ')}
-                            </span>
-                          )}
-                          {art.doi && (
-                            <span className={styles.doiInfo}>
-                              DOI: <a href={`https://doi.org/${art.doi}`} target="_blank" rel="noopener noreferrer" className={styles.doiLink}>{art.doi}</a>
-                            </span>
-                          )}
-                          {art.citations_count !== undefined && (
-                            <span className={styles.citationsInfo}>
-                              Citations: {art.citations_count}
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Action Slashes */}
-                        <div className={styles.actionsLine}>
-                          <Link to={`/articles/${art.id}`} className={styles.actionLink}>
-                            {lang === 'ar' ? 'التفاصيل' : 'Details'}
-                          </Link>
-                          
-                          {art.journal_link && (
-                            <>
-                              <span className={styles.separator}>/</span>
-                              <a href={art.journal_link} target="_blank" rel="noopener noreferrer" className={styles.actionLink}>
-                                {lang === 'ar' ? 'رابط المجلة' : 'Journal Link'}
-                              </a>
-                            </>
-                          )}
-                          
-                          {art.pdf_link && art.pdf_link !== '#' && (
-                            <>
-                              <span className={styles.separator}>/</span>
-                              <a href={art.pdf_link} target="_blank" rel="noopener noreferrer" className={styles.actionLink}>
-                                PDF
-                              </a>
-                            </>
-                          )}
-                          
-                          <span className={styles.separator}>/</span>
-                          <button 
-                            onClick={() => {
-                              setActiveCitation(art);
-                              setActiveTab('bibtex');
-                            }} 
-                            className={styles.citeLinkButton}
-                          >
-                            {lang === 'ar' ? 'تصدير الاقتباس' : 'Cite'}
-                          </button>
-                        </div>
                       </article>
                     );
-                  })
-                ) : (
-                  <p className={styles.noPublications}>
-                    {t('noPublications')}
-                  </p>
-                )}
-              </div>
+                  })}
+                </div>
+              ) : (
+                <div className="py-12 text-center text-muted-foreground text-sm border border-dashed border-border">
+                  {t('noPublications')}
+                </div>
+              )}
 
             </div>
 
           </div>
-
         </div>
       </section>
 
-      {/* Citation Export Modal */}
+      {/* Citation Export Modal utilizing shadcn Dialog */}
       {activeCitation && (
-        <div className={styles.modalOverlay} onClick={() => setActiveCitation(null)}>
-          <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
-            <div className={styles.modalHeader}>
-              <h3 className={styles.modalTitle}>{lang === 'ar' ? 'تصدير مرجع البحث' : 'Export Citation Reference'}</h3>
-              <button className={styles.modalClose} onClick={() => setActiveCitation(null)}>&times;</button>
-            </div>
-            <div className={styles.modalBody}>
-              <div className={styles.modalTabs}>
-                {['bibtex', 'ris', 'apa', 'chicago'].map(tab => (
-                  <button 
-                    key={tab} 
-                    className={`${styles.modalTab} ${activeTab === tab ? styles.activeTab : ''}`}
-                    onClick={() => {
-                      setActiveTab(tab);
-                      setCopied(false);
-                    }}
-                  >
-                    {tab.toUpperCase()}
-                  </button>
-                ))}
+        <Dialog open={!!activeCitation} onOpenChange={() => setActiveCitation(null)}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle className="font-serif font-bold text-foreground">
+                {lang === 'ar' ? 'تصدير مرجع البحث' : 'Export Citation Reference'}
+              </DialogTitle>
+            </DialogHeader>
+
+            <div className="space-y-4 py-2">
+              <Tabs value={activeTab} onValueChange={(val) => { setActiveTab(val); setCopied(false); }}>
+                <TabsList className="w-full justify-start border-b border-border mb-3 bg-transparent p-0 h-auto">
+                  {['bibtex', 'ris', 'apa', 'chicago'].map(tab => (
+                    <TabsTrigger
+                      key={tab}
+                      value={tab}
+                      className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-4 py-2 text-xs font-bold uppercase tracking-wider"
+                    >
+                      {tab}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+                <div className="mt-4">
+                  <pre className="bg-secondary p-4 text-xs font-mono overflow-x-auto border border-border max-h-48 whitespace-pre-wrap leading-relaxed">
+                    {getCitationText(
+                      activeCitation,
+                      activeTab,
+                      getAuthorName(activeCitation?.primary_author_id) || 'LDREAS Researchers'
+                    )}
+                  </pre>
+                </div>
+              </Tabs>
+
+              <div className="flex justify-end gap-2 pt-2 border-t border-border mt-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setActiveCitation(null)}
+                >
+                  {lang === 'ar' ? 'إغلاق' : 'Close'}
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={handleCopyCitation}
+                >
+                  {copied ? (lang === 'ar' ? 'تم النسخ!' : 'Copied!') : (lang === 'ar' ? 'نسخ للمحفظة' : 'Copy to Clipboard')}
+                </Button>
               </div>
-              <pre className={styles.citationCode}>
-                {getCitationText(activeCitation, activeTab)}
-              </pre>
-              <button className={styles.copyButton} onClick={handleCopyCitation}>
-                {copied ? (lang === 'ar' ? 'تم النسخ!' : 'Copied!') : (lang === 'ar' ? 'نسخ للمحفظة' : 'Copy to Clipboard')}
-              </button>
             </div>
-          </div>
-        </div>
+          </DialogContent>
+        </Dialog>
       )}
     </main>
   );

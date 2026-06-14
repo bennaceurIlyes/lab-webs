@@ -1,29 +1,43 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
-import { dbService } from '../lib/dbService';
-import Tag from '../components/ui/Tag';
-import styles from './NewsDetail.module.css';
+import { useNews } from '../hooks/useNews';
+import { useTeams } from '../hooks/useTeams';
+import { usePublications } from '../hooks/usePublications';
+import PageHero from '../components/layout/PageHero';
+import { Card, CardHeader, CardTitle, CardDescription } from '../components/ui/Card';
+import { Button } from '../components/ui/Button';
+import { Badge } from '../components/ui/Badge';
+import { Separator } from '../components/ui/Separator';
+import { Link2, Twitter, Linkedin, Eye } from 'lucide-react';
 
 export default function NewsDetail() {
   const { id } = useParams();
   const { t, lang } = useTranslation();
+  const { getNewsById } = useNews();
+  const { getMemberById } = useTeams();
+  const { publications } = usePublications();
+
   const [newsItem, setNewsItem] = useState(null);
   const [author, setAuthor] = useState(null);
   const [relatedArticles, setRelatedArticles] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   // Interactive UI state
   const [scrollPercent, setScrollPercent] = useState(0);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    dbService.getNewsById(id, lang)
+    getNewsById(id)
       .then(data => {
+        if (!data) {
+          setLoading(false);
+          return;
+        }
         setNewsItem(data);
-        if (data && data.author_id) {
-          dbService.getMemberById(data.author_id, lang).then(member => setAuthor(member));
+        if (data.author_id) {
+          getMemberById(data.author_id).then(member => setAuthor(member));
         }
         setLoading(false);
       })
@@ -31,25 +45,22 @@ export default function NewsDetail() {
         console.error(err);
         setLoading(false);
       });
-  }, [id, lang]);
+  }, [id, lang, getNewsById, getMemberById]);
 
   // Fetch related publications based on keyword matching or default to recent ones
   useEffect(() => {
-    if (newsItem) {
-      dbService.getArticles(lang).then(articles => {
-        // Simple keyword filter matching
-        const newsKeywords = [newsItem.category, ...(newsItem.description?.split(/\s+/) || [])];
-        const matched = articles.filter(art => 
-          art.keywords?.some(kw => 
-            newsItem.title?.toLowerCase().includes(kw.toLowerCase()) || 
-            newsItem.content?.toLowerCase().includes(kw.toLowerCase())
-          )
-        );
-        // Fallback to recent articles if no keyword overlaps
-        setRelatedArticles(matched.length > 0 ? matched.slice(0, 2) : articles.slice(0, 2));
-      });
+    if (newsItem && publications.length > 0) {
+      // Simple keyword filter matching
+      const matched = publications.filter(art =>
+        art.keywords?.some(kw =>
+          newsItem.title?.toLowerCase().includes(kw.toLowerCase()) ||
+          newsItem.content?.toLowerCase().includes(kw.toLowerCase())
+        )
+      );
+      // Fallback to recent articles if no keyword overlaps
+      setRelatedArticles(matched.length > 0 ? matched.slice(0, 2) : publications.slice(0, 2));
     }
-  }, [newsItem, lang]);
+  }, [newsItem, publications]);
 
   // Reading scroll progress indicator hook
   useEffect(() => {
@@ -83,18 +94,18 @@ export default function NewsDetail() {
 
   if (loading) {
     return (
-      <main className={styles.loadingContainer}>
-        <div className={styles.spinner}></div>
+      <main className="flex items-center justify-center py-20">
+        <div className="h-6 w-6 animate-spin border-2 border-primary border-t-transparent" />
       </main>
     );
   }
 
   if (!newsItem) {
     return (
-      <main className={styles.errorContainer}>
-        <div className={styles.errorCard}>
-          <h2>{lang === 'ar' ? 'المستجد غير موجود' : (lang === 'fr' ? 'Actualité non trouvée' : 'News item not found')}</h2>
-          <Link to="/news" className={styles.backBtn}>
+      <main className="container-custom py-12">
+        <div className="max-w-md mx-auto border border-border p-6 bg-card text-center space-y-4">
+          <h2 className="text-lg font-serif font-bold">{lang === 'ar' ? 'المستجد غير موجود' : (lang === 'fr' ? 'Actualité non trouvée' : 'News item not found')}</h2>
+          <Link to="/news" className="inline-block text-xs font-semibold text-primary hover:underline">
             {lang === 'ar' ? '← العودة للأخبار' : (lang === 'fr' ? '← Retour aux actualités' : '← Back to News')}
           </Link>
         </div>
@@ -103,157 +114,154 @@ export default function NewsDetail() {
   }
 
   return (
-    <main id="main-content" className={styles.main}>
+    <main id="main-content">
       {/* Scroll Progress Bar Indicator */}
-      <div className={styles.progressContainer}>
-        <div className={styles.progressBar} style={{ width: `${scrollPercent}%` }}></div>
+      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-secondary">
+        <div className="h-full bg-primary transition-all duration-75" style={{ width: `${scrollPercent}%` }} />
       </div>
 
-      {/* Page Hero */}
-      <section className={styles.heroSection}>
-        <div className={styles.heroInner}>
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-            <Link to="/">{t('navHome')}</Link> 
-            <span className={styles.bcDivider}>/</span> 
-            <Link to="/news">{t('navNews')}</Link> 
-            <span className={styles.bcDivider}>/</span> 
-            <span className={styles.bcActive}>{lang === 'ar' ? 'تفاصيل الخبر' : (lang === 'fr' ? 'Détails' : 'Detail')}</span>
-          </nav>
-          <div className={styles.categoryLabel}>
-            <Tag label={newsItem.category === 'breakthrough' ? (lang === 'ar' ? 'إنجاز علمي' : 'Breakthrough') : (lang === 'ar' ? 'فعالية' : 'Event')} />
-          </div>
-          <h1 className={styles.heroTitle}>{newsItem.title}</h1>
-          
-          <div className={styles.heroMeta}>
-            <span className={styles.date}>{formatDate(newsItem.published_at || newsItem.created_at)}</span>
-            {newsItem.view_count && (
-              <>
-                <span className={styles.metaDivider}>•</span>
-                <span className={styles.viewsCount}>
-                  {newsItem.view_count} {lang === 'ar' ? 'مشاهدة' : (lang === 'fr' ? 'vues' : 'views')}
-                </span>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
+      <PageHero title={newsItem.title}>
+        <Link to="/">{t('navHome')}</Link>
+        <span aria-hidden="true" className="mx-1.5 select-none text-muted-foreground/60"> / </span>
+        <Link to="/news">{t('navNews')}</Link>
+        <span aria-hidden="true" className="mx-1.5 select-none text-muted-foreground/60"> / </span>
+        <span>{lang === 'ar' ? 'تفاصيل الخبر' : (lang === 'fr' ? 'Détails' : 'Detail')}</span>
+      </PageHero>
 
-      {/* Main Grid: Body Content + Sidebar widgets */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-          <div className={styles.layoutContainer}>
+      <section className="py-16 bg-background">
+        <div className="container-custom">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start flex-row-reverse-rtl">
             
             {/* Article Column */}
-            <article className={styles.articleBody}>
+            <article className="lg:col-span-2 space-y-8">
+              <div className="flex items-center gap-3 text-xs text-muted-foreground flex-row-reverse-rtl">
+                <Badge variant="outline" className="text-[10px] font-semibold">
+                  {newsItem.category === 'breakthrough' ? (lang === 'ar' ? 'إنجاز علمي' : 'Breakthrough') : (lang === 'ar' ? 'فعالية' : 'Event')}
+                </Badge>
+                <span>{formatDate(newsItem.published_at || newsItem.created_at)}</span>
+                {newsItem.view_count && (
+                  <>
+                    <span>•</span>
+                    <span className="flex items-center gap-1">
+                      <Eye className="h-3.5 w-3.5" />
+                      {newsItem.view_count} {lang === 'ar' ? 'مشاهدة' : (lang === 'fr' ? 'vues' : 'views')}
+                    </span>
+                  </>
+                )}
+              </div>
+
               {newsItem.photo_url && (
-                <div className={styles.photoWrap}>
-                  <img src={newsItem.photo_url} alt="" className={styles.photo} />
-                  <div className={styles.photoOverlay}></div>
+                <div className="h-64 md:h-96 w-full overflow-hidden border border-border">
+                  <img src={newsItem.photo_url} alt="" className="w-full h-full object-cover" />
                 </div>
               )}
 
-              <div className={styles.articleContent}>
-                <p className={styles.excerpt}>{newsItem.description}</p>
-                
-                <div 
-                  className={styles.bodyText} 
+              <div className="space-y-6">
+                <p className="text-base font-serif italic text-muted-foreground leading-relaxed">
+                  {newsItem.description}
+                </p>
+
+                <div
+                  className="text-sm text-foreground leading-relaxed space-y-4"
                   dangerouslySetInnerHTML={{
                     __html: newsItem.content.replace(/\n/g, '<br /><br />')
-                  }} 
+                  }}
                 />
               </div>
 
               {/* Author Biography Section */}
               {author && (
-                <div className={styles.authorCard}>
-                  <img src={author.photo_url} alt={author.full_name} className={styles.authorPhoto} />
-                  <div className={styles.authorInfo}>
-                    <div className={styles.authorHeader}>
-                      <span className={styles.authorLabel}>{lang === 'ar' ? 'كاتب المقال' : (lang === 'fr' ? 'Rédigé par' : 'Written by')}</span>
-                      <h4 className={styles.authorName}>
-                        <Link to={`/members/${author.id}`}>{author.full_name}</Link>
-                      </h4>
-                      <span className={styles.authorGrade}>{author.grade} • {author.specialty}</span>
+                <Card className="p-6 bg-secondary/15 flex flex-col sm:flex-row gap-4 items-start border-border shadow-none">
+                  {author.photo_url && (
+                    <img src={author.photo_url} alt={author.full_name} className="h-16 w-16 object-cover border border-border shrink-0" />
+                  )}
+                  <div className="space-y-2 flex-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 flex-row-reverse-rtl">
+                      <div>
+                        <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider block">
+                          {lang === 'ar' ? 'كاتب المقال' : (lang === 'fr' ? 'Rédigé par' : 'Written by')}
+                        </span>
+                        <h4 className="font-bold text-sm text-foreground hover:text-primary transition-colors">
+                          <Link to={`/members/${author.id}`}>{author.full_name}</Link>
+                        </h4>
+                      </div>
+                      <span className="text-xs text-muted-foreground font-semibold">{author.grade} • {author.specialty}</span>
                     </div>
-                    {author.bio && <p className={styles.authorBio}>{author.bio}</p>}
+                    {author.bio && <p className="text-xs text-muted-foreground leading-relaxed">{author.bio}</p>}
                   </div>
-                </div>
+                </Card>
               )}
 
-              {/* Footer Back action */}
-              <div className={styles.footerActions}>
-                <Link to="/news" className={styles.backBtn}>
+              <div className="pt-6">
+                <Link to="/news" className="text-xs font-semibold text-primary hover:underline">
                   {lang === 'ar' ? '← العودة للأخبار' : (lang === 'fr' ? '← Retour aux actualités' : '← Back to News')}
                 </Link>
               </div>
             </article>
 
-            {/* Sidebar Column: Floating Sharing & Related Publications */}
-            <aside className={styles.sidebarColumn}>
+            {/* Sidebar Column: Sharing & Related Research */}
+            <aside className="space-y-6 w-full">
+              
               {/* Sharing widget */}
-              <div className={styles.sidebarCard}>
-                <h4 className={styles.sidebarTitle}>{lang === 'ar' ? 'مشاركة الخبر' : (lang === 'fr' ? 'Partager l\'article' : 'Share Article')}</h4>
-                <div className={styles.shareButtons}>
-                  <button 
-                    onClick={handleCopyLink} 
-                    className={`${styles.shareBtn} ${copied ? styles.shareBtnCopied : ''}`}
-                    title="Copy Link"
+              <Card className="p-6 shadow-none border-border">
+                <h4 className="font-serif font-bold text-sm text-foreground border-b border-border pb-2 mb-4">
+                  {lang === 'ar' ? 'مشاركة الخبر' : (lang === 'fr' ? 'Partager l\'article' : 'Share Article')}
+                </h4>
+                <div className="space-y-2 text-xs">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleCopyLink}
+                    className="w-full justify-start gap-2.5 font-semibold text-muted-foreground hover:text-foreground"
                   >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                    </svg>
+                    <Link2 className="h-4 w-4" />
                     <span>{copied ? (lang === 'ar' ? 'تم النسخ!' : 'Copied!') : (lang === 'ar' ? 'نسخ الرابط' : 'Copy Link')}</span>
-                  </button>
+                  </Button>
 
-                  <a 
-                    href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className={styles.shareBtn}
-                  >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                    </svg>
-                    <span>Twitter / X</span>
-                  </a>
+                  <Button variant="outline" size="sm" asChild className="w-full justify-start gap-2.5 font-semibold text-muted-foreground hover:text-foreground">
+                    <a
+                      href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Twitter className="h-4 w-4 text-sky-500" />
+                      <span>Twitter / X</span>
+                    </a>
+                  </Button>
 
-                  <a 
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className={styles.shareBtn}
-                  >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                      <rect x="2" y="9" width="4" height="12"></rect>
-                      <circle cx="4" cy="4" r="2"></circle>
-                    </svg>
-                    <span>LinkedIn</span>
-                  </a>
+                  <Button variant="outline" size="sm" asChild className="w-full justify-start gap-2.5 font-semibold text-muted-foreground hover:text-foreground">
+                    <a
+                      href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Linkedin className="h-4 w-4 text-blue-700" />
+                      <span>LinkedIn</span>
+                    </a>
+                  </Button>
                 </div>
-              </div>
+              </Card>
 
               {/* Related Publications widget */}
               {relatedArticles.length > 0 && (
-                <div className={styles.sidebarCard}>
-                  <h4 className={styles.sidebarTitle}>
+                <Card className="p-6 shadow-none border-border">
+                  <h4 className="font-serif font-bold text-sm text-foreground border-b border-border pb-2 mb-4">
                     {lang === 'ar' ? 'منشورات ذات صلة' : (lang === 'fr' ? 'Publications associées' : 'Related Research')}
                   </h4>
-                  <div className={styles.relatedList}>
+                  <div className="space-y-4">
                     {relatedArticles.map(art => (
-                      <div key={art.id} className={styles.relatedItem}>
-                        <span className={styles.relatedType}>
+                      <div key={art.id} className="space-y-1.5">
+                        <Badge variant="outline" className="text-[9px] font-semibold tracking-wider uppercase">
                           {art.article_type === 'journal' ? (lang === 'ar' ? 'مقال دوري' : 'Journal') : (lang === 'ar' ? 'مؤتمر' : 'Conference')}
-                        </span>
-                        <h5 className={styles.relatedName}>
+                        </Badge>
+                        <h5 className="font-serif font-bold text-xs text-foreground hover:text-primary transition-colors leading-snug">
                           <Link to={`/articles/${art.id}`}>{art.name}</Link>
                         </h5>
-                        {art.doi && <span className={styles.relatedDoi}>DOI: {art.doi}</span>}
+                        {art.doi && <span className="text-[10px] text-muted-foreground block">DOI: {art.doi}</span>}
                       </div>
                     ))}
                   </div>
-                </div>
+                </Card>
               )}
             </aside>
 

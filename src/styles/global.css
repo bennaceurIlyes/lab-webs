@@ -1,162 +1,83 @@
-/* Global styles — institutional editorial baseline */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Cairo:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 14% 10%;
 
-body {
-  font-family: var(--font-body);
-  font-size: var(--size-base);
-  color: var(--color-text-base);
-  background-color: var(--color-bg-main);
-  line-height: 1.6;
+    --card: 0 0% 100%;
+    --card-foreground: 220 14% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 14% 10%;
+
+    --primary: 211 100% 35%; /* Academic Blue: #0056B3 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 96%; /* Neutral Gray */
+    --secondary-foreground: 220 14% 10%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 40%;
+
+    --accent: 211 100% 97%;
+    --accent-foreground: 211 100% 35%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 88%;
+    --input: 220 13% 88%;
+    --ring: 211 100% 35%;
+
+    --radius: 0px; /* Sharp corners for clean academic editorial look */
+
+    --font-display: "Merriweather", Georgia, serif;
+    --font-body: "Inter", system-ui, sans-serif;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body);
+  }
+
+  /* Focus ring style */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2;
+  }
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  line-height: 1.2;
-  color: var(--color-text-base);
-  font-weight: 700;
-}
-
-h1 { font-size: var(--size-4xl); }
-h2 { font-size: var(--size-3xl); }
-h3 { font-size: var(--size-2xl); }
-
-.section-title-accent {
-  font-family: var(--font-display);
-  font-size: var(--size-3xl);
-  font-weight: 700;
-  color: var(--color-primary);
-  border-bottom: 1px solid var(--color-surface);
-  padding-bottom: var(--space-4);
-  margin-bottom: var(--space-6);
-}
-
-.pageWrapper {
-  max-width: 100%;
-  margin: 0;
-  background-color: var(--color-bg-main);
-  box-shadow: none;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.skip-link {
-  position: absolute;
-  top: -100%;
-  inset-inline-start: var(--space-4);
-  background: var(--color-primary);
-  color: #fff;
-  padding: var(--space-2) var(--space-4);
-  border-radius: 0;
-  z-index: 9999;
-  font-size: var(--size-sm);
-  transition: top var(--transition);
-}
-
-.skip-link:focus {
-  top: var(--space-2);
-}
-
-*:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
-}
-
-.container {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-}
-
-.fade-in-up {
-  opacity: 1;
-  transform: none;
-}
-
-.fade-in-up.visible {
-  animation: none;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
+/* RTL layout helpers */
 html[dir="rtl"] body {
   text-align: right;
 }
 
-.flex-row-reverse-rtl {
-  display: flex;
+.flex-row-reverse-rtl:not(.grid) {
+  @apply flex;
 }
 
-html[dir="rtl"] .flex-row-reverse-rtl {
+html[dir="rtl"] .flex-row-reverse-rtl:not(.grid) {
   flex-direction: row-reverse;
 }
 
-.image-brand-filter {
-  filter: saturate(0.95);
+/* Accessibility skip link */
+.skip-link {
+  @apply absolute left-4 -top-full bg-primary text-primary-foreground px-4 py-2 text-sm z-50 transition-all duration-150;
 }
 
-.image-brand-overlay {
-  display: none;
+.skip-link:focus {
+  @apply top-2;
 }
 
-/* Institutional page hero — shared across detail pages */
-.pageHero {
-  background: var(--color-bg-main);
-  border-bottom: 1px solid var(--color-surface);
-  padding: var(--space-12) 0 var(--space-10);
-  color: var(--color-text-base);
+/* Academic container spacing utility */
+.container-custom {
+  @apply max-w-6xl mx-auto px-4 md:px-8 w-full;
 }
 
-.pageHero .heroInner {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
+/* Custom font switches based on document language */
+html[lang="ar"] {
+  --font-display: "Cairo", "Noto Naskh Arabic", serif;
+  --font-body: "Cairo", "Noto Naskh Arabic", sans-serif;
 }
-
-.pageHero .breadcrumb {
-  font-family: var(--font-body);
-  font-size: var(--size-sm);
-  font-weight: 500;
-  color: var(--color-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: var(--space-4);
-}
-
-.pageHero .breadcrumb a {
-  color: var(--color-accent);
-  text-decoration: none;
-}
-
-.pageHero .breadcrumb a:hover {
-  text-decoration: underline;
-}
-
-.pageHero .heroTitle {
-  font-family: var(--font-display);
-  font-size: var(--size-4xl);
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--color-primary);
-  margin: 0;
-}
-
-.pageHero .heroSubtitle {
-  font-size: var(--size-base);
-  line-height: 1.6;
-  color: var(--color-slate-600);
-  margin: var(--space-4) 0 0;
-  max-width: 62ch;
-}
-

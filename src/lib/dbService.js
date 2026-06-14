@@ -173,7 +173,8 @@ const SEED_DATA = {
       started_at: '2025-01-15',
       expected_end_date: '2027-12-31',
       state: 'ongoing',
-      photo_url: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=600&auto=format&fit=crop&q=80'
+      photo_url: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=600&auto=format&fit=crop&q=80',
+      member_ids: ['member_leader_1', 'member_researcher_1']
     },
     {
       id: 'project_2',
@@ -183,7 +184,8 @@ const SEED_DATA = {
       started_at: '2024-06-01',
       expected_end_date: '2026-11-30',
       state: 'ongoing',
-      photo_url: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&auto=format&fit=crop&q=80'
+      photo_url: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&auto=format&fit=crop&q=80',
+      member_ids: ['member_leader_2', 'member_researcher_2']
     },
     {
       id: 'project_3',
@@ -193,7 +195,8 @@ const SEED_DATA = {
       started_at: '2025-05-10',
       expected_end_date: '2028-05-10',
       state: 'planned',
-      photo_url: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&auto=format&fit=crop&q=80'
+      photo_url: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&auto=format&fit=crop&q=80',
+      member_ids: ['member_leader_3']
     }
   ],
   news: [
@@ -384,8 +387,20 @@ const LOCALIZED_DICTS = {
 
 // LocalDB initialization helper
 function getLocalDB() {
+  const existing = localStorage.getItem('ldreas_showcase_db');
+  if (existing) {
+    try {
+      return JSON.parse(existing);
+    } catch (e) {
+      // ignore and fall back to seed
+    }
+  }
   localStorage.setItem('ldreas_showcase_db', JSON.stringify(SEED_DATA));
   return SEED_DATA;
+}
+
+function saveLocalDB(db) {
+  localStorage.setItem('ldreas_showcase_db', JSON.stringify(db));
 }
 
 // Translate record fields helper
@@ -519,6 +534,23 @@ export const dbService = {
     }));
   },
 
+  getProjectById: async (id, lang = 'en') => {
+    if (hasSupabase) {
+      try {
+        const { data, error } = await supabase.from('projects').select('*').eq('id', id).single();
+        if (!error && data) return data;
+      } catch (err) { console.error('Supabase fetch failed, using fallback mock', err); }
+    }
+    const db = getLocalDB();
+    const p = db.projects.find(item => item.id === id);
+    if (!p) return null;
+    return {
+      ...p,
+      name: translateObj(p, p.id, 'name', lang),
+      description: translateObj(p, p.id, 'description', lang)
+    };
+  },
+
   // --- NEWS ---
   getNews: async (lang = 'en') => {
     if (hasSupabase) {
@@ -608,7 +640,7 @@ export const dbService = {
     const db = getLocalDB();
     // Fetch articles where member is either primary author or co-author
     const primary = db.articles.filter(a => a.primary_author_id === memberId);
-    
+
     const coAuthoredIds = db.article_co_authors
       .filter(ca => ca.member_id === memberId)
       .map(ca => ca.article_id);
@@ -618,11 +650,260 @@ export const dbService = {
     const combined = [...primary, ...coAuthored];
     // De-duplicate
     const unique = Array.from(new Map(combined.map(item => [item.id, item])).values());
-    
-    return unique.map(a => ({
-      ...a,
-      name: translateObj(a, a.id, 'name', lang),
-      description: translateObj(a, a.id, 'description', lang)
-    }));
+
+    return unique.map(a => {
+      const coIds = db.article_co_authors.filter(ca => ca.article_id === a.id).map(ca => ca.member_id);
+      const coAuths = db.members.filter(m => coIds.includes(m.id)).map(m => m.full_name);
+      return {
+        ...a,
+        name: translateObj(a, a.id, 'name', lang),
+        description: translateObj(a, a.id, 'description', lang),
+        coAuthors: coAuths
+      };
+    });
+  },
+
+  // --- MUTATIONS / WRITE SERVICE ---
+  
+  // Member profile update
+  updateMemberProfile: async (memberId, fields) => {
+    const db = getLocalDB();
+    const idx = db.members.findIndex(m => m.id === memberId);
+    if (idx !== -1) {
+      db.members[idx] = { ...db.members[idx], ...fields };
+      saveLocalDB(db);
+      return db.members[idx];
+    }
+    throw new Error('Member not found');
+  },
+
+  // Add Article (Member)
+  addArticle: async (article) => {
+    const db = getLocalDB();
+    const newArt = {
+      id: `art_${Date.now()}`,
+      name: article.name,
+      description: article.description || '',
+      published_at: new Date().toISOString(),
+      primary_author_id: article.primary_author_id,
+      journal_name: article.journal_name || '',
+      journal_link: article.journal_link || '#',
+      pdf_link: article.pdf_link || '#',
+      doi: article.doi || '',
+    };
+    db.articles.push(newArt);
+
+    // Save co-authors mapping
+    if (article.coAuthorIds && Array.isArray(article.coAuthorIds)) {
+      article.coAuthorIds.forEach(coId => {
+        db.article_co_authors.push({
+          article_id: newArt.id,
+          member_id: coId
+        });
+      });
+    }
+
+    saveLocalDB(db);
+    return newArt;
+  },
+
+  // Delete Article (Member)
+  deleteArticle: async (articleId) => {
+    const db = getLocalDB();
+    db.articles = db.articles.filter(a => a.id !== articleId);
+    db.article_co_authors = db.article_co_authors.filter(ca => ca.article_id !== articleId);
+    saveLocalDB(db);
+    return true;
+  },
+
+  // Update Article (Member / Lab Manager)
+  updateArticle: async (articleId, article) => {
+    const db = getLocalDB();
+    const idx = db.articles.findIndex(a => a.id === articleId);
+    if (idx !== -1) {
+      db.articles[idx] = {
+        ...db.articles[idx],
+        name: article.name,
+        description: article.description || '',
+        journal_name: article.journal_name || '',
+        journal_link: article.journal_link || '#',
+        pdf_link: article.pdf_link || '#',
+        doi: article.doi || '',
+      };
+      
+      // Update co-authors mapping
+      db.article_co_authors = db.article_co_authors.filter(ca => ca.article_id !== articleId);
+      if (article.coAuthorIds && Array.isArray(article.coAuthorIds)) {
+        article.coAuthorIds.forEach(coId => {
+          db.article_co_authors.push({
+            article_id: articleId,
+            member_id: coId
+          });
+        });
+      }
+      
+      saveLocalDB(db);
+      return db.articles[idx];
+    }
+    throw new Error('Article not found');
+  },
+
+
+  // Create Team (Team Leader / Lab Manager)
+  createTeam: async (team) => {
+    const db = getLocalDB();
+    const newTeam = {
+      id: `team_${Date.now()}`,
+      name: team.name,
+      acronym: team.acronym,
+      description: team.description || '',
+      team_leader_id: team.team_leader_id || null,
+    };
+    db.teams.push(newTeam);
+    saveLocalDB(db);
+    return newTeam;
+  },
+
+  // Delete Team (Lab Manager)
+  deleteTeam: async (teamId) => {
+    const db = getLocalDB();
+    db.teams = db.teams.filter(t => t.id !== teamId);
+    // dissociate members of this team
+    db.members = db.members.map(m => m.team_id === teamId ? { ...m, team_id: null } : m);
+    // dissociate projects of this team
+    db.projects = db.projects.filter(p => p.team_id !== teamId);
+    saveLocalDB(db);
+    return true;
+  },
+
+  // Add Member to Team (Team Leader)
+  addMemberToTeam: async (memberId, teamId) => {
+    const db = getLocalDB();
+    const idx = db.members.findIndex(m => m.id === memberId);
+    if (idx !== -1) {
+      db.members[idx].team_id = teamId;
+      saveLocalDB(db);
+      return db.members[idx];
+    }
+    throw new Error('Member not found');
+  },
+
+  // Remove Member from Team (Team Leader)
+  removeMemberFromTeam: async (memberId) => {
+    const db = getLocalDB();
+    const idx = db.members.findIndex(m => m.id === memberId);
+    if (idx !== -1) {
+      db.members[idx].team_id = null;
+      saveLocalDB(db);
+      return db.members[idx];
+    }
+    throw new Error('Member not found');
+  },
+
+  // Add Project (Team Leader)
+  addProject: async (project) => {
+    const db = getLocalDB();
+    const newProj = {
+      id: `project_${Date.now()}`,
+      team_id: project.team_id,
+      name: project.name,
+      description: project.description || '',
+      started_at: project.started_at || new Date().toISOString().split('T')[0],
+      expected_end_date: project.expected_end_date || null,
+      state: project.state || 'ongoing',
+      photo_url: project.photo_url || null,
+      member_ids: project.member_ids || [],
+    };
+    db.projects.push(newProj);
+    saveLocalDB(db);
+    return newProj;
+  },
+
+  // Delete Project (Team Leader)
+  deleteProject: async (projectId) => {
+    const db = getLocalDB();
+    db.projects = db.projects.filter(p => p.id !== projectId);
+    saveLocalDB(db);
+    return true;
+  },
+
+  // Assign Team Leader (Lab Manager)
+  assignTeamLeader: async (teamId, leaderId) => {
+    const db = getLocalDB();
+    const idx = db.teams.findIndex(t => t.id === teamId);
+    if (idx !== -1) {
+      db.teams[idx].team_leader_id = leaderId;
+      // elevate member role to team_leader if it was standard member
+      const memIdx = db.members.findIndex(m => m.id === leaderId);
+      if (memIdx !== -1 && db.members[memIdx].role === 'member') {
+        db.members[memIdx].role = 'team_leader';
+      }
+      saveLocalDB(db);
+      return db.teams[idx];
+    }
+    throw new Error('Team not found');
+  },
+
+  // Add Member to Lab System (Lab Manager)
+  addMemberToLab: async (member) => {
+    const db = getLocalDB();
+    const newMember = {
+      id: `member_${Date.now()}`,
+      email: member.email,
+      full_name: member.full_name,
+      role: member.role || 'member',
+      grade: member.grade || 'Dr.',
+      degree: member.degree || 'Ph.D',
+      specialty: member.specialty || '',
+      bio: member.bio || '',
+      joined_at: new Date().toISOString(),
+      team_id: member.team_id || null,
+      orcid: member.orcid || '',
+      google_scholar_url: member.google_scholar_url || '',
+      research_gate_url: member.research_gate_url || '',
+      h_index: 0,
+      citations_count: 0,
+      publications_count: 0,
+      research_topics: member.research_topics || [],
+    };
+    db.members.push(newMember);
+    saveLocalDB(db);
+    return newMember;
+  },
+
+  // Remove Member from Lab System (Lab Manager)
+  removeMemberFromLab: async (memberId) => {
+    const db = getLocalDB();
+    db.members = db.members.filter(m => m.id !== memberId);
+    // remove leader associations
+    db.teams = db.teams.map(t => t.team_leader_id === memberId ? { ...t, team_leader_id: null } : t);
+    // remove co-author associations
+    db.article_co_authors = db.article_co_authors.filter(ca => ca.member_id !== memberId);
+    saveLocalDB(db);
+    return true;
+  },
+
+  // Add News (Lab Manager)
+  addNews: async (newsItem) => {
+    const db = getLocalDB();
+    const newNews = {
+      id: `news_${Date.now()}`,
+      title: newsItem.title,
+      description: newsItem.description || '',
+      content: newsItem.content || '',
+      published_at: new Date().toISOString(),
+      photo_url: newsItem.photo_url || null,
+    };
+    db.news.push(newNews);
+    saveLocalDB(db);
+    return newNews;
+  },
+
+  // Delete News (Lab Manager)
+  deleteNews: async (newsId) => {
+    const db = getLocalDB();
+    db.news = db.news.filter(n => n.id !== newsId);
+    saveLocalDB(db);
+    return true;
   }
 };

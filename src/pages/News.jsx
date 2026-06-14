@@ -1,12 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
-import { dbService } from '../lib/dbService';
+import { useNews } from '../hooks/useNews';
+import { useTeams } from '../hooks/useTeams';
 import { Link } from 'react-router-dom';
-import Tag from '../components/ui/Tag';
 import PageHero from '../components/layout/PageHero';
-import styles from './News.module.css';
+import { Card, CardHeader, CardTitle, CardDescription } from '../components/ui/Card';
+import { Button } from '../components/ui/Button';
+import { Badge } from '../components/ui/Badge';
+import { Tabs, TabsList, TabsTrigger } from '../components/ui/Tabs';
+import { Search, Mail, Check, ExternalLink } from 'lucide-react';
 
-// Local translation dictionary for new premium UI elements
 const UI_TRANSLATIONS = {
   en: {
     featured: "Featured Story",
@@ -69,17 +72,13 @@ const UI_TRANSLATIONS = {
 
 export default function News() {
   const { t, lang } = useTranslation();
-  const [newsList, setNewsList] = useState([]);
-  const [members, setMembers] = useState([]);
+  const { news, loading } = useNews();
+  const { members } = useTeams();
+
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
-
-  useEffect(() => {
-    dbService.getNews(lang).then(data => setNewsList(data));
-    dbService.getMembers().then(data => setMembers(data));
-  }, [lang]);
 
   const ui = UI_TRANSLATIONS[lang] || UI_TRANSLATIONS.en;
 
@@ -108,248 +107,223 @@ export default function News() {
   }
 
   // Filter logic
-  const filteredNews = newsList.filter(item => {
+  const filteredNews = news.filter(item => {
     const matchesCategory = activeCategory === 'all' || item.category === activeCategory;
-    const matchesSearch = searchQuery.trim() === '' || 
-      item.title?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    const matchesSearch = searchQuery.trim() === '' ||
+      item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.content?.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
-  // Featured article: Most recent article overall (only display when category is 'all' and no active search)
   const isDefaultView = activeCategory === 'all' && searchQuery.trim() === '';
   const featuredItem = isDefaultView && filteredNews.length > 0 ? filteredNews[0] : null;
-  
-  // List of other items to display in grid
   const gridNews = featuredItem ? filteredNews.slice(1) : filteredNews;
 
-  // Resolve author name helper
   function getAuthorName(authorId) {
     const author = members.find(m => m.id === authorId);
     return author ? author.full_name : ui.editorial;
   }
 
   return (
-    <main id="main-content" className={styles.main}>
+    <main id="main-content">
       <PageHero title={t('newsPageTitle')} subtitle={t('newsSubtitle')}>
         <Link to="/">{t('navHome')}</Link>
-        <span aria-hidden="true"> / </span>
+        <span aria-hidden="true" className="mx-1.5 select-none text-muted-foreground/60"> / </span>
         <span>{t('navNews')}</span>
       </PageHero>
 
-      <section className={styles.section}>
-        <div className={styles.container}>
+      <section className="py-16 bg-background">
+        <div className="container-custom space-y-12">
+          
           {/* Featured Hero Article */}
           {featuredItem && (
-            <div className={styles.featuredWrapper}>
-              <h2 className={styles.sectionLabel}>{ui.featured}</h2>
-              <article className={`${styles.featuredCard} flex-row-reverse-rtl`}>
+            <div className="space-y-4">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-primary">{ui.featured}</h2>
+              <Card className="grid grid-cols-1 lg:grid-cols-2 gap-6 overflow-hidden border-border bg-card shadow-none flex-row-reverse-rtl">
                 {featuredItem.photo_url && (
-                  <div className={styles.featuredImageWrap}>
-                    <img src={featuredItem.photo_url} alt="" className={styles.featuredImage} />
-                    <div className={styles.featuredImageOverlay}></div>
+                  <div className="h-64 lg:h-auto overflow-hidden relative shrink-0">
+                    <img src={featuredItem.photo_url} alt="" className="w-full h-full object-cover" />
                   </div>
                 )}
-                <div className={styles.featuredContent}>
-                  <div className={styles.cardMeta}>
-                    <span className={styles.categoryTag}>{featuredItem.category === 'breakthrough' ? ui.breakthrough : ui.event}</span>
-                    <span className={styles.metaDivider}>•</span>
-                    <span className={styles.date}>{formatDate(featuredItem.published_at || featuredItem.created_at)}</span>
-                    <span className={styles.metaDivider}>•</span>
-                    <span className={styles.readTime}>
-                      {calculateReadingTime(featuredItem.content)} {ui.readTime}
-                    </span>
-                  </div>
-                  
-                  <h3 className={styles.featuredTitle}>
-                    <Link to={`/news/${featuredItem.id}`}>{featuredItem.title}</Link>
-                  </h3>
-                  
-                  <p className={styles.featuredExcerpt}>{featuredItem.description}</p>
-                  
-                  <div className={styles.featuredFooter}>
-                    <div className={styles.authorBadge}>
-                      <span className={styles.authorLabel}>{lang === 'ar' ? 'بواسطة' : (lang === 'fr' ? 'Par' : 'By')}</span>
-                      <span className={styles.authorName}>{getAuthorName(featuredItem.author_id)}</span>
+                <div className="p-6 md:p-8 flex flex-col justify-between space-y-6">
+                  <div>
+                    <div className="flex items-center gap-2 mb-3 text-xs text-muted-foreground flex-row-reverse-rtl">
+                      <Badge className="text-[10px] font-semibold">
+                        {featuredItem.category === 'breakthrough' ? ui.breakthrough : ui.event}
+                      </Badge>
+                      <span>{formatDate(featuredItem.published_at || featuredItem.created_at)}</span>
+                      <span>•</span>
+                      <span>{calculateReadingTime(featuredItem.content)} {ui.readTime}</span>
                     </div>
-                    <Link to={`/news/${featuredItem.id}`} className={styles.featuredReadMore}>
+
+                    <h3 className="text-xl md:text-2xl font-bold font-serif text-foreground hover:text-primary transition-colors leading-tight mb-4">
+                      <Link to={`/news/${featuredItem.id}`}>{featuredItem.title}</Link>
+                    </h3>
+
+                    <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+                      {featuredItem.description}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-between border-t border-border pt-4 flex-row-reverse-rtl">
+                    <div className="text-xs">
+                      <span className="text-muted-foreground">{lang === 'ar' ? 'بواسطة' : (lang === 'fr' ? 'Par' : 'By')}{" "}</span>
+                      <span className="font-semibold text-foreground">{getAuthorName(featuredItem.author_id)}</span>
+                    </div>
+                    <Link to={`/news/${featuredItem.id}`} className="text-xs font-semibold text-primary hover:underline">
                       {t('readMore')}
                     </Link>
                   </div>
                 </div>
-              </article>
+              </Card>
             </div>
           )}
 
-          {/* Dual Column Layout: Main Feed & Sidebar */}
-          <div className={styles.layoutGrid}>
-            {/* Main Content Area */}
-            <div className={styles.feedColumn}>
-              {/* Filter and Search Bar */}
-              <div className={styles.controlsBar}>
-                <div className={styles.categoryTabs}>
-                  <button 
-                    onClick={() => setActiveCategory('all')} 
-                    className={`${styles.tabBtn} ${activeCategory === 'all' ? styles.tabActive : ''}`}
-                  >
-                    {ui.all}
-                  </button>
-                  <button 
-                    onClick={() => setActiveCategory('breakthrough')} 
-                    className={`${styles.tabBtn} ${activeCategory === 'breakthrough' ? styles.tabActive : ''}`}
-                  >
-                    {ui.breakthrough}
-                  </button>
-                  <button 
-                    onClick={() => setActiveCategory('event')} 
-                    className={`${styles.tabBtn} ${activeCategory === 'event' ? styles.tabActive : ''}`}
-                  >
-                    {ui.event}
-                  </button>
-                </div>
+          {/* Grid list and Sidebar */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start flex-row-reverse-rtl">
+            {/* Feed Column */}
+            <div className="lg:col-span-2 space-y-6">
+              
+              {/* Category Filter Tabs and Search */}
+              <div className="flex flex-col md:flex-row gap-4 items-center justify-between border-b border-border pb-4">
+                <Tabs value={activeCategory} onValueChange={setActiveCategory} className="w-full md:w-auto">
+                  <TabsList className="bg-transparent p-0 h-auto gap-2">
+                    <TabsTrigger value="all" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-3 py-1.5 text-xs font-semibold uppercase tracking-wider">{ui.all}</TabsTrigger>
+                    <TabsTrigger value="breakthrough" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-3 py-1.5 text-xs font-semibold uppercase tracking-wider">{ui.breakthrough}</TabsTrigger>
+                    <TabsTrigger value="event" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-3 py-1.5 text-xs font-semibold uppercase tracking-wider">{ui.event}</TabsTrigger>
+                  </TabsList>
+                </Tabs>
 
-                <div className={styles.searchBox}>
-                  <svg className={styles.searchIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                  </svg>
-                  <input 
-                    type="text" 
-                    placeholder={ui.searchPlaceholder} 
+                <div className="relative w-full md:w-64">
+                  <span className="absolute inset-y-0 left-3 flex items-center text-muted-foreground">
+                    <Search className="h-4 w-4" />
+                  </span>
+                  <input
+                    type="text"
+                    placeholder={ui.searchPlaceholder}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className={styles.searchInput}
+                    className="border border-border bg-background pl-9 pr-8 py-1.5 text-xs w-full focus:ring-2 focus:ring-primary focus:outline-none"
                   />
                   {searchQuery && (
-                    <button onClick={() => setSearchQuery('')} className={styles.searchClearBtn} aria-label="Clear search">
+                    <button onClick={() => setSearchQuery('')} className="absolute inset-y-0 right-3 flex items-center text-muted-foreground hover:text-foreground text-xs" aria-label="Clear search">
                       ✕
                     </button>
                   )}
                 </div>
               </div>
 
-              {/* Feed Grid */}
-              {gridNews.length > 0 ? (
-                <div className={styles.grid}>
+              {/* Feed Grid of cards */}
+              {loading ? (
+                <div className="flex items-center justify-center py-20">
+                  <div className="h-6 w-6 animate-spin border-2 border-primary border-t-transparent" />
+                </div>
+              ) : gridNews.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-row-reverse-rtl">
                   {gridNews.map(item => (
-                    <article key={item.id} className={styles.card}>
+                    <Card key={item.id} className="flex flex-col h-full hover:border-primary/50 transition-colors duration-150 overflow-hidden shadow-none">
                       {item.photo_url && (
-                        <div className={styles.imageWrap}>
-                          <img src={item.photo_url} alt="" className={styles.image} loading="lazy" />
-                          <span className={styles.cardCategoryBadge}>
-                            {item.category === 'breakthrough' ? (lang === 'ar' ? 'إنجاز' : 'Breakthrough') : (lang === 'ar' ? 'فعالية' : 'Event')}
-                          </span>
+                        <div className="h-48 overflow-hidden relative shrink-0">
+                          <img src={item.photo_url} alt="" className="w-full h-full object-cover" loading="lazy" />
                         </div>
                       )}
-                      <div className={styles.content}>
-                        <div className={styles.cardMeta}>
-                          <span className={styles.date}>{formatDate(item.published_at || item.created_at)}</span>
-                          <span className={styles.metaDivider}>•</span>
-                          <span className={styles.readTime}>
-                            {calculateReadingTime(item.content)} {ui.readTime}
-                          </span>
+                      <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                          <div className="flex items-center gap-2 mb-2 text-[10px] text-muted-foreground flex-row-reverse-rtl">
+                            <Badge variant="secondary" className="text-[9px] font-semibold py-0.5">
+                              {item.category === 'breakthrough' ? (lang === 'ar' ? 'إنجاز' : 'Breakthrough') : (lang === 'ar' ? 'فعالية' : 'Event')}
+                            </Badge>
+                            <span>{formatDate(item.published_at || item.created_at)}</span>
+                            <span>•</span>
+                            <span>{calculateReadingTime(item.content)} {ui.readTime}</span>
+                          </div>
+
+                          <h4 className="font-serif font-bold text-sm text-foreground hover:text-primary transition-colors leading-snug line-clamp-2">
+                            <Link to={`/news/${item.id}`}>{item.title}</Link>
+                          </h4>
+
+                          <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3 mt-2">
+                            {item.description}
+                          </p>
                         </div>
 
-                        <h3 className={styles.title}>
-                          <Link to={`/news/${item.id}`}>{item.title}</Link>
-                        </h3>
-
-                        <p className={styles.excerpt}>{item.description}</p>
-
-                        <div className={styles.cardFooter}>
-                          <span className={styles.cardAuthor}>{getAuthorName(item.author_id)}</span>
-                          <Link to={`/news/${item.id}`} className={styles.readMoreBtn}>
+                        <div className="flex items-center justify-between border-t border-border pt-3 text-[10px] flex-row-reverse-rtl">
+                          <span className="text-muted-foreground font-medium">{getAuthorName(item.author_id)}</span>
+                          <Link to={`/news/${item.id}`} className="font-semibold text-primary hover:underline">
                             {t('readMore')}
                           </Link>
                         </div>
                       </div>
-                    </article>
+                    </Card>
                   ))}
                 </div>
               ) : (
-                <div className={styles.noResults}>
-                  <svg className={styles.noResultsIcon} width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    <line x1="8" y1="11" x2="14" y2="11"></line>
-                  </svg>
-                  <p>{ui.noNews}</p>
+                <div className="py-12 text-center text-muted-foreground text-sm border border-dashed border-border">
+                  {ui.noNews}
                 </div>
               )}
             </div>
 
             {/* Sidebar Column */}
-            <aside className={styles.sidebarColumn}>
-              {/* Newsletter Widget */}
-              <div className={styles.sidebarCard}>
-                <div className={styles.newsletterIconWrap}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
-                  </svg>
+            <aside className="space-y-6 w-full">
+              
+              {/* Newsletter card */}
+              <Card className="p-6 bg-secondary/20 shadow-none border-border">
+                <div className="h-10 w-10 bg-primary/10 text-primary flex items-center justify-center mb-4 rounded-none">
+                  <Mail className="h-5 w-5" />
                 </div>
-                <h4 className={styles.sidebarTitle}>{ui.newsletterTitle}</h4>
-                <p className={styles.sidebarDesc}>{ui.newsletterDesc}</p>
-                
+                <h4 className="font-serif font-bold text-sm text-foreground mb-1">{ui.newsletterTitle}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed mb-4">{ui.newsletterDesc}</p>
+
                 {subscribed ? (
-                  <div className={styles.subscriptionSuccess}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
+                  <div className="flex items-center gap-2 p-2.5 bg-green-50 text-green-700 text-xs font-semibold border border-green-200">
+                    <Check className="h-4 w-4 shrink-0" />
                     <span>{ui.thanks}</span>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubscribe} className={styles.newsletterForm}>
-                    <input 
-                      type="email" 
+                  <form onSubmit={handleSubscribe} className="space-y-2">
+                    <input
+                      type="email"
                       required
                       placeholder={ui.emailPlaceholder}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className={styles.newsletterInput}
+                      className="border border-border bg-background px-3 py-1.5 text-xs w-full focus:ring-2 focus:ring-primary focus:outline-none"
                     />
-                    <button type="submit" className={styles.newsletterBtn}>
+                    <Button type="submit" size="sm" className="w-full text-xs font-semibold">
                       {ui.subscribe}
-                    </button>
+                    </Button>
                   </form>
                 )}
-              </div>
+              </Card>
 
-              {/* Research Outreach Widget */}
-              <div className={styles.sidebarCard}>
-                <h4 className={styles.sidebarTitle}>{ui.outreachTitle}</h4>
-                <p className={styles.sidebarDesc}>{ui.outreachDesc}</p>
-                
-                <div className={styles.outreachLinks}>
-                  <a href="https://scholar.google.com" target="_blank" rel="noopener noreferrer" className={styles.outreachLink}>
-                    <span>Google Scholar</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                  </a>
-                  <a href="https://www.researchgate.net" target="_blank" rel="noopener noreferrer" className={styles.outreachLink}>
-                    <span>ResearchGate</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                  </a>
-                  <a href="https://dgrsdt.dz" target="_blank" rel="noopener noreferrer" className={styles.outreachLink}>
-                    <span>DGRSDT Portal</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                  </a>
+              {/* Outreach links */}
+              <Card className="p-6 shadow-none border-border">
+                <h4 className="font-serif font-bold text-sm text-foreground mb-1">{ui.outreachTitle}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed mb-4">{ui.outreachDesc}</p>
+                <div className="divide-y divide-border border-y border-border text-xs">
+                  {[
+                    { label: "Google Scholar", url: "https://scholar.google.com" },
+                    { label: "ResearchGate", url: "https://www.researchgate.net" },
+                    { label: "DGRSDT Portal", url: "https://dgrsdt.dz" }
+                  ].map((link, idx) => (
+                    <a
+                      key={idx}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="py-2.5 flex justify-between items-center text-muted-foreground hover:text-primary transition-colors font-medium flex-row-reverse-rtl"
+                    >
+                      <span>{link.label}</span>
+                      <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  ))}
                 </div>
-              </div>
+              </Card>
             </aside>
           </div>
+
         </div>
       </section>
     </main>

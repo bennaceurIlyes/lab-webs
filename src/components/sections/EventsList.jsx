@@ -1,6 +1,6 @@
 import { useTranslation } from '../../hooks/useTranslation';
-import Tag from '../ui/Tag';
-import styles from './EventsList.module.css';
+import { Badge } from '../ui/Badge';
+import { Link } from 'react-router-dom';
 
 export default function EventsList() {
   const { t, lang } = useTranslation();
@@ -33,34 +33,32 @@ export default function EventsList() {
   ];
 
   return (
-    <div className={styles.eventsColumn}>
-      <div className={`${styles.header} flex-row-reverse-rtl`}>
-        <h3 className={styles.heading}>{t('eventsTitle')}</h3>
-        <Link to="/news" className={styles.viewAll}>{t('eventsViewAll')}</Link>
+    <div className="border border-border p-6 bg-card w-full md:col-span-1">
+      <div className="flex items-center justify-between border-b border-border pb-4 mb-4 flex-row-reverse-rtl">
+        <h3 className="font-semibold text-foreground text-sm uppercase tracking-wider">{t('eventsTitle')}</h3>
+        <Link to="/news" className="text-xs font-semibold text-primary hover:underline">{t('eventsViewAll')}</Link>
       </div>
-      <ul className={styles.list}>
-        {events.map((ev, i) => (
-          <li key={ev.id} className={`${styles.item} flex-row-reverse-rtl`}>
-            <div className={styles.dateBlock}>
-              <span className={styles.day}>{ev.day}</span>
-              <span className={styles.month}>{ev.month}</span>
+      <ul className="space-y-6">
+        {events.map((ev) => (
+          <li key={ev.id} className="flex gap-4 items-start flex-row-reverse-rtl">
+            <div className="bg-secondary text-foreground flex flex-col items-center justify-center p-2.5 min-w-[56px] text-center">
+              <span className="text-lg font-bold font-serif leading-none">{ev.day}</span>
+              <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground mt-1">{ev.month}</span>
             </div>
-            <div className={styles.info}>
-              <span className={styles.eventTitle}>
+            <div className="flex-1 space-y-1">
+              <span className="text-xs font-bold text-foreground hover:text-primary transition-colors block">
                 {ev.title}
               </span>
-              <div className={styles.eventMeta}>
-                <Tag label={ev.type} />
-                <span className={styles.location}>{ev.location}</span>
+              <div className="flex items-center gap-2 mt-1">
+                <Badge variant="outline" className="text-[9px] px-1.5 py-0">
+                  {ev.type}
+                </Badge>
+                <span className="text-[10px] text-muted-foreground">{ev.location}</span>
               </div>
             </div>
-            {i < events.length - 1 && <div className={styles.divider} />}
           </li>
         ))}
       </ul>
     </div>
   );
 }
-
-// Simple link helper in case react-router Link is missing
-import { Link } from 'react-router-dom';

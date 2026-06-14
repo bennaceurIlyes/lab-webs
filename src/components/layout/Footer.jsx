@@ -2,58 +2,64 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useTranslation } from '../../hooks/useTranslation';
 import { Link } from 'react-router-dom';
 import LdreasLogo from '../ui/LdreasLogo';
-import styles from './Footer.module.css';
 
 export default function Footer() {
   const { lang, setLang } = useLanguage();
   const { t } = useTranslation();
 
   return (
-    <footer className={styles.footer} role="contentinfo">
-      <div className={`${styles.inner} flex-row-reverse-rtl`}>
-        <div className={styles.columnIdentity}>
-          <LdreasLogo variant="light" className={styles.footerLogo} />
-          <h3 className={styles.footerHeading}>{t('instituteAcronym')}</h3>
-          <p className={styles.footerLabName}>{t('instituteName')}</p>
-          <p className={styles.address}>{t('addressLabel')}</p>
-          <p className={styles.univ}>{t('universityLabel')}</p>
+    <footer className="bg-secondary/40 border-t border-border mt-auto py-12 text-sm" role="contentinfo">
+      <div className="container-custom grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 flex-row-reverse-rtl">
+        {/* Identity Section */}
+        <div className="flex flex-col space-y-3">
+          <Link to="/" className="flex items-center gap-2 text-primary font-bold">
+            <LdreasLogo variant="dark" className="h-10 w-auto text-primary" />
+          </Link>
+          <div>
+            <h3 className="font-semibold text-foreground">{t('instituteAcronym')}</h3>
+            <p className="text-muted-foreground text-xs mt-1 leading-relaxed">{t('instituteName')}</p>
+          </div>
+          <p className="text-muted-foreground text-xs leading-relaxed">{t('addressLabel')}</p>
+          <p className="text-muted-foreground text-xs leading-relaxed font-medium">{t('universityLabel')}</p>
         </div>
 
-        <div className={styles.columnLinks}>
-          <h4 className={styles.columnTitle}>{lang === 'ar' ? 'روابط سريعة' : (lang === 'fr' ? 'Liens Rapides' : 'Quick Links')}</h4>
-          <ul className={styles.linkList}>
-            <li><Link to="/" className={styles.footerLink}>{t('navHome')}</Link></li>
-            <li><Link to="/about" className={styles.footerLink}>{t('navAbout')}</Link></li>
-            <li><Link to="/news" className={styles.footerLink}>{t('navNews')}</Link></li>
-            <li><Link to="/articles" className={styles.footerLink}>{t('navPublications')}</Link></li>
-            <li><Link to="/teams" className={styles.footerLink}>{t('navTeam')}</Link></li>
+        {/* Quick Links */}
+        <div className="flex flex-col space-y-3">
+          <h4 className="font-semibold text-foreground">{lang === 'ar' ? 'روابط سريعة' : (lang === 'fr' ? 'Liens Rapides' : 'Quick Links')}</h4>
+          <ul className="space-y-2 text-xs">
+            <li><Link to="/" className="text-muted-foreground hover:text-primary transition-colors">{t('navHome')}</Link></li>
+            <li><Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">{t('navAbout')}</Link></li>
+            <li><Link to="/news" className="text-muted-foreground hover:text-primary transition-colors">{t('navNews')}</Link></li>
+            <li><Link to="/articles" className="text-muted-foreground hover:text-primary transition-colors">{t('navPublications')}</Link></li>
+            <li><Link to="/teams" className="text-muted-foreground hover:text-primary transition-colors">{t('navTeam')}</Link></li>
           </ul>
         </div>
 
-        <div className={styles.columnContact}>
-          <h4 className={styles.columnTitle}>{t('contactDetailsTitle') || 'Contact'}</h4>
-          <p className={styles.contactLine}>{t('phoneLabel')}</p>
-          <p className={styles.contactLine}>{t('faxLabel')}</p>
-          <p className={styles.contactLine}>
-            <a href="mailto:contact@ldreas.dz" className={styles.footerLink}>contact@ldreas.dz</a>
+        {/* Contact Info */}
+        <div className="flex flex-col space-y-3 text-xs">
+          <h4 className="font-semibold text-foreground text-sm">{t('contactDetailsTitle') || 'Contact'}</h4>
+          <p className="text-muted-foreground">{t('phoneLabel')}</p>
+          <p className="text-muted-foreground">{t('faxLabel')}</p>
+          <p className="text-muted-foreground">
+            <a href="mailto:contact@ldreas.dz" className="hover:text-primary transition-colors">contact@ldreas.dz</a>
           </p>
         </div>
       </div>
 
-      <div className={styles.bottomBar}>
-        <div className={styles.bottomBarInner}>
-          <div className={styles.legalInfo}>
+      <div className="border-t border-border pt-6 mt-6">
+        <div className="container-custom flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+          <div>
             <span>© {new Date().getFullYear()} {t('instituteAcronym')} — {t('universityLabel')}</span>
-            <span className={styles.separator}>|</span>
-            <a href="#legal" className={styles.footerLink}>{t('footerLegal')}</a>
+            <span className="mx-2 select-none text-border">|</span>
+            <a href="#legal" className="hover:text-primary transition-colors">{t('footerLegal')}</a>
           </div>
 
-          <div className={styles.langSwitcher}>
-            <button className={`${styles.langBtn} ${lang === 'ar' ? styles.activeLang : ''}`} onClick={() => setLang('ar')} aria-label="النسخة العربية">AR</button>
-            <span className={styles.langSeparator}>|</span>
-            <button className={`${styles.langBtn} ${lang === 'fr' ? styles.activeLang : ''}`} onClick={() => setLang('fr')} aria-label="Version Française">FR</button>
-            <span className={styles.langSeparator}>|</span>
-            <button className={`${styles.langBtn} ${lang === 'en' ? styles.activeLang : ''}`} onClick={() => setLang('en')} aria-label="English Version">EN</button>
+          <div className="flex items-center gap-1.5 font-semibold">
+            <button className={`hover:text-primary transition-colors px-1 ${lang === 'ar' ? 'text-primary' : ''}`} onClick={() => setLang('ar')} aria-label="AR">AR</button>
+            <span className="text-border select-none">|</span>
+            <button className={`hover:text-primary transition-colors px-1 ${lang === 'fr' ? 'text-primary' : ''}`} onClick={() => setLang('fr')} aria-label="FR">FR</button>
+            <span className="text-border select-none">|</span>
+            <button className={`hover:text-primary transition-colors px-1 ${lang === 'en' ? 'text-primary' : ''}`} onClick={() => setLang('en')} aria-label="EN">EN</button>
           </div>
         </div>
       </div>

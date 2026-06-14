@@ -1,38 +1,15 @@
-import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
-import { dbService } from '../../lib/dbService';
+import { useNews } from '../../hooks/useNews';
 import { Link } from 'react-router-dom';
-import Tag from '../ui/Tag';
-import styles from './NewsGrid.module.css';
+import { Badge } from '../ui/Badge';
+import { Card, CardHeader, CardTitle, CardDescription } from '../ui/Card';
 
 export default function NewsGrid() {
   const { t, lang } = useTranslation();
-  const [newsItems, setNewsItems] = useState([]);
-  const cardsRef = useRef([]);
+  const { news } = useNews();
 
-  useEffect(() => {
-    dbService.getNews(lang).then(data => {
-      // Top 3 news for homepage
-      setNewsItems(data.slice(0, 3));
-    });
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    cardsRef.current.forEach(el => {
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, [lang, newsItems.length]);
+  // Top 3 news for homepage
+  const newsItems = news.slice(0, 3);
 
   function formatDate(dateStr) {
     const d = new Date(dateStr);
@@ -44,41 +21,41 @@ export default function NewsGrid() {
   }
 
   return (
-    <div className={styles.newsColumn}>
-      {/* TODO: Replace with real LDREAS lab photo — see /docs/photo-brief.md */}
-      {newsItems.map((item, i) => (
-        <article
-          key={item.id}
-          className={`${styles.card} fade-in-up`}
-          ref={el => cardsRef.current[i] = el}
-          style={{ animationDelay: `${i * 100}ms` }}
-        >
+    <div className="flex flex-col gap-6 w-full md:col-span-2">
+      {newsItems.map((item) => (
+        <Card key={item.id} className="flex flex-col md:flex-row gap-4 overflow-hidden border-border bg-card hover:border-primary/50 transition-colors duration-150">
           {item.photo_url && (
-            <div className={styles.imageWrap} style={{ position: 'relative' }}>
+            <div className="md:w-1/3 h-48 md:h-auto relative shrink-0">
               <img
                 src={item.photo_url}
                 alt=""
-                className={styles.image}
+                className="w-full h-full object-cover"
                 loading="lazy"
               />
             </div>
           )}
-          <div className={styles.content}>
-            <div className={styles.meta}>
-              <Tag label={lang === 'ar' ? 'مستجدات' : (lang === 'fr' ? 'Actualité' : 'News')} />
-              <span className={styles.date}>{formatDate(item.published_at || item.created_at)}</span>
+          <div className="flex-1 p-6 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2 mb-2 flex-row-reverse-rtl">
+                <Badge variant="secondary" className="text-[10px]">
+                  {lang === 'ar' ? 'مستجدات' : (lang === 'fr' ? 'Actualité' : 'News')}
+                </Badge>
+                <span className="text-xs text-muted-foreground">{formatDate(item.published_at || item.created_at)}</span>
+              </div>
+              <h3 className="text-base font-bold font-serif text-foreground leading-snug mb-2">
+                {item.title}
+              </h3>
+              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3 mb-4">
+                {item.description}
+              </p>
             </div>
-            <h3 className={styles.title}>
-              {item.title}
-            </h3>
-            <p className={styles.excerpt}>
-              {item.description}
-            </p>
-            <Link to={`/news/${item.id}`} className={styles.readMore}>
-              {t('readMore')}
-            </Link>
+            <div>
+              <Link to={`/news/${item.id}`} className="text-xs font-semibold text-primary hover:underline">
+                {t('readMore')}
+              </Link>
+            </div>
           </div>
-        </article>
+        </Card>
       ))}
     </div>
   );

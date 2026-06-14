@@ -6,7 +6,6 @@ import SectionTitle from '../components/ui/SectionTitle';
 import NewsGrid from '../components/sections/NewsGrid';
 import EventsList from '../components/sections/EventsList';
 import LeadershipPreview from '../components/sections/LeadershipPreview';
-import styles from './Home.module.css';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -17,10 +16,10 @@ export default function Home() {
       <TeamsPreview />
       <PublicationsList />
 
-      <section className={styles.newsEventsSection} aria-label={t('newsTitle')}>
-        <div className={styles.container}>
+      <section className="py-16 bg-secondary/10 border-b border-border" aria-label={t('newsTitle')}>
+        <div className="container-custom">
           <SectionTitle title={t('newsTitle')} subtitle={t('newsSubtitle')} />
-          <div className={`${styles.newsEventsGrid} flex-row-reverse-rtl`}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 flex-row-reverse-rtl">
             <NewsGrid />
             <EventsList />
           </div>

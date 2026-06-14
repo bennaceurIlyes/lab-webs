@@ -74,7 +74,6 @@
 
 .highlightCard:hover {
   border-color: var(--color-primary);
-  transform: translateY(-2px);
 }
 
 .highlightNumber {
@@ -106,22 +105,21 @@
 
 .directorCard:hover {
   border-color: var(--color-primary);
-  box-shadow: var(--shadow-sm);
 }
 
-.directorPhotoWrap {
+.directorPhotoPlaceholder {
   width: 140px;
   height: 160px;
-  overflow: hidden;
+  background-color: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: var(--size-3xl);
+  font-weight: 700;
+  color: var(--color-slate-600);
   margin-bottom: var(--space-4);
-}
-
-.directorPhoto {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .directorName {
@@ -181,13 +179,14 @@
 
 .axisCard:hover {
   border-color: var(--color-primary);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-sm);
 }
 
-.axisIcon {
+.axisNumber {
+  font-family: var(--font-display);
   font-size: var(--size-2xl);
-  margin-bottom: var(--space-4);
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: var(--space-2);
 }
 
 .axisTitle {

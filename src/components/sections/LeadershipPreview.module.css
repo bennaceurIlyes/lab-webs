@@ -29,8 +29,6 @@
 
 .card:hover {
   border-color: var(--color-primary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
 }
 
 .photo {
@@ -39,6 +37,20 @@
   object-fit: cover;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
+}
+
+.photoPlaceholder {
+  width: 120px;
+  height: 140px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: var(--size-2xl);
+  font-weight: 700;
+  color: var(--color-slate-600);
 }
 
 .body {

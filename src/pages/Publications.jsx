@@ -112,14 +112,7 @@ export default function Publications() {
     return 0;
   });
 
-  // Copy DOI to clipboard helper
-  const copyToClipboard = (text, label) => {
-    navigator.clipboard.writeText(text).then(() => {
-      alert(`${label} ${lang === 'ar' ? 'تم نسخه بنجاح!' : 'copied successfully!'}`);
-    });
-  };
-
-  // Generate citation strings based on format
+  // Generate citation strings based on format (BibTeX, RIS, APA, Chicago)
   const getCitationText = (art, format) => {
     if (!art) return '';
     const year = art.published_at ? new Date(art.published_at).getFullYear() : '2026';
@@ -127,13 +120,17 @@ export default function Publications() {
     const authors = [primaryName, ...(art.coAuthors || [])].join(', ');
 
     if (format === 'bibtex') {
-      return `@article{ldreas_${art.id},\n  author = {${authors}},\n  title = {${art.name}},\n  journal = {${art.journal_name || 'Saharan Energy Science'}},\n  year = {${year}},\n  volume = {${art.volume || '1'}},\n  number = {${art.issue || '1'}},\n  pages = {${art.pages || '1-10'}},\n  doi = {${art.doi || ''}}\n}`;
+      return `@article{ldreas_${art.id},\n  author = {${authors}},\n  title = {${art.name}},\n  journal = {${art.journal_name || 'Saharan Energy Journal'}},\n  year = {${year}},\n  volume = {${art.volume || '1'}},\n  number = {${art.issue || '1'}},\n  pages = {${art.pages || '1-10'}},\n  doi = {${art.doi || ''}}\n}`;
+    }
+    if (format === 'ris') {
+      const authorBlock = [primaryName, ...(art.coAuthors || [])].map(a => `AU  - ${a}`).join('\n');
+      return `TY  - JOUR\n${authorBlock}\nTI  - ${art.name}\nJO  - ${art.journal_name || 'Saharan Energy Journal'}\nPY  - ${year}\nVL  - ${art.volume || '1'}\nIS  - ${art.issue || '1'}\nSP  - ${art.pages?.split('-')[0] || '1'}\nEP  - ${art.pages?.split('-')[1] || '10'}\nUR  - https://doi.org/${art.doi || ''}\nER  - `;
     }
     if (format === 'apa') {
-      return `${authors}. (${year}). ${art.name}. ${art.journal_name || 'Saharan Energy Science'}, ${art.volume || '1'}(${art.issue || '1'}), ${art.pages || '1-10'}. https://doi.org/${art.doi || ''}`;
+      return `${authors}. (${year}). ${art.name}. ${art.journal_name || 'Saharan Energy Journal'}, ${art.volume || '1'}(${art.issue || '1'}), ${art.pages || '1-10'}. https://doi.org/${art.doi || ''}`;
     }
     if (format === 'chicago') {
-      return `${authors}. "${art.name}." ${art.journal_name || 'Saharan Energy Science'} ${art.volume || '1'}, no. ${art.issue || '1'} (${year}): ${art.pages || '1-10'}.`;
+      return `${authors}. "${art.name}." ${art.journal_name || 'Saharan Energy Journal'} ${art.volume || '1'}, no. ${art.issue || '1'} (${year}): ${art.pages || '1-10'}.`;
     }
     return '';
   };
@@ -157,7 +154,6 @@ export default function Publications() {
       <section className={styles.section}>
         <div className={styles.container}>
           
-          {/* Main Grid: Sidebar + List Content */}
           <div className={styles.layoutGrid}>
             
             {/* Sidebar filter options */}
@@ -223,8 +219,7 @@ export default function Publications() {
                     setSelectedTypes([]);
                     setSelectedAreas([]);
                   }}
-                  className={styles.sortSelect}
-                  style={{ width: '100%', borderStyle: 'dashed', marginTop: '10px' }}
+                  className={styles.clearBtn}
                 >
                   {lang === 'ar' ? 'إعادة تعيين الفلاتر' : 'Clear Filters'}
                 </button>
@@ -240,7 +235,7 @@ export default function Publications() {
                   onClick={() => setShowMobileFilters(!showMobileFilters)} 
                   className={styles.mobileFilterBtn}
                 >
-                  ⚙️ {lang === 'ar' ? 'تصفية' : 'Filters'}
+                  Filters
                 </button>
 
                 <input
@@ -264,105 +259,91 @@ export default function Publications() {
                 </select>
               </div>
 
-              {/* Publications List */}
+              {/* Publications Reference List */}
               <div className={styles.list}>
                 {sortedArticles.length > 0 ? (
-                  sortedArticles.map((art) => (
-                    <article key={art.id} className={`${styles.row} flex-row-reverse-rtl`}>
-                      
-                      {/* Badge / Metadata Header */}
-                      <div className={styles.cardHeaderRow}>
-                        <span className={styles.typeBadge}>
-                          {art.article_type === 'journal' ? (lang === 'ar' ? 'مقال مجلة' : 'Journal Article') : (lang === 'ar' ? 'مقال مؤتمر' : 'Conference Proceeding')}
-                        </span>
-                        {art.published_at && (
-                          <span className={styles.dateBlock}>
-                            📅 {new Date(art.published_at).getFullYear()}
-                          </span>
-                        )}
-                      </div>
+                  sortedArticles.map((art) => {
+                    const primaryName = getAuthorName(art.primary_author_id) || 'LDREAS';
+                    const authorsList = [primaryName, ...(art.coAuthors || [])].join(', ');
+                    const year = art.published_at ? new Date(art.published_at).getFullYear() : '2026';
 
-                      {/* Title */}
-                      <h3 className={styles.articleTitle}>
-                        <Link to={`/articles/${art.id}`} className={styles.articleTitleLink}>
-                          {art.name}
-                        </Link>
-                      </h3>
-
-                      {/* Authors Line */}
-                      <p className={styles.authorLine}>
-                        {art.primary_author_id ? (
-                          <Link to={`/members/${art.primary_author_id}`} className={styles.authorLink}>
-                            {getAuthorName(art.primary_author_id)}
-                          </Link>
-                        ) : (
-                          'LDREAS'
-                        )}
-                        {art.coAuthors && art.coAuthors.length > 0 && `, ${art.coAuthors.join(', ')}`}
-                      </p>
-
-                      {/* Keywords list */}
-                      {art.keywords && art.keywords.length > 0 && (
-                        <div className={styles.keywordsList}>
-                          {art.keywords.map(kw => (
-                            <span key={kw} className={styles.keywordBadge}>{kw}</span>
-                          ))}
+                    return (
+                      <article key={art.id} className={styles.row}>
+                        {/* Reference Text */}
+                        <div className={styles.referenceText}>
+                          <span className={styles.authors}>{authorsList}</span> ({year}). 
+                          <Link to={`/articles/${art.id}`} className={styles.titleSerif}>
+                            {" "}{art.name}
+                          </Link>.{" "}
+                          <span className={styles.journalItalic}>{art.journal_name || 'Saharan Energy Journal'}</span>
+                          {art.volume && `, ${art.volume}`}
+                          {art.issue && `(${art.issue})`}
+                          {art.pages && `, ${art.pages}`}.
                         </div>
-                      )}
 
-                      {/* Metrics and identifiers */}
-                      <div className={styles.metricsRow}>
-                        {art.citations_count !== undefined && (
-                          <span className={styles.metricItem}>
-                            📊 {lang === 'ar' ? 'الاقتباسات:' : 'Citations:'} <span className={styles.metricValue}>{art.citations_count}</span>
-                          </span>
+                        {/* Short Excerpt */}
+                        {art.description && (
+                          <p className={styles.abstractPreview}>{art.description}</p>
                         )}
-                        {art.downloads_count !== undefined && (
-                          <span className={styles.metricItem}>
-                            📥 {lang === 'ar' ? 'التحميلات:' : 'Downloads:'} <span className={styles.metricValue}>{art.downloads_count}</span>
-                          </span>
-                        )}
-                        {art.doi && (
-                          <span 
-                            onClick={() => copyToClipboard(art.doi, 'DOI')} 
-                            className={styles.doiBadge}
-                            title="Click to copy DOI link"
+
+                        {/* Metadata Block */}
+                        <div className={styles.metadataBlock}>
+                          {art.keywords && art.keywords.length > 0 && (
+                            <span className={styles.keywordsBadgeRow}>
+                              {lang === 'ar' ? 'الكلمات المفتاحية: ' : 'Keywords: '}
+                              {art.keywords.join(', ')}
+                            </span>
+                          )}
+                          {art.doi && (
+                            <span className={styles.doiInfo}>
+                              DOI: <a href={`https://doi.org/${art.doi}`} target="_blank" rel="noopener noreferrer" className={styles.doiLink}>{art.doi}</a>
+                            </span>
+                          )}
+                          {art.citations_count !== undefined && (
+                            <span className={styles.citationsInfo}>
+                              Citations: {art.citations_count}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Action Slashes */}
+                        <div className={styles.actionsLine}>
+                          <Link to={`/articles/${art.id}`} className={styles.actionLink}>
+                            {lang === 'ar' ? 'التفاصيل' : 'Details'}
+                          </Link>
+                          
+                          {art.journal_link && (
+                            <>
+                              <span className={styles.separator}>/</span>
+                              <a href={art.journal_link} target="_blank" rel="noopener noreferrer" className={styles.actionLink}>
+                                {lang === 'ar' ? 'رابط المجلة' : 'Journal Link'}
+                              </a>
+                            </>
+                          )}
+                          
+                          {art.pdf_link && art.pdf_link !== '#' && (
+                            <>
+                              <span className={styles.separator}>/</span>
+                              <a href={art.pdf_link} target="_blank" rel="noopener noreferrer" className={styles.actionLink}>
+                                PDF
+                              </a>
+                            </>
+                          )}
+                          
+                          <span className={styles.separator}>/</span>
+                          <button 
+                            onClick={() => {
+                              setActiveCitation(art);
+                              setActiveTab('bibtex');
+                            }} 
+                            className={styles.citeLinkButton}
                           >
-                            🔗 DOI: {art.doi}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Actions row */}
-                      <div className={styles.actionsRow}>
-                        <Link to={`/articles/${art.id}`} className={styles.journalLink} style={{background: 'rgba(255,255,255,0.03)', color: '#fff', border: '1px solid var(--color-border)'}}>
-                          ℹ️ {lang === 'ar' ? 'التفاصيل' : 'Details'}
-                        </Link>
-                        
-                        {art.journal_link && (
-                          <a href={art.journal_link} target="_blank" rel="noopener noreferrer" className={styles.journalLink}>
-                            🌐 {lang === 'ar' ? 'رابط المجلة' : 'View Journal'}
-                          </a>
-                        )}
-                        
-                        {art.pdf_link && art.pdf_link !== '#' && (
-                          <a href={art.pdf_link} target="_blank" rel="noopener noreferrer" className={styles.pdfLink}>
-                            📥 PDF
-                          </a>
-                        )}
-
-                        <button 
-                          onClick={() => {
-                            setActiveCitation(art);
-                            setActiveTab('bibtex');
-                          }} 
-                          className={styles.citeLink}
-                        >
-                          📚 {lang === 'ar' ? 'تصدير الاقتباس' : 'Cite Paper'}
-                        </button>
-                      </div>
-                    </article>
-                  ))
+                            {lang === 'ar' ? 'تصدير الاقتباس' : 'Cite'}
+                          </button>
+                        </div>
+                      </article>
+                    );
+                  })
                 ) : (
                   <p className={styles.noPublications}>
                     {t('noPublications')}
@@ -387,7 +368,7 @@ export default function Publications() {
             </div>
             <div className={styles.modalBody}>
               <div className={styles.modalTabs}>
-                {['bibtex', 'apa', 'chicago'].map(tab => (
+                {['bibtex', 'ris', 'apa', 'chicago'].map(tab => (
                   <button 
                     key={tab} 
                     className={`${styles.modalTab} ${activeTab === tab ? styles.activeTab : ''}`}
@@ -413,4 +394,3 @@ export default function Publications() {
     </main>
   );
 }
-

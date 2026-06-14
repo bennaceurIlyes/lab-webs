@@ -1,35 +1,15 @@
-/* ============================================================
-   TeamDetail — Premium Research Team Page
-   Design: Academic prestige × modern card UX
-   ============================================================ */
-
-/* ── Keyframe animations ── */
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.section {
+  padding: var(--space-12) 0;
+  background-color: var(--color-bg-page);
+  border-top: 1px solid var(--color-border);
 }
 
-@keyframes fadeSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
 }
 
-@keyframes ripple {
-  0% { transform: scale(1); opacity: 0.6; }
-  100% { transform: scale(1.5); opacity: 0; }
-}
-
-@keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position:  200% center; }
-}
-
-/* ── Loading & Error ── */
 .loadingContainer {
   display: flex;
   justify-content: center;
@@ -38,609 +18,310 @@
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid var(--color-surface);
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--color-border);
   border-top-color: var(--color-primary);
-  border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 .errorCard {
-  padding: var(--space-16) 0;
   text-align: center;
+  padding: var(--space-16) 0;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
 }
 
 .errorCard h2 {
   font-family: var(--font-display);
   margin-bottom: var(--space-6);
-  color: var(--color-primary);
+  color: var(--color-text-dark);
 }
 
-/* ── Layout Shell ── */
-.container {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-}
-
-.section {
-  padding: var(--space-16) 0 var(--space-24);
-  background-color: var(--color-bg-main);
-}
-
-/* ── Team Tag in hero ── */
 .teamTag {
-  display: inline-block;
   font-family: var(--font-body);
   font-size: var(--size-xs);
   font-weight: 600;
-  color: var(--color-primary);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  border: 1px solid var(--color-primary);
-  padding: 2px var(--space-3);
-  margin-bottom: var(--space-3);
+  color: var(--color-primary);
+  letter-spacing: 0.05em;
+  display: inline-block;
+  margin-bottom: var(--space-2);
 }
 
-/* ── Intro description strip ── */
+/* ── Intro Block ── */
 .introCard {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
-  border-inline-start: 4px solid var(--color-primary);
   padding: var(--space-8);
-  margin-bottom: var(--space-12);
-  animation: fadeSlideUp 0.5s ease both;
-  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  margin-bottom: var(--space-10);
 }
 
 .descriptionText {
+  font-family: var(--font-body);
   font-size: var(--size-base);
+  line-height: 1.7;
   color: var(--color-slate-600);
-  line-height: 1.8;
   margin: 0;
 }
 
-/* ── Two-column layout ── */
+/* ── Layout Grid ── */
 .layoutGrid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: var(--space-12);
+  grid-template-columns: 1fr 340px;
+  gap: var(--space-10);
   align-items: start;
 }
 
 .directoryCol {
   display: flex;
   flex-direction: column;
-  gap: var(--space-12);
+  gap: var(--space-10);
 }
 
-/* ── Section heading ── */
+/* Headings */
 .sectionHeading {
   font-family: var(--font-display);
   font-size: var(--size-xl);
   font-weight: 700;
   color: var(--color-text-dark);
-  margin: 0 0 var(--space-8) 0;
+  margin: 0 0 var(--space-6) 0;
+  border-bottom: 1px solid var(--color-border);
   padding-bottom: var(--space-3);
-  border-bottom: 2px solid var(--color-border);
-  position: relative;
 }
 
-.sectionHeading::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  inset-inline-start: 0;
-  width: 48px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
-}
-
-/* ═══════════════════════════════════════════
-   LEADER CARD — Premium horizontal layout
-   ═══════════════════════════════════════════ */
+/* ── Leader Highlight Card ── */
 .leaderCardBlock {
-  animation: fadeSlideUp 0.5s ease 0.1s both;
+  display: flex;
+  flex-direction: column;
 }
 
 .leaderCard {
+  display: grid;
+  grid-template-columns: 180px 1fr;
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-8);
-  display: flex;
-  gap: var(--space-10);
-  position: relative;
-  overflow: hidden;
-  transition: var(--transition);
+  padding: var(--space-6);
+  gap: var(--space-8);
 }
 
-/* Gradient accent stripe at top */
-.leaderCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 50%, var(--color-primary) 100%);
-  background-size: 200% auto;
-  animation: shimmer 4s linear infinite;
-}
-
-/* Subtle background pattern */
-.leaderCard::after {
-  content: '';
-  position: absolute;
-  top: -80px;
-  right: -80px;
-  width: 280px;
-  height: 280px;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.leaderCard:hover {
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-md);
-}
-
-/* ── Leader Photo ── */
 .leaderPhotoWrap {
-  width: 170px;
-  height: 210px;
-  flex-shrink: 0;
-  position: relative;
-  border-radius: var(--radius-md);
+  width: 100%;
+  aspect-ratio: 4/5;
+  border: 1px solid var(--color-border);
   overflow: hidden;
-  /* Double border effect via box-shadow */
-  box-shadow:
-    0 0 0 3px var(--color-surface),
-    0 0 0 5px var(--color-primary),
-    0 8px 24px rgba(0, 0, 0, 0.4);
-  transition: box-shadow 0.35s ease, transform 0.35s ease;
-}
-
-.leaderCard:hover .leaderPhotoWrap {
-  box-shadow:
-    0 0 0 3px var(--color-surface),
-    0 0 0 5px var(--color-secondary),
-    0 12px 32px rgba(0, 0, 0, 0.5);
-  transform: translateY(-4px);
+  background: var(--color-surface);
 }
 
 .leaderPhoto {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.leaderCard:hover .leaderPhoto {
-  transform: scale(1.07);
-}
-
-/* "TEAM LEADER" ribbon overlay on photo */
-.leaderPhotoWrap::after {
-  content: 'TEAM LEADER';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(0deg, rgba(7, 10, 15, 0.9) 0%, transparent 100%);
-  color: #fff;
+.leaderPhotoPlaceholder {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-body);
-  font-size: 9px;
+  font-size: var(--size-3xl);
   font-weight: 700;
-  letter-spacing: 0.12em;
-  text-align: center;
-  padding: var(--space-6) 0 var(--space-3);
-  pointer-events: none;
+  color: var(--color-slate-600);
 }
 
-/* ── Leader Info ── */
 .leaderInfo {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  flex-grow: 1;
-  padding-top: var(--space-4); /* compensate for top gradient stripe */
 }
 
 .gradeBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
   font-family: var(--font-body);
   font-size: var(--size-xs);
   font-weight: 600;
-  color: var(--color-bg-main);
-  background: var(--color-primary);
+  color: var(--color-primary);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 3px var(--space-4);
-  align-self: flex-start;
-  border-radius: 4px;
-  margin-bottom: var(--space-2);
+}
+
+.leaderName {
+  font-family: var(--font-display);
+  font-size: var(--size-xl);
+  font-weight: 700;
+  color: var(--color-text-dark);
+  margin: 0;
 }
 
 .memberNameLink {
   text-decoration: none;
 }
 
-.leaderName {
-  font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2vw, var(--size-2xl));
-  font-weight: 700;
-  color: var(--color-text-dark);
-  margin: 0 0 var(--space-1) 0;
-  line-height: 1.25;
-  transition: color 0.2s ease;
-}
-
-.memberNameLink:hover .leaderName {
+.memberNameLink:hover h3,
+.memberNameLink:hover h4 {
   color: var(--color-primary);
+  text-decoration: underline;
 }
 
-/* Specialty & degree rows */
-.specialty,
-.degree {
+.specialty, .degree {
+  font-family: var(--font-body);
   font-size: var(--size-sm);
   color: var(--color-slate-600);
   margin: 0;
-  line-height: 1.5;
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-2);
-}
-
-.specialty::before {
-  content: '◆';
-  font-size: 7px;
-  color: var(--color-secondary);
-  flex-shrink: 0;
-}
-
-.degree::before {
-  content: '◆';
-  font-size: 7px;
-  color: var(--color-primary);
-  opacity: 0.4;
-  flex-shrink: 0;
-}
-
-.specialty strong,
-.degree strong {
-  color: var(--color-text-dark);
-  font-weight: 600;
 }
 
 .bioExcerpt {
-  font-size: var(--size-sm);
-  color: var(--color-slate-600);
-  line-height: 1.7;
-  margin: var(--space-3) 0;
-  padding: var(--space-3) var(--space-4);
-  background: var(--color-surface);
-  border-inline-start: 3px solid var(--color-primary);
-  font-style: italic;
-  border-radius: 0 4px 4px 0;
-}
-
-.emailLink {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
   font-family: var(--font-body);
   font-size: var(--size-sm);
-  font-weight: 600;
-  color: var(--color-bg-main);
-  background: var(--color-primary);
+  line-height: 1.6;
+  color: var(--color-slate-600);
+  margin: var(--space-2) 0;
+}
+
+.leaderActions {
+  margin-top: var(--space-2);
+}
+
+.emailBtn {
+  font-family: var(--font-body);
+  font-size: var(--size-xs);
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 4px 12px;
   text-decoration: none;
-  margin-top: auto;
-  padding: var(--space-2) var(--space-5);
-  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-block;
   transition: var(--transition);
 }
 
-.emailLink::before {
-  content: '✉';
-  font-size: var(--size-sm);
+.emailBtn:hover {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  border-color: var(--color-primary);
 }
 
-.emailLink:hover {
-  background: var(--color-secondary);
-  transform: translateX(3px);
-  text-decoration: none;
-}
-
-
-/* ═══════════════════════════════════════════
-   MEMBER CARDS — Profile card grid
-   ═══════════════════════════════════════════ */
+/* ── Regular Members Grid ── */
 .membersGridBlock {
-  animation: fadeSlideUp 0.5s ease 0.2s both;
+  display: flex;
+  flex-direction: column;
 }
 
 .membersGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-6);
 }
 
 .memberCard {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6) var(--space-4) var(--space-5);
+  padding: var(--space-5);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
   position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  animation: fadeSlideUp 0.5s ease both;
-  transition: var(--transition);
-  box-shadow: var(--shadow-sm);
 }
 
-/* Hover glow gradient top bar */
-.memberCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-}
-
-/* Subtle background gradient reveal on hover */
-.memberCard::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(160deg, rgba(6, 182, 212, 0.05) 0%, transparent 60%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.memberCard:hover {
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-6px);
-}
-
-.memberCard:hover::before {
-  transform: scaleX(1);
-}
-
-.memberCard:hover::after {
-  opacity: 1;
-}
-
-/* ── Member Photo ── */
 .memberPhotoWrap {
-  position: relative;
-  width: 110px;
-  height: 110px;
-  flex-shrink: 0;
-  margin-bottom: var(--space-5);
+  width: 100px;
+  height: 120px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  margin-bottom: var(--space-4);
 }
 
-/* Outer decorative ring */
-.memberPhotoWrap::before {
-  content: '';
-  position: absolute;
-  inset: -5px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
-  opacity: 0.15;
-  transition: opacity 0.3s ease, inset 0.3s ease;
-}
-
-/* Inner ring */
-.memberPhotoWrap::after {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  border: 2px solid var(--color-surface);
-  transition: border-color 0.3s ease;
-}
-
-.memberCard:hover .memberPhotoWrap::before {
-  opacity: 0.35;
-  inset: -6px;
-}
-
-.memberCard:hover .memberPhotoWrap::after {
-  border-color: rgba(0, 128, 128, 0.5);
-}
-
-/* Photo circle */
 .memberPhoto {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
   object-fit: cover;
-  object-position: top center;
-  display: block;
-  position: relative;
-  z-index: 1;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.memberCard:hover .memberPhoto {
-  transform: scale(1.08);
-}
-
-/* ── Online/active indicator dot ── */
-.memberPhotoWrap .memberStatusDot {
-  position: absolute;
-  bottom: 6px;
-  right: 6px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--color-success);
-  border: 2px solid var(--color-surface);
-  z-index: 2;
-}
-
-/* Photo placeholder for members without photo */
 .memberPhotoPlaceholder {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(6, 182, 212, 0.08) 100%);
-  position: relative;
-  z-index: 1;
-}
-
-.memberPhotoPlaceholder::after {
-  content: '👤';
-  position: absolute;
-  inset: 0;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
-  opacity: 0.4;
-}
-
-/* ── Grade badge ── */
-.memberGrade {
-  display: inline-flex;
-  align-items: center;
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: var(--size-xl);
   font-weight: 700;
-  color: var(--color-bg-main);
-  background: var(--color-primary);
+  color: var(--color-slate-600);
+}
+
+.memberGrade {
+  font-family: var(--font-body);
+  font-size: var(--size-xs);
+  color: var(--color-slate-400);
   text-transform: uppercase;
-  letter-spacing: 0.07em;
-  padding: 2px var(--space-3);
-  border-radius: var(--radius-full);
-  margin-bottom: var(--space-3);
-  position: relative;
-  z-index: 1;
-  transition: background 0.2s ease;
+  font-weight: 600;
 }
 
-.memberCard:hover .memberGrade {
-  background: var(--color-secondary);
-}
-
-/* ── Member name ── */
 .memberName {
   font-family: var(--font-display);
-  font-size: var(--size-sm);
+  font-size: var(--size-lg);
   font-weight: 700;
   color: var(--color-text-dark);
-  margin: 0 0 var(--space-2) 0;
-  line-height: 1.3;
-  transition: color 0.2s ease;
-  position: relative;
-  z-index: 1;
+  margin: 2px 0 var(--space-1) 0;
 }
 
-.memberNameLink:hover .memberName {
-  color: var(--color-primary);
-}
-
-/* ── Specialty ── */
 .memberSpecialty {
-  font-size: var(--size-xs);
+  font-family: var(--font-body);
+  font-size: var(--size-sm);
   color: var(--color-slate-600);
   margin: 0 0 var(--space-4) 0;
+  line-height: 1.4;
   flex-grow: 1;
-  line-height: 1.45;
-  position: relative;
-  z-index: 1;
 }
 
-/* ── Email CTA ── */
-.memberEmail {
-  display: inline-flex;
+.memberActions {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 4px;
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--color-primary);
-  text-decoration: none;
-  border: 1px solid var(--color-border);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-full);
-  word-break: break-all;
-  transition: var(--transition);
-  position: relative;
-  z-index: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
+  gap: var(--space-2);
+  margin-top: auto;
 }
 
-.memberEmail::before {
-  content: '✉';
-  font-size: 10px;
-  flex-shrink: 0;
-}
-
-.memberEmail:hover {
-  border-color: var(--color-primary);
-  background: var(--color-primary);
-  color: var(--color-bg-main);
-  text-decoration: none;
-}
-
-/* "View Profile" hover overlay — slides up from bottom */
-.memberCard .viewProfileOverlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(0deg, rgba(14, 20, 32, 0.95), rgba(14, 20, 32, 0.8));
-  color: var(--color-text-dark);
+.memberEmailBtn, .memberProfileLink {
   font-family: var(--font-body);
   font-size: var(--size-xs);
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-align: center;
-  padding: var(--space-3);
-  transform: translateY(100%);
-  transition: var(--transition);
-  z-index: 3;
+  color: var(--color-primary);
+  text-decoration: none;
 }
 
-.memberCard:hover .viewProfileOverlay {
-  transform: translateY(0);
+.memberEmailBtn:hover, .memberProfileLink:hover {
+  text-decoration: underline;
+}
+
+.actionDivider {
+  color: var(--color-border);
+}
+
+.viewProfileOverlay {
+  display: none; /* Removed generic SaaS hover effect overlay */
 }
 
 .noMembers {
+  padding: var(--space-6);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   color: var(--color-slate-600);
-  font-size: var(--size-sm);
+  text-align: center;
 }
 
-/* ═══════════════════════════════════════════
-   PROJECTS COLUMN
-   ═══════════════════════════════════════════ */
+/* ── Right Column: Projects ── */
 .projectsCol {
-  position: sticky;
-  top: calc(80px + 40px + var(--space-6));
-  animation: fadeSlideUp 0.5s ease 0.3s both;
+  display: flex;
+  flex-direction: column;
 }
 
 .projectsList {
@@ -652,32 +333,22 @@
 .projectCard {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
-  border-inline-start: 3px solid var(--color-primary);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  padding: var(--space-6);
-  transition: var(--transition);
-}
-
-.projectCard:hover {
-  border-color: var(--color-primary);
-  border-inline-start-color: var(--color-secondary);
-  box-shadow: var(--shadow-md);
-  transform: translateX(3px);
+  padding: var(--space-5);
 }
 
 .projectHeader {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  margin-bottom: var(--space-2);
   flex-wrap: wrap;
   gap: var(--space-2);
-  margin-bottom: var(--space-4);
 }
 
 .timeline {
+  font-family: var(--font-body);
   font-size: var(--size-xs);
-  color: var(--color-slate-600);
-  font-weight: 500;
+  color: var(--color-slate-400);
 }
 
 .projectName {
@@ -686,114 +357,66 @@
   font-weight: 700;
   color: var(--color-text-dark);
   margin: 0 0 var(--space-2) 0;
-  line-height: 1.4;
 }
 
 .projectDesc {
+  font-family: var(--font-body);
   font-size: var(--size-sm);
+  line-height: 1.5;
   color: var(--color-slate-600);
-  line-height: 1.6;
   margin: 0;
 }
 
 .noProjectsCard {
-  background-color: var(--color-bg-card);
-  border: 1px dashed var(--color-border);
-  border-radius: var(--radius-sm);
-  padding: var(--space-8);
-  text-align: center;
+  padding: var(--space-6);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   color: var(--color-slate-600);
-  font-size: var(--size-sm);
 }
 
-/* ── Footer actions ── */
+/* ── Back button actions ── */
 .footerActions {
-  margin-top: var(--space-12);
+  margin-top: var(--space-10);
   border-top: 1px solid var(--color-border);
   padding-top: var(--space-6);
 }
 
 .backBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--size-sm);
+  font-weight: 700;
   color: var(--color-text-dark);
   background: var(--color-surface);
-  text-decoration: none;
-  font-size: var(--size-sm);
-  font-weight: 600;
   border: 1px solid var(--color-border);
   padding: var(--space-2) var(--space-6);
-  border-radius: var(--radius-sm);
+  cursor: pointer;
   transition: var(--transition);
+  text-decoration: none;
+  display: inline-block;
 }
 
 .backBtn:hover {
-  border-color: var(--color-primary);
   background: var(--color-primary);
-  color: var(--color-bg-main);
+  color: #FFFFFF;
+  border-color: var(--color-primary);
 }
 
-/* ══════════════════════════════
-   RESPONSIVE
-   ══════════════════════════════ */
-@media (max-width: 1024px) {
-  .projectsCol {
-    position: static;
-  }
-}
-
-@media (max-width: 992px) {
+@media (max-width: 900px) {
   .layoutGrid {
     grid-template-columns: 1fr;
-    gap: var(--space-12);
   }
-}
 
-@media (max-width: 768px) {
   .leaderCard {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: var(--space-8);
-    padding: var(--space-8) var(--space-6);
+    grid-template-columns: 1fr;
   }
 
   .leaderPhotoWrap {
-    width: 150px;
-    height: 185px;
-  }
-
-  .gradeBadge {
-    align-self: center;
-  }
-
-  .emailLink {
-    align-self: center;
-  }
-
-  .bioExcerpt {
-    text-align: start;
-  }
-
-  .specialty,
-  .degree {
-    justify-content: center;
-  }
-
-  .membersGrid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: var(--space-4);
-  }
-
-  .memberPhotoWrap {
-    width: 90px;
-    height: 90px;
+    width: 140px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .membersGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 }

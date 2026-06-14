@@ -81,12 +81,8 @@ export default function About() {
 
             {/* Director Message Card */}
             <div className={styles.directorCard}>
-              <div className={styles.directorPhotoWrap}>
-                <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80" 
-                  alt="Prof. Abdelkader NOURI" 
-                  className={styles.directorPhoto}
-                />
+              <div className={styles.directorPhotoPlaceholder}>
+                <span>AN</span>
               </div>
               <h3 className={styles.directorName}>{t('directorLabel')}</h3>
               <p className={styles.directorTitleText}>{t('directorTitle')}</p>
@@ -100,10 +96,8 @@ export default function About() {
             <div className={`${styles.axesGrid} flex-row-reverse-rtl`}>
               {axes.map((ax, idx) => (
                 <div key={idx} className={styles.axisCard}>
-                  <div className={styles.axisIcon}>
-                    {idx === 0 && '☀️'}
-                    {idx === 1 && '🔥'}
-                    {idx === 2 && '💨'}
+                  <div className={styles.axisNumber}>
+                    {String(idx + 1).padStart(2, '0')}
                   </div>
                   <h4 className={styles.axisTitle}>{ax.title}</h4>
                   <p className={styles.axisDesc}>{ax.desc}</p>

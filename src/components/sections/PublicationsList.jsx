@@ -60,7 +60,7 @@ export default function PublicationsList() {
                 <span className={styles.year}>{new Date(pub.published_at).getFullYear()}</span>
                 {pub.pdf_link && pub.pdf_link !== '#' && (
                   <a href={pub.pdf_link} className={styles.doi} target="_blank" rel="noopener noreferrer">
-                    PDF 💾
+                    PDF
                   </a>
                 )}
               </div>

@@ -65,6 +65,13 @@ export default function TeamDetail() {
     }
   }
 
+  function getInitials(fullName) {
+    if (!fullName) return '';
+    const cleanName = fullName.replace(/^(Prof\.|Dr\.|Mr\.|Mrs\.)\s+/i, '');
+    const parts = cleanName.trim().split(/\s+/);
+    return ((parts[0] ? parts[0][0] : '') + (parts[1] ? parts[1][0] : '')).toUpperCase();
+  }
+
   if (loading) {
     return (
       <main className={styles.loadingContainer}>
@@ -120,9 +127,13 @@ export default function TeamDetail() {
                     {lang === 'ar' ? 'رئيس فرقة البحث' : (lang === 'fr' ? 'Chef de l\'équipe' : 'Team Leader')}
                   </h2>
                   <div className={`${styles.leaderCard} flex-row-reverse-rtl`}>
-                    {teamLeader.photo_url && (
+                    {teamLeader.photo_url ? (
                       <div className={styles.leaderPhotoWrap}>
                         <img src={teamLeader.photo_url} alt={teamLeader.full_name} className={styles.leaderPhoto} />
+                      </div>
+                    ) : (
+                      <div className={styles.leaderPhotoPlaceholder} aria-hidden="true">
+                        <span>{getInitials(teamLeader.full_name)}</span>
                       </div>
                     )}
                     <div className={styles.leaderInfo}>
@@ -133,7 +144,11 @@ export default function TeamDetail() {
                       <p className={styles.specialty}><strong>{t('specialtyLabel')}:</strong> {teamLeader.specialty}</p>
                       <p className={styles.degree}><strong>{t('degreeLabel')}:</strong> {teamLeader.degree}</p>
                       {teamLeader.bio && <p className={styles.bioExcerpt}>{teamLeader.bio}</p>}
-                  <a href={`mailto:${teamLeader.email}`} className={styles.emailLink}>{teamLeader.email}</a>
+                      <div className={styles.leaderActions}>
+                        <a href={`mailto:${teamLeader.email}`} className={styles.emailBtn}>
+                          {lang === 'ar' ? 'اتصال بالبريد' : 'Contact Email'}
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -146,26 +161,32 @@ export default function TeamDetail() {
                 </h2>
                 {regularMembers.length > 0 ? (
                   <div className={styles.membersGrid}>
-                    {regularMembers.map((m, index) => (
-                      <div
-                        key={m.id}
-                        className={styles.memberCard}
-                        style={{ animationDelay: `${0.25 + index * 0.07}s` }}
-                      >
+                    {regularMembers.map((m) => (
+                      <div key={m.id} className={styles.memberCard}>
                         <div className={styles.memberPhotoWrap}>
-                          {m.photo_url
-                            ? <img src={m.photo_url} alt={m.full_name} className={styles.memberPhoto} />
-                            : <div className={styles.memberPhotoPlaceholder} aria-hidden="true" />}
+                          {m.photo_url ? (
+                            <img src={m.photo_url} alt={m.full_name} className={styles.memberPhoto} />
+                          ) : (
+                            <div className={styles.memberPhotoPlaceholder} aria-hidden="true">
+                              <span>{getInitials(m.full_name)}</span>
+                            </div>
+                          )}
                         </div>
                         <span className={styles.memberGrade}>{m.grade}</span>
                         <Link to={`/members/${m.id}`} className={styles.memberNameLink}>
                           <h4 className={styles.memberName}>{m.full_name}</h4>
                         </Link>
                         <p className={styles.memberSpecialty}>{m.specialty}</p>
-                        <a href={`mailto:${m.email}`} className={styles.memberEmail}>{m.email}</a>
-                        <Link to={`/members/${m.id}`} className={styles.viewProfileOverlay}>
-                          View Profile →
-                        </Link>
+                        
+                        <div className={styles.memberActions}>
+                          <a href={`mailto:${m.email}`} className={styles.memberEmailBtn}>
+                            {lang === 'ar' ? 'اتصال' : 'Email'}
+                          </a>
+                          <span className={styles.actionDivider}>/</span>
+                          <Link to={`/members/${m.id}`} className={styles.memberProfileLink}>
+                            {lang === 'ar' ? 'الملف الشخصي' : 'Profile'}
+                          </Link>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -191,7 +212,7 @@ export default function TeamDetail() {
                       <div className={styles.projectHeader}>
                         <Tag label={getProjectStateLabel(p.state)} type={getProjectStateColor(p.state)} />
                         <span className={styles.timeline}>
-                          📅 {formatDate(p.started_at)} - {formatDate(p.expected_end_date)}
+                          {formatDate(p.started_at)} - {formatDate(p.expected_end_date)}
                         </span>
                       </div>
                       

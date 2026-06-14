@@ -171,7 +171,7 @@ export default function NewsDetail() {
                     <div className={styles.authorHeader}>
                       <span className={styles.authorLabel}>{lang === 'ar' ? 'كاتب المقال' : (lang === 'fr' ? 'Rédigé par' : 'Written by')}</span>
                       <h4 className={styles.authorName}>
-                        <Link to={`/team/${author.id}`}>{author.full_name}</Link>
+                        <Link to={`/members/${author.id}`}>{author.full_name}</Link>
                       </h4>
                       <span className={styles.authorGrade}>{author.grade} • {author.specialty}</span>
                     </div>
@@ -247,7 +247,7 @@ export default function NewsDetail() {
                           {art.article_type === 'journal' ? (lang === 'ar' ? 'مقال دوري' : 'Journal') : (lang === 'ar' ? 'مؤتمر' : 'Conference')}
                         </span>
                         <h5 className={styles.relatedName}>
-                          <Link to={`/publications/${art.id}`}>{art.name}</Link>
+                          <Link to={`/articles/${art.id}`}>{art.name}</Link>
                         </h5>
                         {art.doi && <span className={styles.relatedDoi}>DOI: {art.doi}</span>}
                       </div>

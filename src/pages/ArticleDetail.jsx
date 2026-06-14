@@ -100,7 +100,7 @@ export default function ArticleDetail() {
                   style={{cursor: 'pointer', marginLeft: 'auto', textDecoration: 'underline', color: 'var(--color-primary)'}}
                   title="Click to copy DOI"
                 >
-                  DOI: {article.doi} ⚙️
+                  DOI: {article.doi}
                 </span>
               )}
             </div>
@@ -168,8 +168,8 @@ export default function ArticleDetail() {
                     </Link>
                     <span className={styles.authorMeta}>{primaryAuthor.grade} — {primaryAuthor.specialty}</span>
                     {primaryAuthor.orcid && (
-                      <a href={`https://orcid.org/${primaryAuthor.orcid}`} target="_blank" rel="noopener noreferrer" style={{fontSize: '12px', color: '#A3E635', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px'}}>
-                        💚 ORCID: {primaryAuthor.orcid}
+                      <a href={`https://orcid.org/${primaryAuthor.orcid}`} target="_blank" rel="noopener noreferrer" style={{fontSize: '12px', color: 'var(--color-primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px'}}>
+                        ORCID: {primaryAuthor.orcid}
                       </a>
                     )}
                   </div>
@@ -182,8 +182,8 @@ export default function ArticleDetail() {
                     </Link>
                     <span className={styles.authorMeta}>{co.grade} — {co.specialty}</span>
                     {co.orcid && (
-                      <a href={`https://orcid.org/${co.orcid}`} target="_blank" rel="noopener noreferrer" style={{fontSize: '12px', color: '#A3E635', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px'}}>
-                        💚 ORCID: {co.orcid}
+                      <a href={`https://orcid.org/${co.orcid}`} target="_blank" rel="noopener noreferrer" style={{fontSize: '12px', color: 'var(--color-primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px'}}>
+                        ORCID: {co.orcid}
                       </a>
                     )}
                   </div>

@@ -54,6 +54,12 @@ export default function MemberProfile() {
     });
   }
 
+  function getInitials(fullName) {
+    const cleanName = fullName.replace(/^(Prof\.|Dr\.|Mr\.|Mrs\.)\s+/i, '');
+    const parts = cleanName.trim().split(/\s+/);
+    return ((parts[0] ? parts[0][0] : '') + (parts[1] ? parts[1][0] : '')).toUpperCase();
+  }
+
   if (loading) {
     return (
       <main className={styles.loadingContainer}>
@@ -96,9 +102,13 @@ export default function MemberProfile() {
             {/* Left Card: Member Info */}
             <div className={styles.infoCol}>
               <div className={styles.profileCard}>
-                {member.photo_url && (
+                {member.photo_url ? (
                   <div className={styles.photoWrap}>
                     <img src={member.photo_url} alt={member.full_name} className={styles.photo} />
+                  </div>
+                ) : (
+                  <div className={styles.photoPlaceholder} aria-hidden="true">
+                    <span>{getInitials(member.full_name)}</span>
                   </div>
                 )}
                 
@@ -130,9 +140,9 @@ export default function MemberProfile() {
                   {member.research_topics && member.research_topics.length > 0 && (
                     <div className={styles.detailRow} style={{marginTop: '10px'}}>
                       <span className={styles.label}>{lang === 'ar' ? 'الاهتمامات البحثية:' : 'Research Areas:'}</span>
-                      <div style={{display: 'flex', flexWrap: 'wrap', gap: '4px', marginTop: '4px'}}>
+                      <div className={styles.topicContainer}>
                         {member.research_topics.map(topic => (
-                          <span key={topic} style={{fontSize: '11px', color: 'var(--color-primary)', background: 'rgba(6, 182, 212, 0.1)', padding: '2px 8px', borderRadius: '4px', fontWeight: '600'}}>
+                          <span key={topic} className={styles.topicBadge}>
                             {topic}
                           </span>
                         ))}
@@ -143,21 +153,21 @@ export default function MemberProfile() {
                   {/* Academic External Links */}
                   {(member.orcid || member.google_scholar_url || member.research_gate_url) && (
                     <div className={styles.detailRow} style={{marginTop: '10px'}}>
-                      <span className={styles.label}>{lang === 'ar' ? 'معرفات أكاديمية:' : 'Digital Identifiers:'}</span>
-                      <div style={{display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '6px'}}>
+                      <span className={styles.label}>{lang === 'ar' ? 'معرفات أكاديمية:' : 'Identifiers:'}</span>
+                      <div className={styles.linksContainer}>
                         {member.orcid && (
-                          <a href={`https://orcid.org/${member.orcid}`} target="_blank" rel="noopener noreferrer" style={{fontSize: '12px', color: '#A3E635', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px'}}>
-                            💚 ORCID: {member.orcid}
+                          <a href={`https://orcid.org/${member.orcid}`} target="_blank" rel="noopener noreferrer" className={styles.digitalLink}>
+                            ORCID: {member.orcid}
                           </a>
                         )}
                         {member.google_scholar_url && (
-                          <a href={member.google_scholar_url} target="_blank" rel="noopener noreferrer" style={{fontSize: '12px', color: 'var(--color-primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px'}}>
-                            🎓 Google Scholar
+                          <a href={member.google_scholar_url} target="_blank" rel="noopener noreferrer" className={styles.digitalLink}>
+                            Google Scholar
                           </a>
                         )}
                         {member.research_gate_url && (
-                          <a href={member.research_gate_url} target="_blank" rel="noopener noreferrer" style={{fontSize: '12px', color: 'var(--color-secondary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px'}}>
-                            🌐 ResearchGate
+                          <a href={member.research_gate_url} target="_blank" rel="noopener noreferrer" className={styles.digitalLink}>
+                            ResearchGate
                           </a>
                         )}
                       </div>
@@ -168,7 +178,7 @@ export default function MemberProfile() {
                 <div className={styles.divider} />
                 
                 <a href={`mailto:${member.email}`} className={styles.emailCta}>
-                  ✉️ {lang === 'ar' ? 'إرسال بريد إلكتروني' : (lang === 'fr' ? 'Contacter par email' : 'Contact by Email')}
+                  {lang === 'ar' ? 'إرسال بريد إلكتروني' : (lang === 'fr' ? 'Contacter par email' : 'Send Message')}
                 </a>
               </div>
             </div>
@@ -177,18 +187,18 @@ export default function MemberProfile() {
             <div className={styles.contentCol}>
               
               {/* Metrics dashboard */}
-              <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1px', background: 'var(--color-border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: '1px solid var(--color-border)'}}>
-                <div style={{background: 'var(--color-bg-card)', padding: '20px', textAlign: 'center'}}>
-                  <div style={{fontSize: '11px', color: 'var(--color-slate-600)', textTransform: 'uppercase', marginBottom: '4px'}}>{lang === 'ar' ? 'مؤشر H-Index' : 'H-Index'}</div>
-                  <div style={{fontSize: '24px', fontWeight: '700', color: 'var(--color-primary)'}}>{member.h_index || 0}</div>
+              <div className={styles.metricsDashboard}>
+                <div className={styles.metricCard}>
+                  <div className={styles.metricLabel}>{lang === 'ar' ? 'مؤشر H-Index' : 'H-Index'}</div>
+                  <div className={styles.metricValue}>{member.h_index || 0}</div>
                 </div>
-                <div style={{background: 'var(--color-bg-card)', padding: '20px', textAlign: 'center'}}>
-                  <div style={{fontSize: '11px', color: 'var(--color-slate-600)', textTransform: 'uppercase', marginBottom: '4px'}}>{lang === 'ar' ? 'إجمالي الاقتباسات' : 'Citations'}</div>
-                  <div style={{fontSize: '24px', fontWeight: '700', color: 'var(--color-secondary)'}}>{member.citations_count || 0}</div>
+                <div className={styles.metricCard}>
+                  <div className={styles.metricLabel}>{lang === 'ar' ? 'إجمالي الاقتباسات' : 'Citations'}</div>
+                  <div className={styles.metricValue}>{member.citations_count || 0}</div>
                 </div>
-                <div style={{background: 'var(--color-bg-card)', padding: '20px', textAlign: 'center'}}>
-                  <div style={{fontSize: '11px', color: 'var(--color-slate-600)', textTransform: 'uppercase', marginBottom: '4px'}}>{lang === 'ar' ? 'المنشورات' : 'Publications'}</div>
-                  <div style={{fontSize: '24px', fontWeight: '700', color: 'var(--color-text-dark)'}}>{member.publications_count || articles.length}</div>
+                <div className={styles.metricCard}>
+                  <div className={styles.metricLabel}>{lang === 'ar' ? 'المنشورات المعترف بها' : 'Publications'}</div>
+                  <div className={styles.metricValue}>{member.publications_count || articles.length}</div>
                 </div>
               </div>
 
@@ -210,30 +220,44 @@ export default function MemberProfile() {
                   <div className={styles.pubList}>
                     {articles.map(art => (
                       <div key={art.id} className={styles.pubCard}>
-                        <div className={styles.pubHeader}>
-                          <span className={styles.pubDate}>
-                            📅 {art.published_at ? new Date(art.published_at).getFullYear() : ''}
-                          </span>
-                        </div>
                         <h3 className={styles.pubTitle}>
                           <Link to={`/articles/${art.id}`} className={styles.pubTitleLink}>
                             {art.name}
                           </Link>
                         </h3>
+                        
+                        <div className={styles.pubMetaLine}>
+                          <span className={styles.pubYear}>
+                            {art.published_at ? new Date(art.published_at).getFullYear() : ''}
+                          </span>
+                          {art.journal_name && (
+                            <>
+                              <span className={styles.pubDivider}>/</span>
+                              <span className={styles.pubJournal}>{art.journal_name}</span>
+                            </>
+                          )}
+                          {art.doi && (
+                            <>
+                              <span className={styles.pubDivider}>/</span>
+                              <span className={styles.pubDoi}>DOI: {art.doi}</span>
+                            </>
+                          )}
+                        </div>
+
                         <p className={styles.pubDesc}>{art.description}</p>
                         
                         <div className={styles.pubActions}>
                           <Link to={`/articles/${art.id}`} className={styles.pubDetailBtn}>
-                            ℹ️ {lang === 'ar' ? 'التفاصيل' : 'Details'}
+                            {lang === 'ar' ? 'التفاصيل' : 'Details'}
                           </Link>
                           {art.journal_link && (
                             <a href={art.journal_link} target="_blank" rel="noopener noreferrer" className={styles.pubJournalBtn}>
-                              🌐 {t('pubViewJournal') || 'View Journal'}
+                              {t('pubViewJournal') || 'View Journal'}
                             </a>
                           )}
                           {art.pdf_link && art.pdf_link !== '#' && (
                             <a href={art.pdf_link} target="_blank" rel="noopener noreferrer" className={styles.pubPdfBtn}>
-                              📥 PDF
+                              PDF
                             </a>
                           )}
                         </div>

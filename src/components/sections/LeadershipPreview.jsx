@@ -33,28 +33,38 @@ export default function LeadershipPreview() {
           subtitle={t('teamSubtitle')}
         />
         <div className={`${styles.grid} flex-row-reverse-rtl`}>
-          {leaders.map(leader => (
-            <article key={leader.id} className={styles.card}>
-              {leader.photo_url && (
-                <img
-                  src={leader.photo_url}
-                  alt=""
-                  className={styles.photo}
-                  loading="lazy"
-                />
-              )}
-              <div className={styles.body}>
-                <p className={styles.role}>{roleLabel(leader.role)}</p>
-                <h3 className={styles.name}>
-                  <Link to={`/members/${leader.id}`} className={styles.nameLink}>
-                    {leader.full_name}
-                  </Link>
-                </h3>
-                <p className={styles.specialty}>{leader.specialty}</p>
-                <p className={styles.bio}>{leader.bio}</p>
-              </div>
-            </article>
-          ))}
+          {leaders.map(leader => {
+            const cleanName = leader.full_name.replace(/^(Prof\.|Dr\.|Mr\.|Mrs\.)\s+/i, '');
+            const parts = cleanName.trim().split(/\s+/);
+            const initials = (parts[0] ? parts[0][0] : '') + (parts[1] ? parts[1][0] : '');
+
+            return (
+              <article key={leader.id} className={styles.card}>
+                {leader.photo_url ? (
+                  <img
+                    src={leader.photo_url}
+                    alt=""
+                    className={styles.photo}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className={styles.photoPlaceholder} aria-hidden="true">
+                    <span>{initials.toUpperCase()}</span>
+                  </div>
+                )}
+                <div className={styles.body}>
+                  <p className={styles.role}>{roleLabel(leader.role)}</p>
+                  <h3 className={styles.name}>
+                    <Link to={`/members/${leader.id}`} className={styles.nameLink}>
+                      {leader.full_name}
+                    </Link>
+                  </h3>
+                  <p className={styles.specialty}>{leader.specialty}</p>
+                  <p className={styles.bio}>{leader.bio}</p>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

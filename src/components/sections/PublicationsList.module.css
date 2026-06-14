@@ -29,7 +29,7 @@
 }
 
 .row:hover {
-  background: rgba(6, 182, 212, 0.02);
+  background: var(--color-surface);
 }
 
 .row:last-child {

@@ -1,97 +1,97 @@
-/* LDREAS Institutional Design System - Redesigned Premium Edition */
+/* LDREAS Academic Design System - Light Mode Editorial Edition */
 :root {
-  /* Core palette */
-  --color-primary:        #06B6D4; /* Energy Teal Accent */
-  --color-secondary:      #F59E0B; /* Desert Gold Accent */
-  --color-accent:         #6366F1; /* Academic Violet Accent */
-  --color-accent-hover:   #4F46E5;
-  --color-bg-main:        #070A0F; /* Deep Obsidian Background */
-  --color-surface:        #0E1420; /* Deep Slate Card Background */
-  --color-text-base:      #F9FAFB; /* Neutral Light Text */
+  /* Core palette - STRICT LIGHT MODE ONLY */
+  --color-primary:        #0056B3; /* Academic Blue */
+  --color-secondary:      #28A745; /* Academic Green Accent */
+  --color-accent:         #0056B3; /* Link Blue */
+  --color-accent-hover:   #004085;
+  --color-bg-main:        #F8F8F8; /* Light Off-White Background */
+  --color-surface:        #EFEFEF; /* Light Grey Surface */
+  --color-text-base:      #212121; /* Charcoal Primary Text */
   
   /* Semantic aliases & backward compatibility */
-  --color-navy-900:       #070A0F;
-  --color-navy-800:       #0E1420;
-  --color-navy-700:       #1E293B; /* Border / Slate Line */
-  --color-sand-50:        #F9FAFB;
-  --color-sand-100:       #F3F4F6;
+  --color-navy-900:       #EFEFEF;
+  --color-navy-800:       #FFFFFF;
+  --color-navy-700:       #D0D0D0; /* Border color equivalent */
+  --color-sand-50:        #212121;
+  --color-sand-100:       #555555;
   --color-accent-500:     var(--color-primary);
-  --color-accent-600:     #0891B2;
-  --color-accent-cool:    rgba(6, 182, 212, 0.1);
-  --color-slate-600:      #9CA3AF; /* Muted slate text */
-  --color-slate-400:      #6B7280; /* Highly muted text */
+  --color-accent-600:     #004085;
+  --color-accent-cool:    rgba(0, 86, 179, 0.05);
+  --color-slate-600:      #555555; /* Secondary text */
+  --color-slate-400:      #777777; /* Highly muted text */
   --color-white:          #FFFFFF;
-  --color-news-tag-bg:    rgba(99, 102, 241, 0.15);
-  --color-news-tag-text:  #818CF8;
+  --color-news-tag-bg:    #EFEFEF;
+  --color-news-tag-text:  #212121;
 
-  --color-primary-dark:   #070A0F;
-  --color-primary-light:  #0E1420;
-  --color-sand:           #070A0F;
-  --color-beige:          #070A0F;
-  --color-bg-outer:       #070A0F;
-  --color-bg-container:   #0E1420;
-  --color-bg-page:        #070A0F;
-  --color-bg:             #070A0F;
-  --color-bg-card:        #0E1420;
-  --color-text:           #9CA3AF;
-  --color-text-dark:      #F9FAFB;
-  --color-text-muted:     #6B7280;
-  --color-border:         #1E293B;
+  --color-primary-dark:   #212121;
+  --color-primary-light:  #EFEFEF;
+  --color-sand:           #F8F8F8;
+  --color-beige:          #F8F8F8;
+  --color-bg-outer:       #F8F8F8;
+  --color-bg-container:   #FFFFFF;
+  --color-bg-page:        #F8F8F8;
+  --color-bg:             #F8F8F8;
+  --color-bg-card:        #FFFFFF; /* White card surface */
+  --color-text:           #555555;
+  --color-text-dark:      #212121;
+  --color-text-muted:     #777777;
+  --color-border:         #D0D0D0;
 
-  --color-success:        #10B981; /* Quantum Green */
-  --color-warning:        #F59E0B; /* Amber Warning */
-  --color-danger:         #EF4444; /* Crimson Error */
+  --color-success:        #28A745;
+  --color-warning:        #FFC107;
+  --color-danger:         #DC3545;
 
-  /* Glassmorphism overlays */
-  --color-glass-bg:       rgba(255, 255, 255, 0.03);
-  --color-glass-border:   rgba(255, 255, 255, 0.08);
-  --color-glass-hover:    rgba(255, 255, 255, 0.06);
+  /* Glassmorphism overrides - REMOVED */
+  --color-glass-bg:       #FFFFFF;
+  --color-glass-border:   #D0D0D0;
+  --color-glass-hover:    #EFEFEF;
 
   /* Typography */
-  --font-display: "Outfit", "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Merriweather", Georgia, "Times New Roman", serif;
   --font-body:    "Inter", system-ui, -apple-system, sans-serif;
-  --font-arabic:  "Cairo", "Noto Sans Arabic", sans-serif;
+  --font-arabic:  "Cairo", serif;
   --font-heading: var(--font-display);
 
   /* Type scale */
-  --size-xs:   0.85rem;    /* 13.6px */
-  --size-sm:   0.925rem;   /* 14.8px */
-  --size-base: 1.05rem;    /* ~16.8px */
-  --size-lg:   1.2rem;
-  --size-xl:   1.4rem;
-  --size-2xl:  1.75rem;
-  --size-3xl:  2.25rem;
-  --size-4xl:  3.25rem;
+  --size-xs:   0.825rem;
+  --size-sm:   0.9rem;
+  --size-base: 1.0rem;
+  --size-lg:   1.15rem;
+  --size-xl:   1.35rem;
+  --size-2xl:  1.65rem;
+  --size-3xl:  2.1rem;
+  --size-4xl:  2.8rem;
 
-  /* Spacing (4px base scale) */
-  --space-1:  0.25rem;  /* 4px */
-  --space-2:  0.5rem;   /* 8px */
-  --space-3:  0.75rem;  /* 12px */
-  --space-4:  1.0rem;   /* 16px */
-  --space-6:  1.5rem;   /* 24px */
-  --space-8:  2.0rem;   /* 32px */
-  --space-12: 3.0rem;   /* 48px */
-  --space-16: 4.0rem;   /* 64px */
-  --space-24: 6.0rem;   /* 96px */
+  /* Spacing */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1.0rem;
+  --space-6:  1.5rem;
+  --space-8:  2.0rem;
+  --space-12: 3.0rem;
+  --space-16: 4.0rem;
+  --space-24: 6.0rem;
 
   /* Layout */
-  --max-width: 1280px;
-  --gutter:    24px;
+  --max-width: 1140px; /* Restrained academic grid width */
+  --gutter:    32px;
 
-  /* Modern Card Border Radii */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-full: 9999px;
+  /* Sharp Corners (No rounded borders) */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-full: 0px;
 
-  /* Premium Elevations */
-  --shadow-sm: 0px 4px 20px -2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0px 10px 30px -4px rgba(6, 182, 212, 0.15); /* Accent bloom glow */
-  --shadow-lg: 0px 20px 50px -8px rgba(0, 0, 0, 0.7);
+  /* Zero Shadows - Flat Design */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
   --shadow-side: none;
-  --shadow-scroll: 0px 4px 20px rgba(0, 0, 0, 0.3);
+  --shadow-scroll: none;
 
-  --transition: cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+  --transition: all 0.15s ease-in-out;
 }
 
 html[lang="ar"] {
@@ -99,4 +99,3 @@ html[lang="ar"] {
   --font-body: var(--font-arabic);
   --font-heading: var(--font-arabic);
 }
-

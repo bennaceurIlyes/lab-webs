@@ -13,15 +13,14 @@
   margin: 0 auto;
   padding: 0 var(--gutter) var(--space-8);
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  grid-template-columns: 1.6fr 1fr 1fr;
   gap: var(--space-8);
   width: 100%;
 }
 
 .columnIdentity,
 .columnContact,
-.columnLinks,
-.columnPartners {
+.columnLinks {
   display: flex;
   flex-direction: column;
 }
@@ -34,19 +33,19 @@
 
 .columnTitle {
   font-family: var(--font-body);
-  font-size: var(--size-sm);
-  font-weight: 600;
-  color: var(--color-white);
+  font-size: var(--size-xs);
+  font-weight: 700;
+  color: var(--color-text-dark);
   margin: 0 0 var(--space-4) 0;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
 }
 
 .footerHeading {
   font-family: var(--font-display);
   font-size: var(--size-lg);
   font-weight: 700;
-  color: var(--color-white);
+  color: var(--color-text-dark);
   margin: 0 0 var(--space-2) 0;
 }
 
@@ -89,35 +88,9 @@
   text-decoration: underline;
 }
 
-.partnerGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-3);
-}
-
-.partnerLogo {
-  border: 1px solid var(--color-border);
-  padding: var(--space-3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  filter: grayscale(1) brightness(1.5);
-  opacity: 0.75;
-}
-
-.partnerLogo span {
-  font-family: var(--font-body);
-  font-size: var(--size-xs);
-  font-weight: 600;
-  color: var(--color-slate-600);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
 .bottomBar {
   border-top: 1px solid var(--color-border);
-  background-color: var(--color-bg-main);
+  background-color: var(--color-bg-page);
 }
 
 .bottomBarInner {
@@ -142,6 +115,7 @@
 
 .separator {
   opacity: 0.4;
+  color: var(--color-border);
 }
 
 .langSwitcher {
@@ -164,13 +138,13 @@
 
 .langBtn:hover,
 .langBtn.activeLang {
-  color: var(--color-secondary);
+  color: var(--color-primary);
+  font-weight: 700;
 }
 
 .langSeparator {
-  color: var(--color-slate-600);
+  color: var(--color-border);
   font-size: var(--size-xs);
-  opacity: 0.4;
 }
 
 @media (max-width: 900px) {

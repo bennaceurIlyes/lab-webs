@@ -1,6 +1,5 @@
 /* StatCounter — animated number counter triggered by IntersectionObserver */
 import { useState, useEffect, useRef } from 'react';
-import styles from './StatCounter.module.css';
 
 export default function StatCounter({ value, label, icon }) {
   const [count, setCount] = useState(0);
@@ -47,10 +46,10 @@ export default function StatCounter({ value, label, icon }) {
   }
 
   return (
-    <div className={styles.stat} ref={ref}>
-      <div className={styles.icon}>{icon}</div>
-      <span className={styles.number}>{count}</span>
-      <span className={styles.label}>{label}</span>
+    <div className="flex flex-col items-center gap-2 text-white" ref={ref}>
+      <div className="w-10 h-10">{icon}</div>
+      <span className="text-3xl md:text-4xl font-bold">{count}</span>
+      <span className="text-xs md:text-sm font-medium opacity-90 uppercase tracking-wider">{label}</span>
     </div>
   );
 }

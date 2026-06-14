@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
 import { dbService } from '../../lib/dbService';
 import StatCounter from '../ui/StatCounter';
-import styles from './StatsBar.module.css';
 
 const icons = {
   teams: (
@@ -67,12 +66,12 @@ export default function StatsBar() {
   ];
 
   return (
-    <section className={styles.statsBar} aria-label="Key statistics">
-      <div className={`${styles.inner} flex-row-reverse-rtl`}>
+    <section className="bg-primary py-12 md:py-16" aria-label="Key statistics">
+      <div className="container-custom flex items-center justify-around flex-wrap gap-8 flex-row-reverse-rtl">
         {stats.map((stat, i) => (
-          <div key={stat.label} className={styles.item}>
+          <div key={stat.label} className="flex items-center gap-4">
             <StatCounter value={stat.value} label={stat.label} icon={stat.icon} />
-            {i < stats.length - 1 && <div className={styles.divider} />}
+            {i < stats.length - 1 && <div className="hidden md:block h-12 w-px bg-white/20" />}
           </div>
         ))}
       </div>

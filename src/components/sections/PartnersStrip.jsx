@@ -1,5 +1,4 @@
 import { useTranslation } from '../../hooks/useTranslation';
-import styles from './PartnersStrip.module.css';
 
 const partners = [
   { name: 'MESRS Algeria', id: 'mesrs' },
@@ -13,13 +12,13 @@ export default function PartnersStrip() {
   const { t } = useTranslation();
 
   return (
-    <section className={styles.section} aria-label={t('partnerLogos')}>
-      <div className={styles.inner}>
-        <span className={styles.label}>{t('partnerLogos')}</span>
-        <div className={styles.row}>
+    <section className="py-8 bg-secondary/30 border-b border-border" aria-label={t('partnerLogos')}>
+      <div className="container-custom">
+        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4 block flex-row-reverse-rtl">{t('partnerLogos')}</span>
+        <div className="flex items-center justify-around gap-6 flex-wrap flex-row-reverse-rtl">
           {partners.map(p => (
-            <div key={p.id} className={styles.logo} title={p.name}>
-              <span className={styles.logoText}>{p.name}</span>
+            <div key={p.id} className="px-4 py-2 border border-border rounded-sm bg-background" title={p.name}>
+              <span className="text-sm font-semibold text-muted-foreground">{p.name}</span>
             </div>
           ))}
         </div>

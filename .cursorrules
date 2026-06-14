@@ -1,0 +1,545 @@
+# LDREAS Researcher Portal — Design System Rules
+
+Any development, modification, or extension to this codebase **MUST** adhere strictly to every rule below.
+Violations will cause visual and functional inconsistencies across the portal.
+
+---
+
+## 1. Core Aesthetic
+
+| Principle        | Rule                                                                                                      |
+|------------------|-----------------------------------------------------------------------------------------------------------|
+| **Style**        | Premium, clean, high-contrast **academic print-editorial** aesthetic (inspired by MIT, Stanford portals).  |
+| **Geometry**     | Sharp corners **ONLY**. `--radius: 0px` / Tailwind `rounded-none` on **ALL** elements — buttons, cards, badges, inputs, selects, tables, dialogs, sheets, dropdowns, images, and toasts. |
+| **Shadows**      | Minimal or none. Cards and panels use `shadow-sm` or `shadow-none`. No drop-shadow, no box-shadow larger than `shadow-sm`. |
+| **Borders**      | Thin `1px` borders using `border-border` (HSL `220 13% 88%`). Double borders or decorative borders are **forbidden**. |
+| **Animations**   | Subtle and fast only. `transition-colors duration-150` or `transition-all duration-200`. No bouncing, no slide-in, no spring animations. Spinners use `animate-spin` with a `border-2 border-primary border-t-transparent` CSS spinner — never an SVG spinner. |
+
+---
+
+## 2. Color Palette (CSS Custom Properties)
+
+All colors are defined as HSL values in `src/styles/global.css` inside `:root`. They are consumed via Tailwind's `bg-*`, `text-*`, `border-*` utilities.
+
+| Token                    | HSL Value            | Usage                                              |
+|--------------------------|----------------------|------------------------------------------------------|
+| `--background`           | `0 0% 100%`         | Page background, input backgrounds                   |
+| `--foreground`           | `220 14% 10%`       | Primary text, active sidebar tab background           |
+| `--primary`              | `211 100% 35%`      | Academic Blue `#0056B3`. Buttons, links, ring focus   |
+| `--primary-foreground`   | `0 0% 100%`         | Text on primary-colored elements                     |
+| `--secondary`            | `220 14% 96%`       | Muted panel backgrounds, hover fills                  |
+| `--secondary-foreground` | `220 14% 10%`       | Text on secondary backgrounds                        |
+| `--muted`                | `220 14% 96%`       | Disabled/placeholder backgrounds                     |
+| `--muted-foreground`     | `220 9% 40%`        | Secondary text, labels, timestamps                   |
+| `--accent`               | `211 100% 97%`      | Light accent highlight background                    |
+| `--accent-foreground`    | `211 100% 35%`      | Text on accent backgrounds                           |
+| `--destructive`          | `0 84% 60%`         | Delete buttons, error states                         |
+| `--destructive-foreground`| `0 0% 100%`        | Text on destructive elements                         |
+| `--border`               | `220 13% 88%`       | All borders, separators, input outlines              |
+| `--input`                | `220 13% 88%`       | Input field borders (same as `--border`)             |
+| `--ring`                 | `211 100% 35%`      | Focus ring (matches primary)                         |
+
+### Color Rules
+- **Never** use raw hex/rgb values in components. Always use the token classes (`text-primary`, `bg-destructive`, etc.).
+- **Never** use generic red/blue/green. Use the curated palette above.
+- Success messages use `bg-emerald-500/10 text-emerald-600 border-emerald-500/20`.
+- Error messages use `bg-destructive/10 text-destructive border-destructive/20`.
+- Role badges use `bg-primary/10 text-primary border-primary/20`.
+
+---
+
+## 3. Typography
+
+### Font Families (CSS Custom Properties)
+```
+--font-display: "Merriweather", Georgia, serif;
+--font-body:    "Inter", system-ui, sans-serif;
+```
+
+| Context                                      | Font              | Tailwind Class    |
+|----------------------------------------------|-------------------|-------------------|
+| Page titles (`<h1>`)                         | Merriweather      | `font-serif`      |
+| Section headings (`<h2>`, `<h3>`)            | Merriweather      | `font-serif`      |
+| Card titles, panel headers                   | Merriweather      | `font-serif`      |
+| Body text, descriptions                      | Inter             | `font-sans` (default) |
+| Form labels                                  | Inter             | `font-sans` (default) |
+| Buttons, inputs, selects, badges, nav links  | Inter             | `font-sans` (default) |
+| Arabic locale override                       | Cairo / Noto Naskh Arabic | automatic via `html[lang="ar"]` CSS |
+
+### Size Conventions
+| Element                      | Classes                                                |
+|------------------------------|--------------------------------------------------------|
+| Page Hero `<h1>`             | `text-3xl md:text-4xl lg:text-5xl font-bold font-serif tracking-tight leading-tight` |
+| Section `<h2>`               | `text-2xl md:text-3xl font-bold font-serif tracking-tight` |
+| Panel/Card Header `<h3>`     | `font-serif font-bold text-lg text-foreground`         |
+| Panel Description            | `text-xs text-muted-foreground`                        |
+| Body text                    | `text-sm` (default) or `text-xs` for metadata          |
+| Micro-labels (dates, tags)   | `text-[10px]`                                          |
+
+---
+
+## 4. Form System
+
+### Labels
+All form labels MUST use this exact class string:
+```
+text-[10px] font-bold uppercase tracking-wider text-muted-foreground block
+```
+Alternate short-hand references: "micro-label" pattern. Never use `text-sm` or larger for form labels.
+
+### Inputs
+All `<input>`, `<textarea>`, and `<select>` elements MUST use:
+```
+w-full border border-border bg-background px-3 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:outline-none
+```
+- **No rounded corners** — the global `--radius: 0px` handles this automatically.
+- Textareas add `min-h-[100px] resize-y`.
+
+### Grid Layout (6-column)
+Dashboard forms use a 6-column responsive grid:
+```
+<div className="grid grid-cols-1 md:grid-cols-6 gap-x-6 gap-y-5">
+```
+
+| Width Need                   | Col Span                   | Inputs Per Row |
+|------------------------------|---------------------------|----------------|
+| Standard field (name, email) | `col-span-1 md:col-span-3`| 2              |
+| Narrow field (date, select)  | `col-span-1 md:col-span-2`| 3              |
+| Full-width (bio, URL, textarea) | `col-span-1 md:col-span-6`| 1           |
+
+### Checkboxes (multi-select, e.g. project members)
+```
+<label className="flex items-center gap-2 text-sm cursor-pointer hover:bg-secondary/30 p-1.5 transition-colors">
+  <input type="checkbox" className="accent-primary" ... />
+  <span>Member Name</span>
+</label>
+```
+
+### Form Sections
+Each form section starts with a `<Separator />` followed by a section micro-label:
+```
+<span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground block mb-1">
+  Section Title
+</span>
+```
+
+### Submit Buttons
+- Primary action: `<Button>` (default variant) with `w-full md:w-auto` sizing.
+- Destructive action: `variant="destructive"`.
+- Cancel/Reset: `variant="outline"`.
+- Always include a `gap-2` with a Lucide icon before the label.
+
+---
+
+## 5. Component Library
+
+All reusable components live in `src/components/ui/` and `src/components/layout/`.
+
+### UI Components (`src/components/ui/`)
+| Component           | File               | Library              | Key Styling Notes                                       |
+|---------------------|--------------------|----------------------|----------------------------------------------------------|
+| `Button`            | `Button.jsx`       | `class-variance-authority` + `@radix-ui/react-slot` | 6 variants: default, destructive, outline, secondary, ghost, link. 4 sizes: default, sm, lg, icon. |
+| `Badge`             | `Badge.jsx`        | `class-variance-authority` | 4 variants: default, secondary, destructive, outline. No rounded corners. |
+| `Card`              | `Card.jsx`         | Custom               | `border border-border bg-card shadow-none`. Sub-components: CardHeader, CardTitle, CardDescription, CardContent, CardFooter. |
+| `Dialog`            | `Dialog.jsx`       | `@radix-ui/react-dialog` | Overlay: `bg-black/50 backdrop-blur-sm`. Content: `border border-border bg-background p-6 shadow-lg`. Close button with `<X>` icon. |
+| `Table`             | `Table.jsx`        | Custom               | Row hover: `hover:bg-secondary/50`. Header text: `text-muted-foreground font-medium`. Borders: `border-b border-border`. |
+| `Tabs`              | `Tabs.jsx`         | Custom               | Trigger styling: `text-xs font-bold uppercase tracking-wider`. |
+| `Badge`             | `Badge.jsx`        | CVA                  | `px-2.5 py-0.5 text-xs font-semibold`. No rounded corners. |
+| `Separator`         | `Separator.jsx`    | Custom               | Thin horizontal rule using `border-border`.              |
+| `Sheet`             | `Sheet.jsx`        | `@radix-ui/react-dialog` | Mobile navigation drawer. Side-aware for RTL.            |
+| `NavigationMenu`    | `NavigationMenu.jsx`| `@radix-ui/react-navigation-menu` | Desktop dropdown menus with team listings.               |
+| `SectionTitle`      | `SectionTitle.jsx` | Custom               | Left border accent: `border-l-4 border-primary pl-4`. RTL-aware: `rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-4`. |
+| `StatCounter`       | `StatCounter.jsx`  | Custom               | Animated number counters for homepage stats.              |
+| `Accordion`         | `Accordion.jsx`    | Custom               | Collapsible FAQ/info sections.                            |
+| `Tag`               | `Tag.jsx`          | Custom               | Small keyword/label tags.                                 |
+| `LdreasLogo`        | `LdreasLogo.jsx`   | Custom SVG           | Inline SVG logo component with `variant` prop.            |
+
+### Layout Components (`src/components/layout/`)
+| Component    | File            | Purpose                                               |
+|-------------|-----------------|-------------------------------------------------------|
+| `Header`    | `Header.jsx`    | Top institutional identity bar (university name, etc.) |
+| `NavBar`    | `NavBar.jsx`    | Sticky navigation with desktop menu + mobile Sheet     |
+| `PageHero`  | `PageHero.jsx`  | Full-width banner with breadcrumb + page title `<h1>` |
+| `Footer`    | `Footer.jsx`    | 3-column footer with links, contact, language switcher |
+
+---
+
+## 6. Page & Layout Patterns
+
+### Global Page Wrapper
+```jsx
+<div className="pageWrapper">
+  <a href="#main-content" className="skip-link">Skip to main content</a>
+  <Header />
+  <NavBar />
+  <Routes>...</Routes>
+  <Footer />
+</div>
+```
+
+### Container
+All page content MUST be wrapped in:
+```
+<div className="container-custom">  <!-- max-w-6xl mx-auto px-4 md:px-8 w-full -->
+```
+
+### Page Structure
+Every page follows this pattern:
+```jsx
+<main id="main-content">
+  <PageHero title="..." >
+    {/* Breadcrumb links */}
+    <Link to="/">Home</Link>
+    <span aria-hidden="true" className="mx-1.5 select-none text-muted-foreground/60"> / </span>
+    <span>Current Page</span>
+  </PageHero>
+  <section className="py-12 bg-background">
+    <div className="container-custom">
+      {/* Page content */}
+    </div>
+  </section>
+</main>
+```
+
+### Dashboard Layout (Sidebar + Panel)
+```
+grid grid-cols-1 lg:grid-cols-4 gap-8 items-start
+├── <aside>  (sidebar tabs, 1 col)
+└── <div className="lg:col-span-3">  (main panel, 3 cols)
+```
+
+### Sidebar Tab Buttons
+```
+w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-wider transition-all duration-150 flex items-center gap-3 border
+```
+- **Active state**: `bg-foreground text-background border-foreground shadow-sm`
+- **Inactive state**: `text-muted-foreground hover:bg-secondary/50 hover:text-foreground border-transparent`
+
+### Flash / Toast Notifications
+Success and error messages appear at the top of the dashboard panel:
+- **Success**: `bg-emerald-500/10 text-emerald-600 text-xs p-3.5 border border-emerald-500/20 font-medium`
+- **Error**: `bg-destructive/10 text-destructive text-xs p-3.5 border border-destructive/20 font-medium`
+- Auto-dismiss after 4 seconds via `setTimeout`.
+
+---
+
+## 7. NavBar & Navigation
+
+### Desktop
+- Sticky: `sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur py-3`
+- Uses Radix `NavigationMenu` with dropdown for team listings.
+- Active link: `text-primary font-semibold`. Inactive: `text-muted-foreground`.
+
+### Mobile
+- Hamburger triggers a Radix `Sheet` (slide-in panel).
+- Sheet side is RTL-aware: `side={isRtl ? "left" : "right"}`.
+- Links close the sheet on click via `onClick={() => setMobileOpen(false)}`.
+
+### Breadcrumbs
+Always rendered inside `<PageHero>`:
+```
+<nav className="text-xs uppercase tracking-wider text-primary font-semibold mb-4 flex items-center gap-1.5 flex-wrap">
+```
+Separator: `<span aria-hidden="true" className="mx-1.5 select-none text-muted-foreground/60"> / </span>`
+
+---
+
+## 8. RTL & Multilingual Compatibility
+
+### Languages Supported
+| Code | Language | Direction |
+|------|----------|-----------|
+| `en` | English  | LTR       |
+| `fr` | French   | LTR       |
+| `ar` | Arabic   | RTL       |
+
+### RTL Rules
+1. `<html dir="rtl">` is set automatically by `LanguageContext` when `lang === 'ar'`.
+2. Flex containers that need to reverse use the helper class `.flex-row-reverse-rtl:not(.grid)`.
+3. **NEVER** combine `.grid` and `.flex-row-reverse-rtl` on the same element — it collapses column widths.
+4. `SectionTitle` border accent flips: `border-l-4` → `rtl:border-r-4`.
+5. Table cells use `rtl:text-right`.
+6. Form text alignment uses `text-start` (not `text-left`) for RTL compatibility.
+
+### Arabic Font Override
+```css
+html[lang="ar"] {
+  --font-display: "Cairo", "Noto Naskh Arabic", serif;
+  --font-body: "Cairo", "Noto Naskh Arabic", sans-serif;
+}
+```
+
+### Translation
+- All user-facing text goes through `useTranslation()` hook returning `t(key)` and `lang`.
+- Translation files: `src/locales/en.json`, `src/locales/fr.json`, `src/locales/ar.json`.
+- Fallback pattern: `t('key') || 'English fallback'`.
+- Inline ternary for short labels: `lang === 'ar' ? 'عربي' : 'English'`.
+
+---
+
+## 9. Icons
+
+Use **Lucide React** (`lucide-react`) exclusively. Never use FontAwesome, Heroicons, or emoji.
+
+### Standard Icon Size
+- Default: `h-4 w-4` (16px).
+- Large (hero/empty states): `h-6 w-6`.
+- Inside buttons: always pair with `gap-2` on the button.
+
+### Commonly Used Icons
+| Icon           | Usage                    |
+|---------------|--------------------------|
+| `User`        | Profile tab               |
+| `BookOpen`    | Publications tab          |
+| `Briefcase`   | Projects tab              |
+| `Users`       | Members/Team tab          |
+| `Megaphone`   | News/Announcements tab    |
+| `Plus`        | Add/Create actions        |
+| `Trash2`      | Delete actions            |
+| `Calendar`    | Date display              |
+| `LogOut`      | Logout button             |
+| `Sparkles`    | Special features          |
+| `Layers`      | Teams/Categories          |
+| `Settings`    | Configuration             |
+| `X`           | Close/dismiss             |
+| `Menu`        | Mobile hamburger          |
+| `ExternalLink`| External URL links        |
+
+---
+
+## 10. Confirmations & Dialogs
+
+### CRITICAL RULE
+**NEVER** use `window.confirm()` or `window.alert()`. Always use state-based Radix `<Dialog>` modals.
+
+### Confirmation Dialog Pattern
+```jsx
+const [confirmDialog, setConfirmDialog] = useState({
+  open: false,
+  title: '',
+  description: '',
+  onConfirm: null
+});
+
+const requestConfirm = (title, description, onConfirmAction) => {
+  setConfirmDialog({
+    open: true,
+    title,
+    description,
+    onConfirm: () => {
+      onConfirmAction();
+      setConfirmDialog(prev => ({ ...prev, open: false }));
+    }
+  });
+};
+```
+
+### Dialog Styling
+- Overlay: `bg-black/50 backdrop-blur-sm`
+- Content: `border border-border bg-background p-6 shadow-lg`
+- Title: `font-serif font-bold text-lg`
+- Description: `text-sm text-muted-foreground`
+- Footer buttons: confirm (primary/destructive) + cancel (outline)
+- **No rounded corners** on dialog content panel.
+
+---
+
+## 11. Data Layer & State Management
+
+### Context Providers (wrap the entire app)
+```
+<LanguageProvider>     → useLanguage() — lang, setLang
+  <AuthProvider>       → useAuth() — user, login, logout, refreshUser
+    <BrowserRouter>
+```
+
+### Database Service
+`src/lib/dbService.js` — abstraction over localStorage mock database.
+- All CRUD operations are `async` functions.
+- Data is seeded on first load from `src/data/` JSON files.
+- Translation-aware: many getters accept a `lang` parameter.
+
+### Custom Hooks
+| Hook               | File                         | Returns                                    |
+|--------------------|-----------------------------|---------------------------------------------|
+| `useTranslation()` | `src/hooks/useTranslation.js`| `{ t, lang }`                               |
+| `usePublications()`| `src/hooks/usePublications.js`| `{ publications, loading, getCitationText }`|
+| `useTeams()`       | `src/hooks/useTeams.js`      | `{ teams, members }`                        |
+
+---
+
+## 12. Routing & Pages
+
+| Route               | Component        | Access      |
+|---------------------|-----------------|-------------|
+| `/`                 | `Home`           | Public      |
+| `/about`            | `About`          | Public      |
+| `/news`             | `News`           | Public      |
+| `/news/:id`         | `NewsDetail`     | Public      |
+| `/articles`         | `Publications`   | Public      |
+| `/teams`            | `TeamsList`      | Public      |
+| `/teams/:id`        | `TeamDetail`     | Public      |
+| `/projects/:id`     | `ProjectDetail`  | Public      |
+| `/members/:id`      | `MemberProfile`  | Public      |
+| `/login`            | `Login`          | Public      |
+| `/dashboard`        | `Dashboard`      | Auth-only   |
+
+---
+
+## 13. User Roles & Permissions
+
+| Role            | Key                | Dashboard Tabs                                              |
+|-----------------|--------------------|------------------------------------------------------------|
+| **Member**      | `member`           | Profile Editor, My Publications                             |
+| **Team Leader** | `team_leader`      | Profile Editor, My Publications, Manage Projects, Team Personnel |
+| **Lab Manager** | `lab_leader`       | Profile Editor, My Publications, Manage Members, Research Teams, Lab Announcements |
+
+---
+
+## 14. Accessibility
+
+- Every page has `<main id="main-content">`.
+- Skip link: `<a href="#main-content" className="skip-link">Skip to main content</a>`.
+- All interactive elements have unique `id` attributes.
+- `aria-label` on icon-only buttons.
+- `aria-hidden="true"` on decorative separators.
+- Focus ring: `ring-2 ring-ring ring-offset-2` via `*:focus-visible` in global CSS.
+- Semantic HTML: `<nav>`, `<main>`, `<section>`, `<footer>`, `<article>`, `<aside>`.
+- Navigation has `role="navigation"` and `aria-label="Main navigation"`.
+- Footer has `role="contentinfo"`.
+
+---
+
+## 15. Image Handling
+
+- Project/News images use `photo_url` field (external URL string).
+- Render with aspect-ratio container:
+  ```jsx
+  <div className="aspect-video w-full overflow-hidden border border-border bg-secondary/10">
+    <img src={url} alt="..." className="h-full w-full object-cover" />
+  </div>
+  ```
+- Fallback for missing images: grey placeholder div with a centered Lucide icon.
+- **No border-radius** on image containers.
+
+---
+
+## 16. File & Directory Structure
+
+```
+src/
+├── App.jsx                    # Root component with routing
+├── main.jsx                   # Vite entry point
+├── assets/                    # Static assets
+├── components/
+│   ├── layout/
+│   │   ├── Header.jsx         # Top institutional bar
+│   │   ├── NavBar.jsx         # Sticky navigation
+│   │   ├── PageHero.jsx       # Page banner with breadcrumb
+│   │   └── Footer.jsx         # Site footer
+│   ├── sections/              # Homepage section components
+│   └── ui/
+│       ├── Accordion.jsx
+│       ├── Badge.jsx
+│       ├── Button.jsx
+│       ├── Card.jsx
+│       ├── Dialog.jsx
+│       ├── LdreasLogo.jsx
+│       ├── NavigationMenu.jsx
+│       ├── SectionTitle.jsx
+│       ├── Separator.jsx
+│       ├── Sheet.jsx
+│       ├── StatCounter.jsx
+│       ├── Table.jsx
+│       ├── Tabs.jsx
+│       └── Tag.jsx
+├── context/
+│   ├── AuthContext.jsx         # Authentication state
+│   └── LanguageContext.jsx     # i18n language state
+├── data/                       # Seed JSON data
+├── hooks/
+│   ├── useTranslation.js
+│   ├── usePublications.js
+│   └── useTeams.js
+├── lib/
+│   ├── dbService.js            # localStorage CRUD service
+│   └── utils.js                # cn() Tailwind merge helper
+├── locales/
+│   ├── en.json
+│   ├── fr.json
+│   └── ar.json
+├── pages/
+│   ├── Home.jsx
+│   ├── About.jsx
+│   ├── News.jsx
+│   ├── NewsDetail.jsx
+│   ├── Publications.jsx
+│   ├── ProjectDetail.jsx
+│   ├── TeamsList.jsx
+│   ├── TeamDetail.jsx
+│   ├── MemberProfile.jsx
+│   ├── Login.jsx
+│   └── Dashboard.jsx
+└── styles/
+    └── global.css              # Design tokens + Tailwind layers
+```
+
+---
+
+## 17. Dependencies & Tooling
+
+| Package                            | Purpose                              |
+|------------------------------------|--------------------------------------|
+| `react`, `react-dom`              | UI framework                         |
+| `react-router-dom`                | Client-side routing                   |
+| `@radix-ui/react-dialog`          | Dialog/Sheet primitives               |
+| `@radix-ui/react-navigation-menu` | Navigation menu primitive             |
+| `@radix-ui/react-slot`            | Slot primitive for Button             |
+| `class-variance-authority`        | Component variant system (CVA)        |
+| `clsx` / `tailwind-merge`         | `cn()` utility for class merging      |
+| `lucide-react`                    | Icon library                          |
+| `tailwindcss`                     | Utility-first CSS framework           |
+| `vite`                            | Build tool & dev server               |
+
+---
+
+## 18. Naming Conventions
+
+| Item            | Convention                              | Example                    |
+|-----------------|----------------------------------------|----------------------------|
+| Components      | PascalCase                              | `PageHero`, `SectionTitle` |
+| Files (components)| PascalCase `.jsx`                     | `Button.jsx`, `Card.jsx`  |
+| Files (hooks)   | camelCase with `use` prefix             | `useTranslation.js`        |
+| Files (services)| camelCase                               | `dbService.js`             |
+| CSS classes     | Tailwind utilities only                 | No BEM, no CSS modules     |
+| Translation keys| camelCase                               | `navHome`, `loginTitle`    |
+| Route paths     | kebab-case                              | `/news/:id`, `/members/:id`|
+| Database fields | snake_case                              | `full_name`, `team_id`     |
+
+---
+
+## 19. Do's and Don'ts — Quick Reference
+
+### ✅ DO
+- Use `cn()` from `lib/utils.js` to merge Tailwind classes
+- Use `text-start` instead of `text-left` for RTL compatibility
+- Use Radix primitives for overlays, dialogs, sheets, and navigation menus
+- Use `font-serif` for all headings and titles
+- Use `rounded-none` / `--radius: 0px` everywhere
+- Use `border border-border` for all container outlines
+- Use `shadow-none` or `shadow-sm` maximum
+- Flash-dismiss success/error messages after 4s
+- Wrap page content in `container-custom`
+- Give all forms and interactive elements unique `id` attributes
+
+### ❌ DON'T
+- Use `window.confirm()`, `window.alert()`, or `window.prompt()`
+- Use rounded corners (`rounded-md`, `rounded-lg`, `rounded-full`)
+- Use raw hex colors — always use token classes
+- Use FontAwesome, Heroicons, or emoji for icons
+- Use CSS Modules, styled-components, or inline `style` props
+- Use `text-left` or `text-right` — use `text-start` / `text-end`
+- Use large shadows (`shadow-md`, `shadow-lg`, `shadow-xl`)
+- Add new fonts without updating `global.css` custom properties
+- Combine `.grid` and `.flex-row-reverse-rtl` on the same element
+- Create new components outside `src/components/ui/` or `src/components/layout/`

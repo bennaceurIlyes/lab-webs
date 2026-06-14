@@ -1,0 +1,169 @@
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.pageHero {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  padding: var(--space-16) 0 var(--space-12);
+  color: #fff;
+}
+
+.heroInner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.breadcrumb {
+  font-size: var(--size-sm);
+  color: var(--color-sand);
+  margin-bottom: var(--space-4);
+}
+
+.breadcrumb a {
+  color: var(--color-sand);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.heroTitle {
+  font-family: var(--font-heading);
+  font-size: var(--size-4xl);
+  font-weight: 700;
+}
+
+.section {
+  padding: var(--space-12) 0 var(--space-24);
+  background-color: var(--color-bg-page);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--space-8);
+}
+
+.card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-accent);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.acronym {
+  background-color: var(--color-primary-light);
+  color: #ffffff;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--size-xs);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.count {
+  font-size: var(--size-sm);
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.teamTitle {
+  font-family: var(--font-heading);
+  font-size: var(--size-xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-4);
+}
+
+.titleLink {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.titleLink:hover {
+  color: var(--color-accent);
+}
+
+.description {
+  font-size: var(--size-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: var(--space-6);
+  flex-grow: 1;
+}
+
+.leaderInfo {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-4);
+  margin-bottom: var(--space-6);
+  font-size: var(--size-sm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.leaderLabel {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.leaderName {
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.leaderName:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.cardFooter {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-4);
+  margin-top: auto;
+}
+
+.viewBtn {
+  font-size: var(--size-sm);
+  color: var(--color-accent);
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--transition);
+}
+
+.viewBtn:hover {
+  color: var(--color-accent-hover);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}

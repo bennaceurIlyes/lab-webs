@@ -47,11 +47,11 @@
 }
 
 .sectionHeading {
-  font-family: var(--font-heading);
+  font-family: var(--font-display);
   font-size: var(--size-3xl);
-  color: var(--color-primary);
-  border-left: 4px solid var(--color-accent);
-  padding-left: var(--space-4);
+  color: var(--color-navy-900);
+  border-inline-start: 4px solid var(--color-terracotta-500);
+  padding-inline-start: var(--space-4);
 }
 
 .text {
@@ -61,12 +61,13 @@
 }
 
 .mission {
-  border-left: 4px solid var(--color-accent);
+  border-inline-start: 4px solid var(--color-terracotta-500);
   padding: var(--space-4) var(--space-6);
-  background: rgba(0, 153, 204, 0.05);
+  background: var(--color-sand-50);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-family: var(--font-body);
   font-style: italic;
-  color: var(--color-text-muted);
+  color: var(--color-slate-600);
   line-height: 1.7;
 }
 
@@ -100,34 +101,114 @@
   letter-spacing: 0.5px;
 }
 
-.chartCol {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.orgChart {
-  width: 100%;
-  background: var(--color-bg);
+.directorCard {
+  background: var(--color-bg-container);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);
   padding: var(--space-8);
-}
-
-.orgChartPlaceholder {
+  box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-4);
-  min-height: 300px;
-  justify-content: center;
+  text-align: center;
 }
 
-.chartLabel {
-  font-size: var(--size-sm);
-  color: var(--color-text-muted);
-  font-weight: 600;
+.directorPhotoWrap {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--color-accent);
+  margin-bottom: var(--space-4);
+  box-shadow: var(--shadow-sm);
 }
+
+.directorPhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.directorName {
+  font-family: var(--font-heading);
+  font-size: var(--size-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.directorTitleText {
+  font-size: var(--size-xs);
+  color: var(--color-accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: var(--space-1) 0 var(--space-4) 0;
+}
+
+.directorQuote {
+  font-size: var(--size-sm);
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.axesBlock {
+  margin-top: var(--space-16);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-12);
+}
+
+.axesHeading {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-align: center;
+  margin-bottom: var(--space-10);
+}
+
+.axesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.axisCard {
+  background: var(--color-bg-container);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.axisCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.axisIcon {
+  font-size: var(--size-3xl);
+  margin-bottom: var(--space-4);
+}
+
+.axisTitle {
+  font-family: var(--font-heading);
+  font-size: var(--size-md);
+  font-weight: 700;
+  color: var(--color-text-dark);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.axisDesc {
+  font-size: var(--size-sm);
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+
 
 @media (max-width: 768px) {
   .twoCol {
@@ -140,6 +221,10 @@
 
   .highlights {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .axesGrid {
+    grid-template-columns: 1fr;
   }
 }
 

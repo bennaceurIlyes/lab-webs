@@ -1,17 +1,21 @@
-/* NewsGrid — 3 news cards with images, categories, excerpts */
-import { useEffect, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
-import { useLanguage } from '../../context/LanguageContext';
-import { news } from '../../data/news';
+import { dbService } from '../../lib/dbService';
+import { Link } from 'react-router-dom';
 import Tag from '../ui/Tag';
 import styles from './NewsGrid.module.css';
 
 export default function NewsGrid() {
-  const { t } = useTranslation();
-  const { lang } = useLanguage();
+  const { t, lang } = useTranslation();
+  const [newsItems, setNewsItems] = useState([]);
   const cardsRef = useRef([]);
 
   useEffect(() => {
+    dbService.getNews(lang).then(data => {
+      // Top 3 news for homepage
+      setNewsItems(data.slice(0, 3));
+    });
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -28,13 +32,11 @@ export default function NewsGrid() {
     });
 
     return () => observer.disconnect();
-  }, []);
-
-  const topNews = news.slice(0, 3);
+  }, [lang, newsItems.length]);
 
   function formatDate(dateStr) {
     const d = new Date(dateStr);
-    return d.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {
+    return d.toLocaleDateString(lang === 'ar' ? 'ar-DZ' : (lang === 'fr' ? 'fr-FR' : 'en-US'), {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
@@ -43,35 +45,37 @@ export default function NewsGrid() {
 
   return (
     <div className={styles.newsColumn}>
-      {topNews.map((item, i) => (
+      {newsItems.map((item, i) => (
         <article
           key={item.id}
           className={`${styles.card} fade-in-up`}
           ref={el => cardsRef.current[i] = el}
           style={{ animationDelay: `${i * 100}ms` }}
         >
-          <div className={styles.imageWrap}>
-            <img
-              src={item.image}
-              alt=""
-              className={styles.image}
-              loading="lazy"
-            />
-          </div>
+          {item.photo_url && (
+            <div className={styles.imageWrap}>
+              <img
+                src={item.photo_url}
+                alt=""
+                className={styles.image}
+                loading="lazy"
+              />
+            </div>
+          )}
           <div className={styles.content}>
             <div className={styles.meta}>
-              <Tag label={item.category} />
-              <span className={styles.date}>{formatDate(item.date)}</span>
+              <Tag label={lang === 'ar' ? 'مستجدات' : (lang === 'fr' ? 'Actualité' : 'News')} />
+              <span className={styles.date}>{formatDate(item.published_at || item.created_at)}</span>
             </div>
             <h3 className={styles.title}>
-              {lang === 'en' && item.titleEn ? item.titleEn : item.title}
+              {item.title}
             </h3>
             <p className={styles.excerpt}>
-              {lang === 'en' && item.excerptEn ? item.excerptEn : item.excerpt}
+              {item.description}
             </p>
-            <a href={`#news-${item.id}`} className={styles.readMore}>
+            <Link to={`/news/${item.id}`} className={styles.readMore}>
               {t('readMore')}
-            </a>
+            </Link>
           </div>
         </article>
       ))}

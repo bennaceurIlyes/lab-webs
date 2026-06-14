@@ -1,35 +1,39 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from '../../hooks/useTranslation';
-import { departments } from '../../data/departments';
+import { dbService } from '../../lib/dbService';
 import styles from './NavBar.module.css';
 
 export default function NavBar() {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [megaOpen, setMegaOpen] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileAccordion, setMobileAccordion] = useState(null);
+  const [teams, setTeams] = useState([]);
   const navRef = useRef(null);
   const megaTimeout = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Load teams for mega menu
+    dbService.getTeams(lang).then(data => setTeams(data));
+
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lang]);
 
   useEffect(() => {
     setMobileOpen(false);
   }, [location]);
 
   const navItems = [
-    { key: 'lab', label: t('navLab'), path: '/about', hasMega: false, hasChevron: true },
-    { key: 'research', label: t('navResearch'), path: '/research', hasMega: true, hasChevron: true },
-    { key: 'partnerships', label: t('navPartnerships'), path: '#partnerships', hasMega: false, hasChevron: true },
-    { key: 'news', label: t('navNews'), path: '/news', hasMega: false, hasChevron: true },
-    { key: 'jobs', label: t('navJobs'), path: '/jobs', hasMega: false, hasChevron: false },
+    { key: 'home', label: t('navHome'), path: '/', hasMega: false },
+    { key: 'about', label: t('navAbout'), path: '/about', hasMega: false },
+    { key: 'news', label: t('navNews'), path: '/news', hasMega: false },
+    { key: 'publications', label: t('navPublications'), path: '/articles', hasMega: false },
+    { key: 'teams', label: t('navTeam') || 'Teams', path: '/teams', hasMega: true, hasChevron: true },
   ];
 
   function handleMegaEnter(key) {
@@ -41,10 +45,6 @@ export default function NavBar() {
     megaTimeout.current = setTimeout(() => setMegaOpen(null), 150);
   }
 
-  function toggleAccordion(id) {
-    setMobileAccordion(prev => prev === id ? null : id);
-  }
-
   return (
     <nav
       className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}
@@ -52,14 +52,14 @@ export default function NavBar() {
       role="navigation"
       aria-label="Main navigation"
     >
-      <div className={styles.inner}>
-        {/* Mobile Logo (only visible in mobile header style navbar) */}
-        <Link to="/" className={styles.mobileLogo} aria-label="LMNP Home">
-          <span className={styles.mobileLogoText}>LMNP</span>
+      <div className={`${styles.inner} flex-row-reverse-rtl`}>
+        {/* Mobile Logo */}
+        <Link to="/" className={styles.mobileLogo} aria-label="LDREAS Home">
+          <span className={styles.mobileLogoText}>LDREAS</span>
         </Link>
 
         {/* Desktop nav */}
-        <ul className={styles.navList}>
+        <ul className={`${styles.navList} flex-row-reverse-rtl`}>
           {navItems.map(item => (
             <li
               key={item.key}
@@ -74,7 +74,7 @@ export default function NavBar() {
                 aria-expanded={item.hasMega ? megaOpen === item.key : undefined}
               >
                 {item.label}
-                {item.hasChevron && <span className={styles.navChevron}> &gt;</span>}
+                {item.hasChevron && <span className={styles.navChevron}> ▾</span>}
               </Link>
               {item.hasMega && (
                 <div
@@ -83,37 +83,24 @@ export default function NavBar() {
                   onMouseLeave={handleMegaLeave}
                 >
                   <div className={styles.megaInner}>
-                    {departments.map(dept => (
-                      <div key={dept.id} className={styles.megaColumn}>
-                        <Link to="/research" className={styles.megaHeading}>{dept.id}</Link>
-                        <span className={styles.megaDeptName}>{dept.name}</span>
-                        <ul className={styles.megaTeams}>
-                          {dept.teams.map(team => (
-                            <li key={team.id}>
-                              <a href={`#${team.id}`} className={styles.megaTeamLink}>{team.name}</a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
+                    <div className={styles.megaColumn}>
+                      <span className={styles.megaHeading}>{t('navTeam') || 'Research Teams'}</span>
+                      <span className={styles.megaDeptName}>{t('projectsSubtitle')}</span>
+                      <ul className={styles.megaTeams}>
+                        {teams.map(team => (
+                          <li key={team.id}>
+                            <Link to={`/teams/${team.id}`} className={styles.megaTeamLink}>
+                              <strong>{team.acronym}</strong> - {team.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               )}
             </li>
           ))}
-          {/* Search Button */}
-          <li className={styles.searchItem}>
-            <button
-              className={styles.searchBtn}
-              aria-label="Search website"
-              onClick={() => alert('Search functionality is simulated.')}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-            </button>
-          </li>
         </ul>
 
         {/* Hamburger button */}
@@ -135,7 +122,7 @@ export default function NavBar() {
       {mobileOpen && (
         <div className={styles.mobileOverlay}>
           <div className={styles.mobileHeader}>
-            <span className={styles.mobileTitle}>LMNP</span>
+            <span className={styles.mobileTitle}>LDREAS</span>
             <button
               className={styles.closeBtn}
               onClick={() => setMobileOpen(false)}
@@ -150,47 +137,9 @@ export default function NavBar() {
           <ul className={styles.mobileList}>
             {navItems.map(item => (
               <li key={item.key} className={styles.mobileItem}>
-                {item.hasMega ? (
-                  <>
-                    <button
-                      className={styles.mobileLink}
-                      onClick={() => toggleAccordion(item.key)}
-                      aria-expanded={mobileAccordion === item.key}
-                    >
-                      {item.label}
-                      <svg
-                        className={`${styles.chevron} ${mobileAccordion === item.key ? styles.chevronOpen : ''}`}
-                        width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5"
-                      >
-                        <polyline points="4,6 8,10 12,6" />
-                      </svg>
-                    </button>
-                    {mobileAccordion === item.key && (
-                      <div className={styles.mobileAccordion}>
-                        {departments.map(dept => (
-                          <div key={dept.id} className={styles.mobileAccordionGroup}>
-                            <Link to="/research" className={styles.mobileAccordionTitle} onClick={() => setMobileOpen(false)}>
-                              {dept.id} — {dept.name}
-                            </Link>
-                            <ul>
-                              {dept.teams.map(team => (
-                                <li key={team.id}>
-                                  <a href={`#${team.id}`} className={styles.mobileTeamLink} onClick={() => setMobileOpen(false)}>
-                                    {team.name}
-                                  </a>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <Link to={item.path} className={styles.mobileLink} onClick={() => setMobileOpen(false)}>
-                    {item.label}
-                  </Link>
-                )}
+                <Link to={item.path} className={styles.mobileLink} onClick={() => setMobileOpen(false)}>
+                  {item.label}
+                </Link>
               </li>
             ))}
           </ul>

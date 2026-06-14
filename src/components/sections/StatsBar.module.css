@@ -1,6 +1,6 @@
 /* StatsBar styles — dark primary background with flex row of stats */
 .statsBar {
-  background: var(--color-primary);
+  background: var(--color-navy-900);
   padding: var(--space-8) 0;
 }
 
@@ -23,7 +23,7 @@
 
 .divider {
   position: absolute;
-  right: 0;
+  inset-inline-end: 0;
   top: 10%;
   height: 80%;
   width: 1px;

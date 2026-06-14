@@ -1,21 +1,9 @@
 .header {
   position: relative;
-  height: 140px;
-  background-color: #f7f9fc;
+  min-height: 120px;
+  background-color: var(--color-sand-50);
   border-bottom: 1px solid var(--color-border);
-  overflow: hidden;
   width: 100%;
-}
-
-.gridBackground {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.8;
 }
 
 .inner {
@@ -25,21 +13,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-right: var(--space-6);
+  padding: var(--space-4) var(--space-6);
+  max-width: var(--max-width);
+  margin: 0 auto;
 }
 
 .logoContainer {
-  height: 100%;
-  width: 240px;
-  background-color: #ffffff;
   display: flex;
   align-items: center;
-  justify-content: center;
-  /* Slanted diagonal right edge */
-  clip-path: polygon(0 0, 100% 0, 82% 100%, 0 100%);
-  padding-right: 35px;
   flex-shrink: 0;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
 }
 
 .logoLink {
@@ -60,41 +42,35 @@
 
 .branding {
   flex-grow: 1;
-  padding-left: var(--space-6);
+  padding-inline-start: var(--space-6);
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .labName {
-  font-family: var(--font-heading);
-  font-size: 1.35rem;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #222222;
+  color: var(--color-navy-900);
   margin: 0 0 var(--space-1) 0;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
-/* Colored initial letters */
-.letterL {
-  color: #592e8a; /* Purple */
-  font-weight: 800;
+.affiliations {
+  font-family: var(--font-body);
+  font-size: var(--size-sm);
+  color: var(--color-slate-400);
+  margin: 0;
 }
 
-.letterM {
-  color: var(--color-primary); /* Blue */
-  font-weight: 800;
+.directorName {
+  font-family: var(--font-body);
+  font-size: var(--size-xs);
+  color: var(--color-slate-400);
+  margin: var(--space-1) 0 0 0;
 }
 
-.letterN {
-  color: #009e5b; /* Green */
-  font-weight: 800;
-}
-
-.letterP {
-  color: var(--color-accent); /* Orange */
-  font-weight: 800;
-}
 
 .affiliations {
   font-size: var(--size-xs);
@@ -140,32 +116,29 @@
 
 .langBtn {
   background: none;
-  border: 1px solid transparent;
+  border: none;
   cursor: pointer;
-  padding: 2px;
+  padding: var(--space-1) var(--space-2);
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-sm);
   transition: all var(--transition);
-  opacity: 0.5;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--size-xs);
+  color: var(--color-slate-400);
 }
 
 .langBtn:hover {
-  opacity: 0.8;
-  border-color: var(--color-border);
+  color: var(--color-navy-900);
 }
 
 .langBtn.activeLang {
-  opacity: 1;
-  border-color: var(--color-primary);
-  background-color: rgba(0, 108, 181, 0.05);
+  color: var(--color-terracotta-500);
+  background-color: var(--color-sand-100);
 }
 
-.langBtn svg {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  border-radius: 1px;
-}
 
 /* Responsive adjustments */
 @media (max-width: 1024px) {
@@ -174,7 +147,6 @@
   }
   .logoContainer {
     width: 200px;
-    padding-right: 25px;
   }
 }
 
@@ -202,7 +174,7 @@
   }
   
   .branding {
-    padding-left: 0;
+    padding-inline-start: 0;
     text-align: center;
   }
   

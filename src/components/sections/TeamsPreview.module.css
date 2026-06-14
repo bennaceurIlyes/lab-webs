@@ -1,0 +1,123 @@
+.section {
+  padding: var(--space-16) 0;
+  background-color: var(--color-sand-100);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-8);
+  margin-top: var(--space-10);
+}
+
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-terracotta-500);
+}
+
+/* Scroll animation support */
+:global(.fade-in-up).visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.acronym {
+  background-color: var(--color-navy-800);
+  color: var(--color-sand-50);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--size-xs);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.memberCount {
+  font-family: var(--font-body);
+  font-size: var(--size-sm);
+  color: var(--color-slate-400);
+  font-weight: 500;
+}
+
+.teamName {
+  font-family: var(--font-display);
+  font-size: var(--size-xl);
+  font-weight: 700;
+  color: var(--color-navy-900);
+  margin-bottom: var(--space-3);
+  line-height: 1.4;
+}
+
+.description {
+  font-family: var(--font-body);
+  font-size: var(--size-sm);
+  color: var(--color-slate-600);
+  line-height: 1.6;
+  margin-bottom: var(--space-6);
+  flex-grow: 1;
+}
+
+.link {
+  font-family: var(--font-body);
+  font-size: var(--size-sm);
+  color: var(--color-terracotta-500);
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--transition);
+  margin-top: auto;
+}
+
+.link:hover {
+  color: var(--color-terracotta-600);
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-12) 0;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  .card {
+    padding: var(--space-6);
+  }
+}

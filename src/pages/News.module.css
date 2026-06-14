@@ -139,50 +139,96 @@
   flex: 1;
 }
 
-.readMore {
+.readMoreBtn {
+  font-family: var(--font-body);
   font-size: var(--size-sm);
   font-weight: 600;
   color: var(--color-accent);
-  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
   transition: color var(--transition);
 }
 
-.readMore:hover {
+html[dir="rtl"] .readMoreBtn {
+  text-align: right;
+}
+
+.readMoreBtn:hover {
   color: var(--color-accent-hover);
+  text-decoration: underline;
 }
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-2);
-  margin-top: var(--space-8);
-}
-
-.pageBtn {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  background: #fff;
-  color: var(--color-text);
-  font-weight: 600;
+.backBtn {
+  font-family: var(--font-body);
   font-size: var(--size-sm);
+  font-weight: 600;
+  color: var(--color-accent);
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
   cursor: pointer;
+  margin-bottom: var(--space-4);
+  color: #fff;
   transition: all var(--transition);
 }
 
-.pageBtn:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+.backBtn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
-.pageBtnActive {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: #fff;
+.detailCard {
+  background: var(--color-bg-container);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-md);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+html[dir="rtl"] .detailCard {
+  text-align: right;
+}
+
+.detailMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.detailPhotoWrap {
+  width: 100%;
+  max-height: 400px;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-6);
+}
+
+.detailPhoto {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.detailDesc {
+  font-size: var(--size-lg);
+  font-weight: 500;
+  color: var(--color-text-dark);
+  line-height: 1.6;
+  margin: 0 0 var(--space-6) 0;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-4);
+}
+
+.detailContent {
+  font-size: var(--size-base);
+  line-height: 1.8;
+  color: var(--color-text);
 }
 
 @media (max-width: 768px) {

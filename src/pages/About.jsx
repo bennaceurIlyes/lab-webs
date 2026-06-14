@@ -1,9 +1,46 @@
-/* About page — laboratory information with page hero and two-column layout */
+import { useEffect, useState } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
+import { dbService } from '../lib/dbService';
 import styles from './About.module.css';
 
 export default function About() {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
+  const [counts, setCounts] = useState({ teams: 0, members: 0, articles: 0 });
+
+  useEffect(() => {
+    Promise.all([
+      dbService.getTeams(lang),
+      dbService.getMembers(lang),
+      dbService.getArticles(lang)
+    ]).then(([teamsData, membersData, articlesData]) => {
+      setCounts({
+        teams: teamsData.length,
+        members: membersData.length,
+        articles: articlesData.length
+      });
+    }).catch(err => console.error("Error loading about page counts", err));
+  }, [lang]);
+
+  const axes = [
+    {
+      title: lang === 'ar' ? 'الطاقة الشمسية الكهروضوئية في الصحراء' : (lang === 'fr' ? 'Photovoltaïque Solaire Saharien' : 'Saharan Solar Photovoltaics'),
+      desc: lang === 'ar' 
+        ? 'تحسين مردودية الخلايا الشمسية ودراسة طبقات طاردة الغبار وحماية الألواح من درجات الحرارة العالية.' 
+        : (lang === 'fr' ? 'Optimisation des rendements PV et développement de couches anti-poussière sous hautes chaleurs.' : 'PV panel yield optimization and anti-soiling coatings under extreme dry climates.')
+    },
+    {
+      title: lang === 'ar' ? 'أنظمة الطاقة الشمسية المركزة والتخزين الحراري' : (lang === 'fr' ? 'Solaire Concentré (CSP) & Stockage' : 'Concentrated Solar (CSP) & Thermal Storage'),
+      desc: lang === 'ar' 
+        ? 'تصميم لواقط حرارية للمحطات المركزة واختبار الأملاح الذائبة لتخزين الطاقة واستغلالها ليلاً.' 
+        : (lang === 'fr' ? 'Conception de récepteurs thermiques CSP et expérimentation de sels fondus pour le stockage nocturne.' : 'Designing high-temp receivers and molten salt materials for thermal capture and dispatch.')
+    },
+    {
+      title: lang === 'ar' ? 'طاقة الرياح والشبكات الذكية المعزولة' : (lang === 'fr' ? 'Énergie Éolienne & Micro-Réseaux' : 'Wind Energy & Hybrid Micro-Grids'),
+      desc: lang === 'ar' 
+        ? 'نمذجة التيارات الهوائية المنخفضة وتصميم شفرات توربينات ملائمة للصحراء والتحكم بالشبكات الصغيرة.' 
+        : (lang === 'fr' ? 'Modélisation des courants éoliens sahariens et conception de micro-réseaux intelligents autonomes.' : 'Saharan wind profiling and dynamic controllers for off-grid hybrid power platforms.')
+    }
+  ];
 
   return (
     <main id="main-content">
@@ -20,53 +57,63 @@ export default function About() {
       {/* About content */}
       <section className={styles.section}>
         <div className={styles.container}>
-          <div className={styles.twoCol}>
+          <div className={`${styles.twoCol} flex-row-reverse-rtl`}>
             <div className={styles.textCol}>
               <h2 className={styles.sectionHeading}>{t('aboutIntroTitle')}</h2>
               <p className={styles.text}>{t('aboutIntroText')}</p>
               <blockquote className={styles.mission}>
-                <p>{t('aboutMission')}</p>
+                <p>{t('missionText')}</p>
               </blockquote>
+              
               <div className={styles.highlights}>
                 <div className={styles.highlightCard}>
-                  <span className={styles.highlightNumber}>340+</span>
+                  <span className={styles.highlightNumber}>{counts.members || 6}</span>
                   <span className={styles.highlightLabel}>{t('statMembers')}</span>
                 </div>
                 <div className={styles.highlightCard}>
-                  <span className={styles.highlightNumber}>22</span>
+                  <span className={styles.highlightNumber}>{counts.teams || 3}</span>
                   <span className={styles.highlightLabel}>{t('statTeams')}</span>
                 </div>
                 <div className={styles.highlightCard}>
-                  <span className={styles.highlightNumber}>5</span>
-                  <span className={styles.highlightLabel}>{t('statDepartments')}</span>
+                  <span className={styles.highlightNumber}>{counts.articles || 3}</span>
+                  <span className={styles.highlightLabel}>{t('navPublications')}</span>
                 </div>
               </div>
             </div>
-            <div className={styles.chartCol}>
-              <div className={styles.orgChart}>
-                <div className={styles.orgChartPlaceholder}>
-                  <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5">
-                    <rect x="24" y="4" width="32" height="16" rx="3" />
-                    <line x1="40" y1="20" x2="40" y2="30" />
-                    <line x1="16" y1="30" x2="64" y2="30" />
-                    <line x1="16" y1="30" x2="16" y2="38" />
-                    <line x1="40" y1="30" x2="40" y2="38" />
-                    <line x1="64" y1="30" x2="64" y2="38" />
-                    <rect x="4" y="38" width="24" height="12" rx="2" />
-                    <rect x="28" y="38" width="24" height="12" rx="2" />
-                    <rect x="52" y="38" width="24" height="12" rx="2" />
-                    <line x1="16" y1="50" x2="16" y2="56" />
-                    <line x1="40" y1="50" x2="40" y2="56" />
-                    <line x1="64" y1="50" x2="64" y2="56" />
-                    <rect x="8" y="56" width="16" height="8" rx="2" />
-                    <rect x="32" y="56" width="16" height="8" rx="2" />
-                    <rect x="56" y="56" width="16" height="8" rx="2" />
-                  </svg>
-                  <span className={styles.chartLabel}>{t('aboutOrgChart')}</span>
-                </div>
+
+            {/* Director Message Card */}
+            <div className={styles.directorCard}>
+              <div className={styles.directorPhotoWrap}>
+                <img 
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80" 
+                  alt="Prof. Abdelkader NOURI" 
+                  className={styles.directorPhoto}
+                />
               </div>
+              <h3 className={styles.directorName}>{t('directorLabel')}</h3>
+              <p className={styles.directorTitleText}>{t('directorTitle')}</p>
+              <p className={styles.directorQuote}>"{t('directorText')}"</p>
             </div>
           </div>
+
+          {/* Research Axes Section */}
+          <div className={styles.axesBlock}>
+            <h2 className={styles.axesHeading}>{t('researchAxesTitle')}</h2>
+            <div className={`${styles.axesGrid} flex-row-reverse-rtl`}>
+              {axes.map((ax, idx) => (
+                <div key={idx} className={styles.axisCard}>
+                  <div className={styles.axisIcon}>
+                    {idx === 0 && '☀️'}
+                    {idx === 1 && '🔥'}
+                    {idx === 2 && '💨'}
+                  </div>
+                  <h4 className={styles.axisTitle}>{ax.title}</h4>
+                  <p className={styles.axisDesc}>{ax.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
       </section>
     </main>

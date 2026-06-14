@@ -1,462 +1,678 @@
-.section {
-  padding: var(--space-12) 0;
-  background-color: var(--color-bg-page);
-  border-top: 1px solid var(--color-border);
-}
+/* ================================================================
+   TeamDetail — FIFA Portrait Card Layout
+   Clean institutional palette · Square corners · Portrait flip cards
+   Height > Width (مستطيل عمودي like FIFA)
+   ================================================================ */
 
-.container {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-}
-
-.loadingContainer {
+/* ── Utilities ────────────────────────────────────────────────── */
+.loadingWrap {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 50vh;
 }
-
 .spinner {
-  width: 36px;
-  height: 36px;
-  border: 2px solid var(--color-border);
-  border-top-color: var(--color-primary);
-  animation: spin 0.8s linear infinite;
+  width: 32px; height: 32px;
+  border: 2px solid #D0D0D0;
+  border-top-color: #0056B3;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
 }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.errorCard {
+.errorBox {
   text-align: center;
-  padding: var(--space-16) 0;
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-}
-
-.errorCard h2 {
-  font-family: var(--font-display);
-  margin-bottom: var(--space-6);
-  color: var(--color-text-dark);
-}
-
-.teamTag {
+  padding: 64px 32px;
   font-family: var(--font-body);
-  font-size: var(--size-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--color-primary);
-  letter-spacing: 0.05em;
+  color: #555;
+}
+
+/* ================================================================
+   PAGE HEADER — light, institutional
+   ================================================================ */
+.pageHeader {
+  background: #ffffff;
+  border-bottom: 1px solid #D0D0D0;
+  padding: 48px 0 40px;
+}
+.headerInner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+  margin-top: 20px;
+}
+.headerText { flex: 1; min-width: 0; }
+
+.headerKicker {
   display: inline-block;
-  margin-bottom: var(--space-2);
-}
-
-/* ── Intro Block ── */
-.introCard {
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  padding: var(--space-8);
-  margin-bottom: var(--space-10);
-}
-
-.descriptionText {
   font-family: var(--font-body);
-  font-size: var(--size-base);
-  line-height: 1.7;
-  color: var(--color-slate-600);
-  margin: 0;
-}
-
-/* ── Layout Grid ── */
-.layoutGrid {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: var(--space-10);
-  align-items: start;
-}
-
-.directoryCol {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-10);
-}
-
-/* Headings */
-.sectionHeading {
-  font-family: var(--font-display);
-  font-size: var(--size-xl);
+  font-size: 11px;
   font-weight: 700;
-  color: var(--color-text-dark);
-  margin: 0 0 var(--space-6) 0;
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: var(--space-3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #0056B3;
+  border-left: 3px solid #0056B3;
+  padding-left: 10px;
+  margin-bottom: 12px;
+}
+.headerTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  color: #212121;
+  line-height: 1.2;
+  margin: 0 0 14px 0;
+}
+.headerDesc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #555555;
+  margin: 0;
+  max-width: 64ch;
 }
 
-/* ── Leader Highlight Card ── */
-.leaderCardBlock {
+/* Stats box */
+.statsBox {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid #D0D0D0;
+  background: #F8F8F8;
+  flex-shrink: 0;
+}
+.statItem {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 28px;
+  gap: 6px;
 }
-
-.leaderCard {
+.statNum {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #0056B3;
+  line-height: 1;
+}
+.statLabel {
   display: flex;
   align-items: center;
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: var(--space-6);
-  gap: var(--space-8);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-  transition: var(--transition);
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #777777;
+}
+.statDivider {
+  width: 1px;
+  background: #D0D0D0;
+  align-self: stretch;
 }
 
-.leaderCard:hover {
-  border-color: var(--color-primary);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+/* ================================================================
+   CONTENT SECTION
+   ================================================================ */
+.contentSection {
+  background: #F8F8F8;
+  padding: 48px 0 80px;
+}
+.contentWrap {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
 }
 
-.leaderPhotoWrap {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  border: 1px solid var(--color-border);
-  overflow: hidden;
-  background: var(--color-surface);
+/* ── Block ── */
+.block {}
+
+.blockTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #555555;
+  margin: 0 0 24px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #D0D0D0;
+}
+.titleBar {
+  display: inline-block;
+  width: 3px;
+  height: 14px;
+  background: #0056B3;
   flex-shrink: 0;
 }
 
-.leaderPhoto {
+/* ================================================================
+   FLIP CARD — Core 3-D CSS Mechanism
+   Square corners (no border-radius), portrait tall rectangle
+   ================================================================ */
+
+/* Container — sets perspective and locks the portrait dimensions */
+.flipCard {
+  perspective: 1200px;
+  cursor: pointer;
+  /* No border-radius — square */
+}
+
+/* Leader card — larger portrait */
+.flipCardLeader {
+  width: 260px;     /* fixed portrait width */
+  height: 370px;    /* height > width  ≈  FIFA ratio 1:1.42 */
+}
+
+/* Regular member card — standard portrait */
+.flipCardMember {
+  width: 100%;      /* fills grid column */
+  aspect-ratio: 10 / 15;   /* width:height = 10:15 = 2:3 portrait ratio */
+}
+
+/* Rotating inner wrapper */
+.flipInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.flipCard:hover .flipInner,
+.flipCard:focus-within .flipInner {
+  transform: rotateY(180deg);
+}
+
+/* Both faces share these rules */
+.flipFace {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* Square — no border-radius */
+}
+
+/* FRONT: white card with border */
+.flipFront {
+  background: #ffffff;
+  border: 1px solid #D0D0D0;
+}
+
+/* BACK: academic blue */
+.flipBack {
+  background: #0056B3;
+  border: 1px solid #0056B3;
+  transform: rotateY(180deg);
+}
+
+/* ================================================================
+   FRONT FACE — FIFA card layout
+   Top section (58%): avatar fills edge-to-edge
+   Bottom section (42%): info text
+   ================================================================ */
+
+/* Avatar area — takes up top ~58% of card, no padding, edge-to-edge */
+.cardImgArea {
+  flex: 0 0 58%;
+  position: relative;
+  overflow: hidden;
+  background: #EFEFEF;
+  /* No border-radius */
+}
+
+.cardImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+  /* Square crop */
 }
 
-.leaderPhotoPlaceholder {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+/* Initials placeholder — fills the avatar area */
+.cardInitials {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-body);
-  font-size: var(--size-3xl);
+  font-size: 3.2rem;
   font-weight: 700;
-  color: var(--color-slate-600);
-  flex-shrink: 0;
+  color: #0056B3;
+  background: #EEF3FA;
+  letter-spacing: -0.02em;
+  user-select: none;
 }
 
-.leaderInfo {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.gradeBadge {
+/* Leader ribbon badge overlay on image */
+.leaderRibbon {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  background: #0056B3;
+  color: #ffffff;
   font-family: var(--font-body);
-  font-size: var(--size-xs);
-  font-weight: 600;
-  color: var(--color-primary);
+  font-size: 10px;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 10px 3px 8px;
+  /* Square — no border-radius */
 }
 
-.leaderName {
-  font-family: var(--font-display);
-  font-size: var(--size-xl);
-  font-weight: 700;
-  color: var(--color-text-dark);
-  margin: 0;
-}
-
-.memberNameLink {
-  text-decoration: none;
-}
-
-.memberNameLink:hover h3,
-.memberNameLink:hover h4 {
-  color: var(--color-primary);
-  text-decoration: underline;
-}
-
-.specialty, .degree {
-  font-family: var(--font-body);
-  font-size: var(--size-sm);
-  color: var(--color-slate-600);
-  margin: 0;
-}
-
-.bioExcerpt {
-  font-family: var(--font-body);
-  font-size: var(--size-sm);
-  line-height: 1.6;
-  color: var(--color-slate-600);
-  margin: var(--space-2) 0;
-}
-
-.leaderActions {
-  margin-top: var(--space-2);
-}
-
-.emailBtn {
-  font-family: var(--font-body);
-  font-size: var(--size-xs);
-  font-weight: 700;
-  color: var(--color-primary);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  padding: 4px 12px;
-  text-decoration: none;
-  cursor: pointer;
-  display: inline-block;
-  transition: var(--transition);
-}
-
-.emailBtn:hover {
-  background: var(--color-primary);
-  color: #FFFFFF;
-  border-color: var(--color-primary);
-}
-
-/* ── Regular Members Grid ── */
-.membersGridBlock {
+/* Info area — bottom 42% of card */
+.cardInfoArea {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 12px 10px;
+  gap: 3px;
+  border-top: 2px solid #0056B3;
 }
 
+.cardGrade {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #0056B3;
+  background: #EEF3FA;
+  border: 1px solid #C2D5EE;
+  padding: 1px 7px;
+  display: inline-block;
+  /* Square */
+}
+
+.cardName {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #212121;
+  margin: 4px 0 0 0;
+  line-height: 1.2;
+}
+
+.cardSpec {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: #555555;
+  margin: 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardDeg {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: #888888;
+  margin: 0;
+}
+
+.hoverHint {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 600;
+  color: #BBBBBB;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-top: 4px;
+}
+
+/* ================================================================
+   BACK FACE — Blue, profile info + CTAs
+   ================================================================ */
+.backContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px 16px;
+  height: 100%;
+  box-sizing: border-box;
+  gap: 7px;
+}
+
+/* Small avatar on back */
+.backAvatarSm {
+  width: 56px;
+  height: 56px;
+  border: 2px solid rgba(255,255,255,0.4);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.1);
+  /* Square */
+}
+.backAvatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.backAvatarInit {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  user-select: none;
+}
+
+.backGrade {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 1px 8px;
+  display: inline-block;
+}
+
+.backName {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.backSpec {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.8);
+  margin: 0;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.backBio {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.75);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Academic IDs strip */
+.backIds {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255,255,255,0.18);
+  width: 100%;
+}
+.idLink {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.idLink:hover {
+  color: #ffffff;
+  border-bottom-color: rgba(255,255,255,0.5);
+}
+
+/* CTA buttons */
+.backActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2px;
+}
+.btnWhite {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  color: #0056B3;
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  padding: 5px 12px;
+  text-decoration: none;
+  transition: background 0.15s;
+  /* Square */
+}
+.btnWhite:hover { background: #EEF3FA; }
+
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 5px 10px;
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+  /* Square */
+}
+.btnGhost:hover {
+  border-color: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.08);
+}
+
+/* ================================================================
+   LEADER CARD WRAP — centered single card
+   ================================================================ */
+.leaderCardWrap {
+  display: flex;
+  justify-content: flex-start; /* or center — left-aligned for academic feel */
+}
+
+/* ================================================================
+   MEMBERS GRID — portrait cards, auto columns
+   ================================================================ */
 .membersGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-6);
+  /* 4 portrait columns; each card is ~220px wide → height ~330px */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 220px));
+  gap: 20px;
 }
 
-.memberCard {
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: var(--space-5);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  position: relative;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-  transition: var(--transition);
-}
-
-.memberCard:hover {
-  border-color: var(--color-primary);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-}
-
-.memberPhotoWrap {
-  width: 90px;
-  height: 90px;
-  overflow: hidden;
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  background: var(--color-surface);
-  margin-bottom: var(--space-4);
-}
-
-.memberPhoto {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.memberPhotoPlaceholder {
-  width: 90px;
-  height: 90px;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-body);
-  font-size: var(--size-xl);
-  font-weight: 700;
-  color: var(--color-slate-600);
-}
-
-.memberGrade {
-  font-family: var(--font-body);
-  font-size: var(--size-xs);
-  color: var(--color-slate-400);
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-.memberName {
-  font-family: var(--font-display);
-  font-size: var(--size-lg);
-  font-weight: 700;
-  color: var(--color-text-dark);
-  margin: 2px 0 var(--space-1) 0;
-}
-
-.memberSpecialty {
-  font-family: var(--font-body);
-  font-size: var(--size-sm);
-  color: var(--color-slate-600);
-  margin: 0 0 var(--space-4) 0;
-  line-height: 1.4;
-  flex-grow: 1;
-}
-
-.memberActions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  margin-top: auto;
-  width: 100%;
-}
-.memberProfileBtn, .memberEmailBtn {
-  font-family: var(--font-body);
-  font-size: var(--size-xs);
-  font-weight: 700;
-  color: var(--color-primary);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  padding: 4px 12px;
-  text-decoration: none;
-  transition: var(--transition);
-  cursor: pointer;
-  display: inline-block;
-}
-
-.memberProfileBtn:hover, .memberEmailBtn:hover {
-  background: var(--color-primary);
-  color: #FFFFFF;
-  border-color: var(--color-primary);
-}
-
-.viewProfileOverlay {
-  display: none; /* Removed generic SaaS hover effect overlay */
-}
-
-.noMembers {
-  padding: var(--space-6);
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  color: var(--color-slate-600);
-  text-align: center;
-}
-
-/* ── Right Column: Projects ── */
-.projectsCol {
-  display: flex;
-  flex-direction: column;
-}
-
-.projectsList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
+/* ================================================================
+   RESEARCH PROJECTS — full-width grid at bottom
+   ================================================================ */
+.projectsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
 }
 
 .projectCard {
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: var(--space-5);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-  transition: var(--transition);
-}
-
-.projectCard:hover {
-  border-color: var(--color-primary);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-}
-
-.projectHeader {
   display: flex;
-  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #D0D0D0;
+  transition: border-color 0.15s;
+  /* Square */
+}
+.projectCard:hover { border-color: #0056B3; }
+
+.projNum {
+  display: flex;
   align-items: center;
-  margin-bottom: var(--space-2);
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.timeline {
-  font-family: var(--font-body);
-  font-size: var(--size-xs);
-  color: var(--color-slate-400);
-}
-
-.projectName {
+  justify-content: center;
+  width: 40px;
+  flex-shrink: 0;
+  background: #F8F8F8;
+  border-right: 1px solid #D0D0D0;
   font-family: var(--font-display);
-  font-size: var(--size-base);
+  font-size: 11px;
   font-weight: 700;
-  color: var(--color-text-dark);
-  margin: 0 0 var(--space-2) 0;
+  color: #aaaaaa;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  padding: 14px 0;
+  letter-spacing: 0.05em;
 }
 
-.projectDesc {
+.projBody {
+  flex: 1;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.projMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* State badges */
+.badge {
   font-family: var(--font-body);
-  font-size: var(--size-sm);
-  line-height: 1.5;
-  color: var(--color-slate-600);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 2px 8px;
+  border: 1px solid;
+  /* Square */
+}
+.ongoing   { background: #EEF3FA; color: #0056B3; border-color: #C2D5EE; }
+.completed { background: #EDFAF0; color: #1e7e34; border-color: #B8E0C4; }
+.planned   { background: #FFF8EE; color: #996300; border-color: #FFDF99; }
+
+.projDate {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: #777777;
+}
+.projDate svg { opacity: 0.6; flex-shrink: 0; }
+
+.projTitle {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #212121;
   margin: 0;
+  line-height: 1.3;
 }
-
-.noProjectsCard {
-  padding: var(--space-6);
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  color: var(--color-slate-600);
-}
-
-/* ── Back button actions ── */
-.footerActions {
-  margin-top: var(--space-10);
-  border-top: 1px solid var(--color-border);
-  padding-top: var(--space-6);
-}
-
-.backBtn {
+.projDesc {
   font-family: var(--font-body);
-  font-size: var(--size-sm);
-  font-weight: 700;
-  color: var(--color-text-dark);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  padding: var(--space-2) var(--space-6);
-  cursor: pointer;
-  transition: var(--transition);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: #555555;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Empty state */
+.emptyBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 24px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #D0D0D0;
+  color: #aaaaaa;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+}
+.emptyBox p { margin: 0; color: #555555; }
+
+/* ================================================================
+   FOOTER NAV
+   ================================================================ */
+.footerNav {
+  padding-top: 24px;
+  border-top: 1px solid #D0D0D0;
+}
+.btnBack {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555555;
+  background: #ffffff;
+  border: 1px solid #D0D0D0;
+  padding: 8px 18px;
   text-decoration: none;
-  display: inline-block;
+  transition: border-color 0.15s, color 0.15s;
+  /* Square */
 }
+.btnBack:hover { color: #0056B3; border-color: #0056B3; }
 
-.backBtn:hover {
-  background: var(--color-primary);
-  color: #FFFFFF;
-  border-color: var(--color-primary);
-}
-
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
 @media (max-width: 900px) {
-  .layoutGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .leaderCard {
-    grid-template-columns: 1fr;
-  }
-
-  .leaderPhotoWrap {
-    width: 140px;
-  }
+  .headerRow { flex-direction: column; gap: 24px; }
+  .statsBox  { align-self: flex-start; }
+  .membersGrid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+  .projectsGrid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {
-  .membersGrid {
-    grid-template-columns: 1fr;
-  }
+  .headerInner, .contentWrap { padding: 0 20px; }
+  .pageHeader { padding: 32px 0 24px; }
+  .membersGrid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .flipCardLeader { width: 200px; height: 285px; }
 }

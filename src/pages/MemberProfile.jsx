@@ -186,22 +186,6 @@ export default function MemberProfile() {
             {/* Right Card: Bio, Metrics dashboard & Publications list */}
             <div className={styles.contentCol}>
               
-              {/* Metrics dashboard */}
-              <div className={styles.metricsDashboard}>
-                <div className={styles.metricCard}>
-                  <div className={styles.metricLabel}>{lang === 'ar' ? 'مؤشر H-Index' : 'H-Index'}</div>
-                  <div className={styles.metricValue}>{member.h_index || 0}</div>
-                </div>
-                <div className={styles.metricCard}>
-                  <div className={styles.metricLabel}>{lang === 'ar' ? 'إجمالي الاقتباسات' : 'Citations'}</div>
-                  <div className={styles.metricValue}>{member.citations_count || 0}</div>
-                </div>
-                <div className={styles.metricCard}>
-                  <div className={styles.metricLabel}>{lang === 'ar' ? 'المنشورات المعترف بها' : 'Publications'}</div>
-                  <div className={styles.metricValue}>{member.publications_count || articles.length}</div>
-                </div>
-              </div>
-
               {/* Bio block */}
               <div className={styles.bioCard}>
                 <h2 className={styles.sectionHeading}>{lang === 'ar' ? 'السيرة العلمية' : (lang === 'fr' ? 'Biographie' : 'Scientific Biography')}</h2>

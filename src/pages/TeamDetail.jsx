@@ -1,237 +1,314 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
 import { dbService } from '../lib/dbService';
-import Tag from '../components/ui/Tag';
 import styles from './TeamDetail.module.css';
 
+/* ── Icons ────────────────────────────────────────────────────── */
+const IcoCal  = () => <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" width="12" height="12" aria-hidden="true"><rect x="2" y="3" width="16" height="15" rx="1"/><path d="M14 1v4M6 1v4M2 9h16"/></svg>;
+const IcoArr  = () => <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.2" width="12" height="12" aria-hidden="true"><path d="M4 10h12M11 4l6 6-6 6"/></svg>;
+const IcoMail = () => <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" width="12" height="12" aria-hidden="true"><rect x="2" y="4" width="16" height="13" rx="1"/><path d="m2 6 8 6 8-6"/></svg>;
+const IcoUsers= () => <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" width="14" height="14" aria-hidden="true"><path d="M13 13c0-2.21-1.343-4-3-4S7 10.79 7 13"/><circle cx="10" cy="6" r="3"/><path d="M16 14c0-1.657-1-3-2.5-3M4 14c0-1.657 1-3 2.5-3"/></svg>;
+const IcoFlask= () => <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" width="14" height="14" aria-hidden="true"><path d="M8 2h4M8 2v6l-4 7a1 1 0 00.9 1.5h10.2A1 1 0 0016 15l-4-7V2"/></svg>;
+
+/* ── State badge ──────────────────────────────────────────────── */
+const STATE = {
+  ongoing:   { en: 'Ongoing',   fr: 'En cours',  ar: 'جاري',  cls: 'ongoing'   },
+  completed: { en: 'Completed', fr: 'Terminé',   ar: 'مكتمل', cls: 'completed' },
+  planned:   { en: 'Planned',   fr: 'Planifié',  ar: 'مخطط',  cls: 'planned'   },
+};
+function StateBadge({ state, lang }) {
+  const s = STATE[state] ?? STATE.planned;
+  const lbl = lang === 'ar' ? s.ar : lang === 'fr' ? s.fr : s.en;
+  return <span className={`${styles.badge} ${styles[s.cls]}`}>{lbl}</span>;
+}
+
+/* ── Helpers ──────────────────────────────────────────────────── */
+function initials(name = '') {
+  const c = name.replace(/^(Prof\.|Dr\.|Mr\.|Mrs\.)\s+/i, '');
+  const p = c.trim().split(/\s+/);
+  return ((p[0]?.[0] ?? '') + (p[1]?.[0] ?? '')).toUpperCase();
+}
+function fmtDate(str, lang) {
+  if (!str) return '';
+  return new Date(str).toLocaleDateString(
+    lang === 'ar' ? 'ar-DZ' : lang === 'fr' ? 'fr-FR' : 'en-US',
+    { year: 'numeric', month: 'short' }
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   FIFA-STYLE PORTRAIT FLIP CARD — LEADER (larger)
+   ══════════════════════════════════════════════════════════════════ */
+function LeaderFlipCard({ leader, lang }) {
+  return (
+    <div className={`${styles.flipCard} ${styles.flipCardLeader}`}>
+      <div className={styles.flipInner}>
+
+        {/* ── FRONT ── */}
+        <div className={`${styles.flipFace} ${styles.flipFront}`}>
+          {/* Avatar fills top 58% edge-to-edge */}
+          <div className={styles.cardImgArea}>
+            {leader.photo_url
+              ? <img src={leader.photo_url} alt={leader.full_name} className={styles.cardImg} />
+              : <div className={styles.cardInitials}>{initials(leader.full_name)}</div>
+            }
+            {/* Leader crown ribbon */}
+            <div className={styles.leaderRibbon} aria-hidden="true">
+              ★ {lang === 'ar' ? 'الرئيس' : lang === 'fr' ? 'Chef' : 'Leader'}
+            </div>
+          </div>
+          {/* Info area — bottom 42% */}
+          <div className={styles.cardInfoArea}>
+            <span className={styles.cardGrade}>{leader.grade}</span>
+            <h3 className={styles.cardName}>{leader.full_name}</h3>
+            <p className={styles.cardSpec}>{leader.specialty}</p>
+            <p className={styles.cardDeg}>{leader.degree}</p>
+            <span className={styles.hoverHint}>
+              {lang === 'ar' ? '← اقلب للمزيد' : lang === 'fr' ? '← Survolez' : '← Hover for profile'}
+            </span>
+          </div>
+        </div>
+
+        {/* ── BACK ── */}
+        <div className={`${styles.flipFace} ${styles.flipBack}`}>
+          <div className={styles.backContent}>
+            <div className={styles.backAvatarSm}>
+              {leader.photo_url
+                ? <img src={leader.photo_url} alt={leader.full_name} className={styles.backAvatarImg} />
+                : <div className={styles.backAvatarInit}>{initials(leader.full_name)}</div>
+              }
+            </div>
+            <span className={styles.backGrade}>{leader.grade}</span>
+            <p className={styles.backName}>{leader.full_name}</p>
+            {leader.bio && <p className={styles.backBio}>{leader.bio}</p>}
+            {(leader.orcid || leader.google_scholar_url || leader.research_gate_url) && (
+              <div className={styles.backIds}>
+                {leader.orcid          && <a href={`https://orcid.org/${leader.orcid}`}  target="_blank" rel="noopener noreferrer" className={styles.idLink}>ORCID</a>}
+                {leader.google_scholar_url && <a href={leader.google_scholar_url}         target="_blank" rel="noopener noreferrer" className={styles.idLink}>Scholar</a>}
+                {leader.research_gate_url  && <a href={leader.research_gate_url}          target="_blank" rel="noopener noreferrer" className={styles.idLink}>ResearchGate</a>}
+              </div>
+            )}
+            <div className={styles.backActions}>
+              <Link to={`/members/${leader.id}`} className={styles.btnWhite}>
+                {lang === 'ar' ? 'الملف' : lang === 'fr' ? 'Profil' : 'Full Profile'} <IcoArr />
+              </Link>
+              <a href={`mailto:${leader.email}`} className={styles.btnGhost}>
+                <IcoMail /> {lang === 'ar' ? 'مراسلة' : 'Email'}
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   FIFA-STYLE PORTRAIT FLIP CARD — MEMBER (standard)
+   ══════════════════════════════════════════════════════════════════ */
+function MemberFlipCard({ member, lang }) {
+  return (
+    <div className={`${styles.flipCard} ${styles.flipCardMember}`}>
+      <div className={styles.flipInner}>
+
+        {/* ── FRONT ── */}
+        <div className={`${styles.flipFace} ${styles.flipFront}`}>
+          <div className={styles.cardImgArea}>
+            {member.photo_url
+              ? <img src={member.photo_url} alt={member.full_name} className={styles.cardImg} />
+              : <div className={styles.cardInitials}>{initials(member.full_name)}</div>
+            }
+          </div>
+          <div className={styles.cardInfoArea}>
+            <span className={styles.cardGrade}>{member.grade}</span>
+            <h4 className={styles.cardName}>{member.full_name}</h4>
+            <p className={styles.cardSpec}>{member.specialty}</p>
+            <span className={styles.hoverHint}>
+              {lang === 'ar' ? '← اقلب' : lang === 'fr' ? '← Survolez' : '← Hover'}
+            </span>
+          </div>
+        </div>
+
+        {/* ── BACK ── */}
+        <div className={`${styles.flipFace} ${styles.flipBack}`}>
+          <div className={styles.backContent}>
+            <div className={styles.backAvatarSm}>
+              {member.photo_url
+                ? <img src={member.photo_url} alt={member.full_name} className={styles.backAvatarImg} />
+                : <div className={styles.backAvatarInit}>{initials(member.full_name)}</div>
+              }
+            </div>
+            <span className={styles.backGrade}>{member.grade}</span>
+            <p className={styles.backName}>{member.full_name}</p>
+            <p className={styles.backSpec}>{member.specialty}</p>
+            <div className={styles.backActions}>
+              <Link to={`/members/${member.id}`} className={styles.btnWhite}>
+                {lang === 'ar' ? 'الملف' : lang === 'fr' ? 'Profil' : 'Profile'} <IcoArr />
+              </Link>
+              <a href={`mailto:${member.email}`} className={styles.btnGhost}>
+                <IcoMail /> {lang === 'ar' ? 'مراسلة' : 'Email'}
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   MAIN COMPONENT
+   ══════════════════════════════════════════════════════════════════ */
 export default function TeamDetail() {
   const { id } = useParams();
   const { t, lang } = useTranslation();
-  const [team, setTeam] = useState(null);
-  const [members, setMembers] = useState([]);
+  const [team,     setTeam]     = useState(null);
+  const [members,  setMembers]  = useState([]);
   const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading,  setLoading]  = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    dbService.getTeamById(id, lang).then(teamData => {
-      if (!teamData) {
-        setLoading(false);
-        return;
-      }
-      setTeam(teamData);
-
-      const fetchMembers = dbService.getMembersByTeam(id, lang);
-      const fetchProjects = dbService.getProjectsByTeam(id, lang);
-
-      return Promise.all([fetchMembers, fetchProjects]).then(([membersData, projectsData]) => {
-        setMembers(membersData);
-        setProjects(projectsData);
-        setLoading(false);
-      });
-    }).catch(err => {
-      console.error("Error loading team details", err);
-      setLoading(false);
-    });
+    dbService.getTeamById(id, lang)
+      .then(td => {
+        if (!td) { setLoading(false); return; }
+        setTeam(td);
+        return Promise.all([
+          dbService.getMembersByTeam(id, lang),
+          dbService.getProjectsByTeam(id, lang),
+        ]).then(([m, p]) => { setMembers(m); setProjects(p); setLoading(false); });
+      })
+      .catch(() => setLoading(false));
   }, [id, lang]);
 
-  const teamLeader = members.find(m => m.id === team?.team_leader_id) || members.find(m => m.role === 'team_leader');
-  const regularMembers = members.filter(m => m.id !== teamLeader?.id);
+  const leader  = members.find(m => m.id === team?.team_leader_id) || members.find(m => m.role === 'team_leader');
+  const regular = members.filter(m => m.id !== leader?.id);
 
-  function formatDate(dateStr) {
-    if (!dateStr) return '';
-    const d = new Date(dateStr);
-    return d.toLocaleDateString(lang === 'ar' ? 'ar-DZ' : (lang === 'fr' ? 'fr-FR' : 'en-US'), {
-      year: 'numeric', month: 'short'
-    });
-  }
+  if (loading) return <main className={styles.loadingWrap}><div className={styles.spinner} /></main>;
 
-  function getProjectStateColor(state) {
-    switch(state) {
-      case 'completed': return 'green';
-      case 'ongoing': return 'blue';
-      case 'planned': return 'orange';
-      default: return 'blue';
-    }
-  }
-
-  function getProjectStateLabel(state) {
-    switch(state) {
-      case 'completed': return t('projectStateCompleted') || 'Completed';
-      case 'ongoing': return t('projectStateOngoing') || 'Ongoing';
-      case 'planned': return t('projectStatePlanned') || 'Planned';
-      default: return state;
-    }
-  }
-
-  function getInitials(fullName) {
-    if (!fullName) return '';
-    const cleanName = fullName.replace(/^(Prof\.|Dr\.|Mr\.|Mrs\.)\s+/i, '');
-    const parts = cleanName.trim().split(/\s+/);
-    return ((parts[0] ? parts[0][0] : '') + (parts[1] ? parts[1][0] : '')).toUpperCase();
-  }
-
-  if (loading) {
-    return (
-      <main className={styles.loadingContainer}>
-        <div className={styles.spinner}></div>
-      </main>
-    );
-  }
-
-  if (!team) {
-    return (
-      <main className={styles.container}>
-        <div className={styles.errorCard}>
-          <h2>{lang === 'ar' ? 'فرقة البحث غير موجودة' : (lang === 'fr' ? 'Équipe non trouvée' : 'Team not found')}</h2>
-          <Link to="/teams" className={styles.backBtn}>
-            {lang === 'ar' ? '← العودة للفرق' : (lang === 'fr' ? '← Retour aux équipes' : '← Back to Teams')}
-          </Link>
-        </div>
-      </main>
-    );
-  }
+  if (!team) return (
+    <main className={styles.contentWrap}>
+      <div className={styles.errorBox}>
+        <p>{lang === 'fr' ? 'Équipe introuvable' : lang === 'ar' ? 'الفرقة غير موجودة' : 'Team not found'}</p>
+        <Link to="/teams" className={styles.btnBack}>← Back</Link>
+      </div>
+    </main>
+  );
 
   return (
     <main id="main-content">
-      {/* Page Hero */}
-      <section className="pageHero">
-        <div className="heroInner">
+
+      {/* ── PAGE HEADER ─────────────────────────────────────────── */}
+      <section className={styles.pageHeader}>
+        <div className={styles.headerInner}>
           <nav className="breadcrumb" aria-label="Breadcrumb">
             <Link to="/">{t('navHome')}</Link> / <Link to="/teams">{t('navTeam') || 'Teams'}</Link> / {team.acronym}
           </nav>
-          <span className={styles.teamTag}>{lang === 'ar' ? 'فرقة بحثية معتمدة' : (lang === 'fr' ? 'Équipe de Recherche' : 'Accredited Research Team')}</span>
-          <h1 className="heroTitle">{team.name} ({team.acronym})</h1>
+
+          <div className={styles.headerRow}>
+            <div className={styles.headerText}>
+              <span className={styles.headerKicker}>
+                {lang === 'ar' ? 'فرقة بحثية معتمدة' : lang === 'fr' ? 'Équipe de Recherche' : 'Research Team'}
+              </span>
+              <h1 className={styles.headerTitle}>{team.name}</h1>
+              <p className={styles.headerDesc}>{team.description}</p>
+            </div>
+
+            <div className={styles.statsBox}>
+              <div className={styles.statItem}>
+                <span className={styles.statNum}>{members.length}</span>
+                <span className={styles.statLabel}><IcoUsers />{lang === 'ar' ? 'باحثون' : lang === 'fr' ? 'Chercheurs' : 'Researchers'}</span>
+              </div>
+              <div className={styles.statDivider} />
+              <div className={styles.statItem}>
+                <span className={styles.statNum}>{projects.length}</span>
+                <span className={styles.statLabel}><IcoFlask />{lang === 'ar' ? 'مشاريع' : lang === 'fr' ? 'Projets' : 'Projects'}</span>
+              </div>
+              <div className={styles.statDivider} />
+              <div className={styles.statItem}>
+                <span className={styles.statNum}>{team.acronym}</span>
+                <span className={styles.statLabel}>Équipe</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Details section */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-          
-          {/* Intro Description */}
-          <div className={styles.introCard}>
-            <p className={styles.descriptionText}>{team.description}</p>
-          </div>
+      {/* ── CONTENT ─────────────────────────────────────────────── */}
+      <section className={styles.contentSection}>
+        <div className={styles.contentWrap}>
 
-          <div className={styles.layoutGrid}>
-            
-            {/* Left/Right content: Members directory */}
-            <div className={styles.directoryCol}>
-              
-              {/* Leader Highlight */}
-              {teamLeader && (
-                <div className={styles.leaderCardBlock}>
-                  <h2 className={styles.sectionHeading}>
-                    {lang === 'ar' ? 'رئيس فرقة البحث' : (lang === 'fr' ? 'Chef de l\'équipe' : 'Team Leader')}
-                  </h2>
-                  <div className={`${styles.leaderCard} flex-row-reverse-rtl`}>
-                    {teamLeader.photo_url ? (
-                      <div className={styles.leaderPhotoWrap}>
-                        <img src={teamLeader.photo_url} alt={teamLeader.full_name} className={styles.leaderPhoto} />
-                      </div>
-                    ) : (
-                      <div className={styles.leaderPhotoPlaceholder} aria-hidden="true">
-                        <span>{getInitials(teamLeader.full_name)}</span>
-                      </div>
-                    )}
-                    <div className={styles.leaderInfo}>
-                      <span className={styles.gradeBadge}>{teamLeader.grade}</span>
-                      <Link to={`/members/${teamLeader.id}`} className={styles.memberNameLink}>
-                        <h3 className={styles.leaderName}>{teamLeader.full_name}</h3>
-                      </Link>
-                      <p className={styles.specialty}><strong>{t('specialtyLabel')}:</strong> {teamLeader.specialty}</p>
-                      <p className={styles.degree}><strong>{t('degreeLabel')}:</strong> {teamLeader.degree}</p>
-                      {teamLeader.bio && <p className={styles.bioExcerpt}>{teamLeader.bio}</p>}
-                      <div className={styles.leaderActions}>
-                        <a href={`mailto:${teamLeader.email}`} className={styles.emailBtn}>
-                          {lang === 'ar' ? 'اتصال بالبريد' : 'Contact Email'}
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Members Grid */}
-              <div className={styles.membersGridBlock}>
-                <h2 className={styles.sectionHeading}>
-                  {lang === 'ar' ? 'أعضاء فرقة البحث' : (lang === 'fr' ? 'Membres de l\'équipe' : 'Team Members')}
-                </h2>
-                {regularMembers.length > 0 ? (
-                  <div className={styles.membersGrid}>
-                    {regularMembers.map((m) => (
-                      <div key={m.id} className={styles.memberCard}>
-                        <div className={styles.memberPhotoWrap}>
-                          {m.photo_url ? (
-                            <img src={m.photo_url} alt={m.full_name} className={styles.memberPhoto} />
-                          ) : (
-                            <div className={styles.memberPhotoPlaceholder} aria-hidden="true">
-                              <span>{getInitials(m.full_name)}</span>
-                            </div>
-                          )}
-                        </div>
-                        <span className={styles.memberGrade}>{m.grade}</span>
-                        <Link to={`/members/${m.id}`} className={styles.memberNameLink}>
-                          <h4 className={styles.memberName}>{m.full_name}</h4>
-                        </Link>
-                        <p className={styles.memberSpecialty}>{m.specialty}</p>
-                        
-                        <div className={styles.memberActions}>
-                          <Link to={`/members/${m.id}`} className={styles.memberProfileBtn}>
-                            {lang === 'ar' ? 'الملف الشخصي' : 'Profile'}
-                          </Link>
-                          <a href={`mailto:${m.email}`} className={styles.memberEmailBtn}>
-                            {lang === 'ar' ? 'اتصال' : 'Email'}
-                          </a>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className={styles.noMembers}>
-                    {lang === 'ar' ? 'لا يوجد أعضاء آخرين مسجلين.' : 'No other members registered.'}
-                  </p>
-                )}
-              </div>
-
-            </div>
-
-            {/* Side column: Projects info */}
-            <div className={styles.projectsCol}>
-              <h2 className={styles.sectionHeading}>
-                {lang === 'ar' ? 'المشاريع البحثية للفرقة' : (lang === 'fr' ? 'Projets de recherche' : 'Team Research Projects')}
+          {/* 1. TEAM LEADER */}
+          {leader && (
+            <div className={styles.block}>
+              <h2 className={styles.blockTitle}>
+                <span className={styles.titleBar} />
+                {lang === 'ar' ? 'رئيس الفرقة' : lang === 'fr' ? "Chef d'équipe" : 'Team Leader'}
               </h2>
-              
-              {projects.length > 0 ? (
-                <div className={styles.projectsList}>
-                  {projects.map(p => (
-                    <div key={p.id} className={styles.projectCard}>
-                      <div className={styles.projectHeader}>
-                        <Tag label={getProjectStateLabel(p.state)} variant={getProjectStateColor(p.state)} />
-                        <span className={styles.timeline}>
-                          {formatDate(p.started_at)} - {formatDate(p.expected_end_date)}
+              {/* Single leader card — centered */}
+              <div className={styles.leaderCardWrap}>
+                <LeaderFlipCard leader={leader} lang={lang} t={t} />
+              </div>
+            </div>
+          )}
+
+          {/* 2. TEAM MEMBERS */}
+          {regular.length > 0 && (
+            <div className={styles.block}>
+              <h2 className={styles.blockTitle}>
+                <span className={styles.titleBar} />
+                {lang === 'ar' ? 'أعضاء الفريق' : lang === 'fr' ? 'Membres' : 'Team Members'}
+              </h2>
+              <div className={styles.membersGrid}>
+                {regular.map(m => (
+                  <MemberFlipCard key={m.id} member={m} lang={lang} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 3. RESEARCH PROJECTS — bottom of page, full width */}
+          <div className={styles.block}>
+            <h2 className={styles.blockTitle}>
+              <span className={styles.titleBar} />
+              {lang === 'ar' ? 'المشاريع البحثية' : lang === 'fr' ? 'Projets de Recherche' : 'Research Projects'}
+            </h2>
+
+            {projects.length > 0 ? (
+              <div className={styles.projectsGrid}>
+                {projects.map((p, i) => (
+                  <article key={p.id} className={styles.projectCard}>
+                    <div className={styles.projNum}>{String(i + 1).padStart(2, '0')}</div>
+                    <div className={styles.projBody}>
+                      <div className={styles.projMeta}>
+                        <StateBadge state={p.state} lang={lang} />
+                        <span className={styles.projDate}>
+                          <IcoCal />
+                          {fmtDate(p.started_at, lang)}
+                          {p.expected_end_date && <> — {fmtDate(p.expected_end_date, lang)}</>}
                         </span>
                       </div>
-                      
-                      <h3 className={styles.projectName}>{p.name}</h3>
-                      <p className={styles.projectDesc}>{p.description}</p>
+                      <h3 className={styles.projTitle}>{p.name}</h3>
+                      <p className={styles.projDesc}>{p.description}</p>
                     </div>
-                  ))}
-                </div>
-              ) : (
-                <div className={styles.noProjectsCard}>
-                  <p>{lang === 'ar' ? 'لا توجد مشاريع بحثية مسجلة حالياً لهذه الفرقة.' : 'No research projects recorded for this team yet.'}</p>
-                </div>
-              )}
-            </div>
-
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <div className={styles.emptyBox}>
+                <IcoFlask />
+                <p>{lang === 'ar' ? 'لا توجد مشاريع مسجلة.' : lang === 'fr' ? 'Aucun projet enregistré.' : 'No research projects recorded yet.'}</p>
+              </div>
+            )}
           </div>
 
-          <div className={styles.footerActions}>
-            <Link to="/teams" className={styles.backBtn}>
-              {lang === 'ar' ? '← العودة للفرق' : (lang === 'fr' ? '← Retour aux équipes' : '← Back to Teams')}
+          {/* Footer */}
+          <div className={styles.footerNav}>
+            <Link to="/teams" className={styles.btnBack}>
+              ← {lang === 'ar' ? 'العودة للفرق' : lang === 'fr' ? 'Retour aux équipes' : 'Back to Teams'}
             </Link>
           </div>
 

@@ -1,3 +1,17 @@
+/* ============================================================
+   TeamsList — Premium Research Teams Directory
+   ============================================================ */
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -5,56 +19,126 @@
 }
 
 .section {
-  padding: var(--space-16) 0;
+  padding: var(--space-16) 0 var(--space-24);
   background-color: var(--color-bg-main);
   border-top: 1px solid var(--color-surface);
 }
 
+/* ── Grid ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--gutter);
 }
 
+/* ── Team Card ── */
 .card {
   background: var(--color-white);
   border: 1px solid var(--color-surface);
+  border-radius: 12px;
   padding: var(--space-8);
   display: flex;
   flex-direction: column;
   height: 100%;
-  transition: border-color var(--transition);
+  position: relative;
+  overflow: hidden;
+  animation: fadeSlideUp 0.5s ease both;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Gradient top bar */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 50%, var(--color-primary) 100%);
+  background-size: 200% auto;
+  transform: scaleX(0);
+  transform-origin: left;
+  border-radius: 12px 12px 0 0;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Background glow on hover */
+.card::after {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0, 51, 102, 0.04) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .card:hover {
-  border-color: var(--color-slate-400);
+  border-color: rgba(0, 51, 102, 0.25);
+  box-shadow:
+    0 8px 30px rgba(0, 51, 102, 0.09),
+    0 2px 8px rgba(0, 51, 102, 0.05);
+  transform: translateY(-5px);
 }
 
+.card:hover::before {
+  transform: scaleX(1);
+  animation: shimmer 2.5s linear infinite;
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+/* ── Card Header ── */
 .cardHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-5);
 }
 
 .acronym {
   font-family: var(--font-body);
-  font-size: var(--size-xs);
-  font-weight: 600;
-  color: var(--color-accent);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-white);
+  background: var(--color-primary);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
+  padding: 3px var(--space-3);
+  border-radius: 20px;
+  transition: background 0.2s ease;
+}
+
+.card:hover .acronym {
+  background: var(--color-accent);
 }
 
 .count {
-  font-size: var(--size-sm);
+  font-size: var(--size-xs);
   color: var(--color-slate-400);
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
+.count::before {
+  content: '👥';
+  font-size: 11px;
+}
+
+/* ── Team Title ── */
 .teamTitle {
   font-family: var(--font-display);
-  font-size: var(--size-xl);
+  font-size: var(--size-lg);
   font-weight: 700;
   color: var(--color-primary);
   margin: 0 0 var(--space-4) 0;
@@ -64,22 +148,31 @@
 .titleLink {
   color: var(--color-primary);
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .titleLink:hover {
   color: var(--color-accent);
-  text-decoration: underline;
+  text-decoration: none;
 }
 
+/* ── Description ── */
 .description {
   font-family: var(--font-body);
   font-size: var(--size-sm);
   color: var(--color-slate-600);
-  line-height: 1.6;
+  line-height: 1.65;
   margin: 0 0 var(--space-6) 0;
   flex-grow: 1;
+
+  /* Clamp to 3 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
+/* ── Leader Info ── */
 .leaderInfo {
   border-top: 1px solid var(--color-surface);
   padding-top: var(--space-4);
@@ -94,43 +187,74 @@
 .leaderLabel {
   color: var(--color-slate-400);
   font-weight: 500;
+  font-size: var(--size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .leaderName {
   color: var(--color-accent);
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .leaderName:hover {
+  color: var(--color-primary);
   text-decoration: underline;
 }
 
+/* ── Card Footer ── */
 .cardFooter {
   border-top: 1px solid var(--color-surface);
   padding-top: var(--space-4);
   margin-top: auto;
 }
 
+/* "View Team" CTA */
 .viewBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   font-family: var(--font-body);
   font-size: var(--size-sm);
-  color: var(--color-accent);
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--color-primary);
   text-decoration: none;
+  border: 1px solid var(--color-surface);
+  padding: var(--space-2) var(--space-5);
+  border-radius: 4px;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.viewBtn::after {
+  content: '→';
+  transition: transform 0.2s ease;
 }
 
 .viewBtn:hover {
-  text-decoration: underline;
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-white);
+  text-decoration: none;
 }
 
-@media (max-width: 900px) {
+.viewBtn:hover::after {
+  transform: translateX(4px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 992px) {
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
   .section {
     padding: var(--space-12) 0;
   }

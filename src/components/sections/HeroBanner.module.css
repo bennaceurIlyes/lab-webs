@@ -1,7 +1,7 @@
 .hero {
   background-color: var(--color-bg-main);
   padding: var(--space-16) 0;
-  border-bottom: 1px solid var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .inner {
@@ -64,32 +64,36 @@
 .ctaPrimary {
   font-family: var(--font-body);
   font-size: var(--size-sm);
-  font-weight: 500;
+  font-weight: 700;
   padding: var(--space-3) var(--space-6);
   text-decoration: none;
   background-color: var(--color-primary);
-  color: var(--color-white);
+  color: var(--color-bg-page);
   border: 1px solid var(--color-primary);
-  transition: background-color var(--transition);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition);
 }
 
 .ctaPrimary:hover {
-  background-color: var(--color-navy-700);
+  background-color: #0891B2;
+  border-color: #0891B2;
+  transform: translateY(-1px);
 }
 
 .ctaSecondary {
   font-family: var(--font-body);
   font-size: var(--size-sm);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-accent);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
+  transition: color var(--transition);
 }
 
 .ctaSecondary:hover {
-  text-decoration: underline;
+  color: var(--color-primary);
 }
 
 .arrow {
@@ -101,7 +105,8 @@
   height: 100%;
   min-height: 360px;
   object-fit: cover;
-  border: 1px solid var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
   display: block;
 }
 

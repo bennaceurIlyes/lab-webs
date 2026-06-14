@@ -1,11 +1,11 @@
 .footer {
   position: relative;
-  background-color: var(--color-primary);
-  border-top: 1px solid var(--color-navy-700);
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
   padding-top: var(--space-12);
   width: 100%;
   margin-top: auto;
-  color: var(--color-surface);
+  color: var(--color-slate-600);
 }
 
 .inner {
@@ -53,7 +53,7 @@
 .footerLabName {
   font-family: var(--font-body);
   font-size: var(--size-sm);
-  color: var(--color-surface);
+  color: var(--color-slate-600);
   margin: 0 0 var(--space-3) 0;
   line-height: 1.5;
 }
@@ -63,7 +63,7 @@
 .contactLine {
   font-family: var(--font-body);
   font-size: var(--size-sm);
-  color: var(--color-surface);
+  color: var(--color-slate-600);
   margin: var(--space-1) 0;
   line-height: 1.5;
 }
@@ -78,14 +78,14 @@
 }
 
 .footerLink {
-  color: var(--color-surface);
+  color: var(--color-slate-600);
   text-decoration: none;
   font-size: var(--size-sm);
   transition: color var(--transition);
 }
 
 .footerLink:hover {
-  color: var(--color-white);
+  color: var(--color-primary);
   text-decoration: underline;
 }
 
@@ -96,13 +96,13 @@
 }
 
 .partnerLogo {
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--color-border);
   padding: var(--space-3);
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 48px;
-  filter: grayscale(1);
+  filter: grayscale(1) brightness(1.5);
   opacity: 0.75;
 }
 
@@ -110,14 +110,14 @@
   font-family: var(--font-body);
   font-size: var(--size-xs);
   font-weight: 600;
-  color: var(--color-surface);
+  color: var(--color-slate-600);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .bottomBar {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: var(--color-primary);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-bg-main);
 }
 
 .bottomBarInner {
@@ -134,7 +134,7 @@
 .legalInfo {
   font-family: var(--font-body);
   font-size: var(--size-xs);
-  color: var(--color-surface);
+  color: var(--color-slate-600);
   display: flex;
   align-items: center;
   gap: var(--space-2);
@@ -153,7 +153,7 @@
 .langBtn {
   background: none;
   border: none;
-  color: var(--color-surface);
+  color: var(--color-slate-600);
   font-family: var(--font-body);
   font-size: var(--size-xs);
   font-weight: 500;
@@ -168,7 +168,7 @@
 }
 
 .langSeparator {
-  color: var(--color-surface);
+  color: var(--color-slate-600);
   font-size: var(--size-xs);
   opacity: 0.4;
 }

@@ -1,90 +1,97 @@
-/* LDREAS Institutional Design System */
+/* LDREAS Institutional Design System - Redesigned Premium Edition */
 :root {
   /* Core palette */
-  --color-primary:        #0A192F;
-  --color-secondary:      #D4AF37;
-  --color-accent:         #008080;
-  --color-accent-hover:   #006666;
-  --color-bg-main:        #F8F9FA;
-  --color-surface:        #E9ECEF;
-  --color-text-base:      #212529;
-
-  /* Semantic aliases (backward compatibility) */
-  --color-navy-900:       var(--color-primary);
-  --color-navy-800:       #081422;
-  --color-navy-700:       #0F2544;
-  --color-sand-50:        #FFFFFF;
-  --color-sand-100:       var(--color-bg-main);
-  --color-accent-500:     var(--color-accent);
-  --color-accent-600:     var(--color-accent-hover);
-  --color-accent-cool:    var(--color-surface);
-  --color-slate-600:      #495057;
-  --color-slate-400:      #6C757D;
+  --color-primary:        #06B6D4; /* Energy Teal Accent */
+  --color-secondary:      #F59E0B; /* Desert Gold Accent */
+  --color-accent:         #6366F1; /* Academic Violet Accent */
+  --color-accent-hover:   #4F46E5;
+  --color-bg-main:        #070A0F; /* Deep Obsidian Background */
+  --color-surface:        #0E1420; /* Deep Slate Card Background */
+  --color-text-base:      #F9FAFB; /* Neutral Light Text */
+  
+  /* Semantic aliases & backward compatibility */
+  --color-navy-900:       #070A0F;
+  --color-navy-800:       #0E1420;
+  --color-navy-700:       #1E293B; /* Border / Slate Line */
+  --color-sand-50:        #F9FAFB;
+  --color-sand-100:       #F3F4F6;
+  --color-accent-500:     var(--color-primary);
+  --color-accent-600:     #0891B2;
+  --color-accent-cool:    rgba(6, 182, 212, 0.1);
+  --color-slate-600:      #9CA3AF; /* Muted slate text */
+  --color-slate-400:      #6B7280; /* Highly muted text */
   --color-white:          #FFFFFF;
-  --color-news-tag-bg:    transparent;
-  --color-news-tag-text:  var(--color-accent);
+  --color-news-tag-bg:    rgba(99, 102, 241, 0.15);
+  --color-news-tag-text:  #818CF8;
 
-  --color-primary-dark:   var(--color-primary);
-  --color-primary-light:  var(--color-navy-700);
-  --color-sand:           var(--color-bg-main);
-  --color-beige:          var(--color-bg-main);
-  --color-bg-outer:       var(--color-bg-main);
-  --color-bg-container:   var(--color-white);
-  --color-bg-page:        var(--color-bg-main);
-  --color-bg:             var(--color-bg-main);
-  --color-bg-card:        var(--color-white);
-  --color-text:           var(--color-slate-600);
-  --color-text-dark:      var(--color-text-base);
-  --color-text-muted:     var(--color-slate-400);
-  --color-border:         var(--color-surface);
+  --color-primary-dark:   #070A0F;
+  --color-primary-light:  #0E1420;
+  --color-sand:           #070A0F;
+  --color-beige:          #070A0F;
+  --color-bg-outer:       #070A0F;
+  --color-bg-container:   #0E1420;
+  --color-bg-page:        #070A0F;
+  --color-bg:             #070A0F;
+  --color-bg-card:        #0E1420;
+  --color-text:           #9CA3AF;
+  --color-text-dark:      #F9FAFB;
+  --color-text-muted:     #6B7280;
+  --color-border:         #1E293B;
 
-  --color-success:        #198754;
-  --color-warning:        #CC8800;
-  --color-danger:         #DC3545;
+  --color-success:        #10B981; /* Quantum Green */
+  --color-warning:        #F59E0B; /* Amber Warning */
+  --color-danger:         #EF4444; /* Crimson Error */
+
+  /* Glassmorphism overlays */
+  --color-glass-bg:       rgba(255, 255, 255, 0.03);
+  --color-glass-border:   rgba(255, 255, 255, 0.08);
+  --color-glass-hover:    rgba(255, 255, 255, 0.06);
 
   /* Typography */
-  --font-display: "Merriweather", Georgia, "Times New Roman", serif;
+  --font-display: "Outfit", "Inter", system-ui, -apple-system, sans-serif;
   --font-body:    "Inter", system-ui, -apple-system, sans-serif;
-  --font-arabic:  "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --font-arabic:  "Cairo", "Noto Sans Arabic", sans-serif;
   --font-heading: var(--font-display);
 
   /* Type scale */
-  --size-xs:   0.8125rem;  /* 13px */
-  --size-sm:   0.875rem;   /* 14px */
-  --size-base: 1.125rem;   /* 18px */
-  --size-lg:   1.25rem;
-  --size-xl:   1.375rem;
-  --size-2xl:  1.75rem;    /* H3 ~28px */
-  --size-3xl:  2.25rem;    /* H2 ~36px */
-  --size-4xl:  3rem;       /* H1 ~48px */
+  --size-xs:   0.85rem;    /* 13.6px */
+  --size-sm:   0.925rem;   /* 14.8px */
+  --size-base: 1.05rem;    /* ~16.8px */
+  --size-lg:   1.2rem;
+  --size-xl:   1.4rem;
+  --size-2xl:  1.75rem;
+  --size-3xl:  2.25rem;
+  --size-4xl:  3.25rem;
 
-  /* Spacing (8px base unit) */
+  /* Spacing (4px base scale) */
   --space-1:  0.25rem;  /* 4px */
   --space-2:  0.5rem;   /* 8px */
   --space-3:  0.75rem;  /* 12px */
-  --space-4:  1rem;     /* 16px */
+  --space-4:  1.0rem;   /* 16px */
   --space-6:  1.5rem;   /* 24px */
-  --space-8:  2rem;     /* 32px */
-  --space-12: 4rem;     /* 64px */
-  --space-16: 6rem;     /* 96px */
-  --space-24: 7.5rem;
+  --space-8:  2.0rem;   /* 32px */
+  --space-12: 3.0rem;   /* 48px */
+  --space-16: 4.0rem;   /* 64px */
+  --space-24: 6.0rem;   /* 96px */
 
   /* Layout */
   --max-width: 1280px;
   --gutter:    24px;
 
-  /* Institutional: sharp corners only */
-  --radius-sm: 0;
-  --radius-md: 0;
-  --radius-lg: 0;
+  /* Modern Card Border Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
 
-  --shadow-sm: none;
-  --shadow-md: none;
-  --shadow-lg: none;
+  /* Premium Elevations */
+  --shadow-sm: 0px 4px 20px -2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0px 10px 30px -4px rgba(6, 182, 212, 0.15); /* Accent bloom glow */
+  --shadow-lg: 0px 20px 50px -8px rgba(0, 0, 0, 0.7);
   --shadow-side: none;
-  --shadow-scroll: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-scroll: 0px 4px 20px rgba(0, 0, 0, 0.3);
 
-  --transition: 0.15s ease;
+  --transition: cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
 }
 
 html[lang="ar"] {
@@ -92,3 +99,4 @@ html[lang="ar"] {
   --font-body: var(--font-arabic);
   --font-heading: var(--font-arabic);
 }
+

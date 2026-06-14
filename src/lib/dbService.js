@@ -49,7 +49,14 @@ const SEED_DATA = {
       photo_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80',
       bio: 'Laboratory Director. 20+ years of expertise in thermal solar receiver simulation and high-temperature fluid dynamics modeling.',
       joined_at: '2007-06-15T00:00:00Z',
-      team_id: 'team_solar_concentrated'
+      team_id: 'team_solar_concentrated',
+      orcid: '0000-0002-1823-4456',
+      google_scholar_url: 'https://scholar.google.com/citations?user=anouri_mock',
+      research_gate_url: 'https://www.researchgate.net/profile/Abdelkader_Nouri_mock',
+      h_index: 34,
+      citations_count: 4210,
+      publications_count: 58,
+      research_topics: ['Solar Thermal', 'CSP', 'Fluid Dynamics']
     },
     {
       id: 'member_leader_1',
@@ -63,7 +70,14 @@ const SEED_DATA = {
       photo_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&auto=format&fit=crop&q=80',
       bio: 'Team Leader of Thermal Systems. Focusing on CSP mirror degradation models and thermal fluid efficiency under desert environments.',
       joined_at: '2012-09-10T00:00:00Z',
-      team_id: 'team_solar_concentrated'
+      team_id: 'team_solar_concentrated',
+      orcid: '0000-0003-8842-1011',
+      google_scholar_url: 'https://scholar.google.com/citations?user=mkadi_mock',
+      research_gate_url: 'https://www.researchgate.net/profile/Mohamed_Kadi_mock',
+      h_index: 22,
+      citations_count: 1840,
+      publications_count: 26,
+      research_topics: ['CSP Mirrors', 'Thermal Fluids', 'Saharan Heat']
     },
     {
       id: 'member_leader_2',
@@ -77,7 +91,14 @@ const SEED_DATA = {
       photo_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80',
       bio: 'Team Leader of PV Systems. Expert in thin-film coatings, nano-structuring, and anti-soiling technologies for Saharan solar installations.',
       joined_at: '2014-04-18T00:00:00Z',
-      team_id: 'team_photovoltaic_storage'
+      team_id: 'team_photovoltaic_storage',
+      orcid: '0000-0001-9988-1234',
+      google_scholar_url: 'https://scholar.google.com/citations?user=fzaidi_mock',
+      research_gate_url: 'https://www.researchgate.net/profile/Fatima_Zaidi_mock',
+      h_index: 18,
+      citations_count: 1120,
+      publications_count: 19,
+      research_topics: ['PV Anti-Soiling', 'Thin-Film Physics', 'Solar Clean Tech']
     },
     {
       id: 'member_leader_3',
@@ -91,7 +112,14 @@ const SEED_DATA = {
       photo_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80',
       bio: 'Team Leader of Wind Energy. Working on aerodynamic simulation profiles and wind turbines designed for low-speed Saharan plateau winds.',
       joined_at: '2016-02-05T00:00:00Z',
-      team_id: 'team_wind_dynamics'
+      team_id: 'team_wind_dynamics',
+      orcid: '0000-0002-3344-5566',
+      google_scholar_url: 'https://scholar.google.com/citations?user=ybensaad_mock',
+      research_gate_url: 'https://www.researchgate.net/profile/Youcef_Bensaad_mock',
+      h_index: 12,
+      citations_count: 640,
+      publications_count: 14,
+      research_topics: ['Aerodynamics', 'Wind Turbines', 'Sandstorm Simulations']
     },
     {
       id: 'member_researcher_1',
@@ -105,7 +133,14 @@ const SEED_DATA = {
       photo_url: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&auto=format&fit=crop&q=80',
       bio: 'Research member in Thermal Systems. Investigating phase-change materials (PCM) and molten salts for high capacity night thermal storage.',
       joined_at: '2018-09-01T00:00:00Z',
-      team_id: 'team_solar_concentrated'
+      team_id: 'team_solar_concentrated',
+      orcid: '0000-0002-1122-3344',
+      google_scholar_url: 'https://scholar.google.com/citations?user=aboudjemila_mock',
+      research_gate_url: 'https://www.researchgate.net/profile/Amel_Boudjemila_mock',
+      h_index: 9,
+      citations_count: 310,
+      publications_count: 11,
+      research_topics: ['PCM Materials', 'Molten Salt Storage', 'Night Thermal Recovery']
     },
     {
       id: 'member_researcher_2',
@@ -119,7 +154,14 @@ const SEED_DATA = {
       photo_url: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&auto=format&fit=crop&q=80',
       bio: 'Research member in PV Systems. Optimizing energy dispatch algorithms and control loops for off-grid hybrid PV-wind-battery installations.',
       joined_at: '2020-01-10T00:00:00Z',
-      team_id: 'team_photovoltaic_storage'
+      team_id: 'team_photovoltaic_storage',
+      orcid: '0000-0003-5566-7788',
+      google_scholar_url: 'https://scholar.google.com/citations?user=kslimani_mock',
+      research_gate_url: 'https://www.researchgate.net/profile/Karim_Slimani_mock',
+      h_index: 7,
+      citations_count: 195,
+      publications_count: 8,
+      research_topics: ['Smart Grids', 'Energy Dispatch', 'Off-grid Systems']
     }
   ],
   projects: [
@@ -162,7 +204,9 @@ const SEED_DATA = {
       description: 'The Rector of Béchar University officially launched the high-resolution meteorological solar station.',
       photo_url: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=800&auto=format&fit=crop&q=80',
       published_at: '2026-05-10T10:00:00Z',
-      author_id: 'member_director'
+      author_id: 'member_director',
+      category: 'breakthrough',
+      view_count: 540
     },
     {
       id: 'news_2',
@@ -171,7 +215,9 @@ const SEED_DATA = {
       description: 'LDREAS invites physicists and energy experts globally to Béchar for our solar-wind integration symposium.',
       photo_url: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80',
       published_at: '2026-06-01T08:30:00Z',
-      author_id: 'member_director'
+      author_id: 'member_director',
+      category: 'event',
+      view_count: 320
     }
   ],
   articles: [
@@ -182,7 +228,19 @@ const SEED_DATA = {
       pdf_link: '#',
       description: 'This paper establishes mathematical degradation equations for parabolic CSP mirror reflectors subject to ambient sand and dust storms in North Africa.',
       published_at: '2025-03-14T00:00:00Z',
-      primary_author_id: 'member_leader_1'
+      primary_author_id: 'member_leader_1',
+      doi: '10.1016/j.solmat.2025.03.114',
+      citations_count: 142,
+      downloads_count: 531,
+      altmetric_score: 18,
+      article_type: 'journal',
+      keywords: ['CSP', 'Saharan Dust', 'Mirror Degradation'],
+      journal_name: 'Solar Energy Materials and Solar Cells',
+      volume: '280',
+      issue: '4',
+      pages: '102-114',
+      issn: '0927-0248',
+      funding_source: 'National Research Grant (DGRSDT)'
     },
     {
       id: 'art_2',
@@ -191,7 +249,19 @@ const SEED_DATA = {
       pdf_link: '#',
       description: 'Developing heuristic control loops to balance solar/wind supply profiles with lithium storage capacity under Bechar rural load metrics.',
       published_at: '2025-11-20T00:00:00Z',
-      primary_author_id: 'member_researcher_2'
+      primary_author_id: 'member_researcher_2',
+      doi: '10.1109/TSTE.2025.3214569',
+      citations_count: 98,
+      downloads_count: 312,
+      altmetric_score: 8,
+      article_type: 'conference',
+      keywords: ['Hybrid Systems', 'Smart Grids', 'Micro-grids', 'Sahara'],
+      journal_name: 'IEEE Transactions on Sustainable Energy',
+      volume: '16',
+      issue: '2',
+      pages: '245-254',
+      issn: '1949-3029',
+      funding_source: 'Algerian-Tunisian Bilateral Project'
     },
     {
       id: 'art_3',
@@ -200,7 +270,19 @@ const SEED_DATA = {
       pdf_link: '#',
       description: 'Analyzing thermal conductivity and phase change enthalpies of salt hydrates for high temp heat retention systems.',
       published_at: '2026-02-05T00:00:00Z',
-      primary_author_id: 'member_researcher_1'
+      primary_author_id: 'member_researcher_1',
+      doi: '10.1007/s10973-026-11843-z',
+      citations_count: 14,
+      downloads_count: 85,
+      altmetric_score: 4,
+      article_type: 'journal',
+      keywords: ['PCM', 'Thermal Storage', 'Molten Salts', 'Desert CSP'],
+      journal_name: 'Journal of Thermal Analysis and Calorimetry',
+      volume: '147',
+      issue: '1',
+      pages: '45-56',
+      issn: '1388-6150',
+      funding_source: 'University of Bechar PRFU Grant'
     }
   ],
   article_co_authors: [
@@ -485,11 +567,16 @@ export const dbService = {
       } catch (err) { console.error('Supabase fetch failed, using fallback mock', err); }
     }
     const db = getLocalDB();
-    return [...db.articles].sort((a, b) => new Date(b.published_at) - new Date(a.published_at)).map(a => ({
-      ...a,
-      name: translateObj(a, a.id, 'name', lang),
-      description: translateObj(a, a.id, 'description', lang)
-    }));
+    return [...db.articles].sort((a, b) => new Date(b.published_at) - new Date(a.published_at)).map(a => {
+      const coIds = db.article_co_authors.filter(ca => ca.article_id === a.id).map(ca => ca.member_id);
+      const coAuths = db.members.filter(m => coIds.includes(m.id)).map(m => m.full_name);
+      return {
+        ...a,
+        name: translateObj(a, a.id, 'name', lang),
+        description: translateObj(a, a.id, 'description', lang),
+        coAuthors: coAuths
+      };
+    });
   },
 
   getArticleById: async (id, lang = 'en') => {

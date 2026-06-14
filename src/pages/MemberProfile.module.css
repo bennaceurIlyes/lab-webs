@@ -8,7 +8,7 @@
 .spinner {
   width: 36px;
   height: 36px;
-  border: 3px solid var(--color-surface);
+  border: 3px solid var(--color-border);
   border-top-color: var(--color-primary);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
@@ -34,12 +34,12 @@
 
 .breadcrumb {
   font-size: var(--size-sm);
-  color: var(--color-sand);
+  color: var(--color-slate-600);
   margin-bottom: var(--space-4);
 }
 
 .breadcrumb a {
-  color: var(--color-sand);
+  color: var(--color-slate-600);
   text-decoration: none;
 }
 
@@ -52,10 +52,10 @@
   font-family: var(--font-body);
   font-size: var(--size-xs);
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--color-primary);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  border: 1px solid var(--color-accent);
+  border: 1px solid var(--color-primary);
   padding: 2px var(--space-3);
   margin-bottom: var(--space-3);
 }
@@ -64,12 +64,13 @@
   font-family: var(--font-display);
   font-size: var(--size-3xl);
   font-weight: 700;
+  color: var(--color-text-dark);
   line-height: 1.3;
 }
 
 .section {
-  padding: var(--space-16) 0 var(--space-24);
-  background-color: var(--color-bg-main);
+  padding: var(--space-12) 0 var(--space-16);
+  background-color: var(--color-bg-page);
 }
 
 .layoutGrid {
@@ -84,19 +85,21 @@
 }
 
 .profileCard {
-  background: var(--color-white);
-  border: 1px solid var(--color-surface);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   padding: var(--space-8);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  border-radius: 12px;
-  transition: box-shadow 0.3s ease;
+  border-radius: var(--radius-lg);
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
 }
 
 .profileCard:hover {
-  box-shadow: 0 8px 32px rgba(0, 51, 102, 0.09);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
 }
 
 .photoWrap {
@@ -113,7 +116,7 @@
   position: absolute;
   inset: -5px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
   z-index: 0;
 }
 
@@ -123,7 +126,7 @@
   position: absolute;
   inset: -2px;
   border-radius: 50%;
-  background: var(--color-white);
+  background: var(--color-surface);
   z-index: 0;
 }
 
@@ -163,7 +166,7 @@ html[dir="rtl"] .infoDetails {
 
 .label {
   font-size: var(--size-xs);
-  color: var(--color-slate-400);
+  color: var(--color-slate-600);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -171,12 +174,12 @@ html[dir="rtl"] .infoDetails {
 
 .value {
   font-size: var(--size-sm);
-  color: var(--color-text-base);
+  color: var(--color-text-dark);
   font-weight: 500;
 }
 
 .teamLink {
-  color: var(--color-accent);
+  color: var(--color-primary);
   text-decoration: none;
   font-weight: 600;
 }
@@ -188,7 +191,7 @@ html[dir="rtl"] .infoDetails {
 .divider {
   width: 100%;
   height: 1px;
-  background-color: var(--color-surface);
+  background-color: var(--color-border);
   margin: var(--space-6) 0;
 }
 
@@ -197,19 +200,20 @@ html[dir="rtl"] .infoDetails {
   width: 100%;
   text-align: center;
   background-color: var(--color-primary);
-  color: #ffffff;
+  color: var(--color-bg-main);
   padding: var(--space-3) var(--space-6);
   border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
   text-decoration: none;
   font-family: var(--font-body);
-  font-weight: 500;
+  font-weight: 600;
   font-size: var(--size-sm);
-  transition: background-color var(--transition);
+  transition: var(--transition);
 }
 
 .emailCta:hover {
-  background-color: var(--color-navy-700);
-  border-color: var(--color-navy-700);
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
 }
 
 .contentCol {
@@ -219,19 +223,21 @@ html[dir="rtl"] .infoDetails {
 }
 
 .bioCard {
-  background: var(--color-white);
-  border: 1px solid var(--color-surface);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
   padding: var(--space-8);
+  box-shadow: var(--shadow-sm);
 }
 
 .sectionHeading {
   font-family: var(--font-display);
   font-size: var(--size-xl);
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-text-dark);
   margin: 0 0 var(--space-6) 0;
   padding-bottom: var(--space-3);
-  border-bottom: 2px solid var(--color-surface);
+  border-bottom: 2px solid var(--color-border);
   position: relative;
 }
 
@@ -242,7 +248,7 @@ html[dir="rtl"] .infoDetails {
   inset-inline-start: 0;
   width: 48px;
   height: 2px;
-  background-color: var(--color-accent);
+  background-color: var(--color-primary);
 }
 
 .bioText {
@@ -264,16 +270,20 @@ html[dir="rtl"] .infoDetails {
 }
 
 .pubCard {
-  background: var(--color-white);
-  border: 1px solid var(--color-surface);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
   border-inline-start: 3px solid var(--color-primary);
   padding: var(--space-6);
-  transition: border-color var(--transition);
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
 }
 
 .pubCard:hover {
   border-color: var(--color-primary);
-  border-inline-start-color: var(--color-accent);
+  border-inline-start-color: var(--color-secondary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .pubHeader {
@@ -282,7 +292,7 @@ html[dir="rtl"] .infoDetails {
 
 .pubDate {
   font-size: var(--size-xs);
-  color: var(--color-slate-400);
+  color: var(--color-slate-600);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -292,24 +302,24 @@ html[dir="rtl"] .infoDetails {
   font-family: var(--font-display);
   font-size: var(--size-base);
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-text-dark);
   margin: 0 0 var(--space-2) 0;
   line-height: 1.4;
 }
 
 .pubTitleLink {
-  color: var(--color-primary);
+  color: var(--color-text-dark);
   text-decoration: none;
   transition: color var(--transition);
 }
 
 .pubTitleLink:hover {
-  color: var(--color-accent);
+  color: var(--color-primary);
 }
 
 .pubDesc {
   font-size: var(--size-sm);
-  color: var(--color-slate-400);
+  color: var(--color-slate-600);
   line-height: 1.6;
   margin-bottom: var(--space-4);
 }
@@ -332,29 +342,30 @@ html[dir="rtl"] .infoDetails {
 }
 
 .pubDetailBtn:hover, .pubJournalBtn:hover {
-  color: var(--color-accent);
+  color: var(--color-secondary);
 }
 
 .pubPdfBtn {
-  color: var(--color-accent);
+  color: var(--color-secondary);
 }
 
 .pubPdfBtn:hover {
-  color: var(--color-accent-hover);
+  color: var(--color-primary);
 }
 
 .noPubsCard {
-  background-color: var(--color-bg-main);
-  border: 1px dashed var(--color-surface);
+  background-color: var(--color-bg-card);
+  border: 1px dashed var(--color-border);
   padding: var(--space-8);
   text-align: center;
-  color: var(--color-slate-400);
+  color: var(--color-slate-600);
   font-size: var(--size-sm);
+  border-radius: var(--radius-lg);
 }
 
 .footerActions {
   margin-top: var(--space-12);
-  border-top: 1px solid var(--color-surface);
+  border-top: 1px solid var(--color-border);
   padding-top: var(--space-6);
 }
 
@@ -362,18 +373,21 @@ html[dir="rtl"] .infoDetails {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  color: var(--color-primary);
+  color: var(--color-text-dark);
+  background: var(--color-surface);
   text-decoration: none;
   font-size: var(--size-sm);
-  font-weight: 500;
-  border: 1px solid var(--color-surface);
+  font-weight: 600;
+  border: 1px solid var(--color-border);
   padding: var(--space-2) var(--space-6);
-  transition: border-color var(--transition), color var(--transition);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
 }
 
 .backBtn:hover {
   border-color: var(--color-primary);
-  color: var(--color-accent);
+  color: var(--color-primary);
+  background: var(--color-glass-hover);
 }
 
 @media (max-width: 868px) {
@@ -383,6 +397,7 @@ html[dir="rtl"] .infoDetails {
   }
   .photoWrap {
     width: 140px;
-    height: 170px;
+    height: 140px;
   }
 }
+

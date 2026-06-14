@@ -1,6 +1,6 @@
 /* DepartmentsGrid styles — 5-column card grid with hover inversion */
 .section {
-  background: #fff;
+  background: var(--color-bg-page);
   padding: var(--space-16) 0;
 }
 
@@ -32,24 +32,24 @@
 
 .card:hover {
   background: var(--color-primary);
-  border-top-color: #fff;
+  border-top-color: var(--color-secondary);
   box-shadow: var(--shadow-md);
 }
 
 .card:hover .icon {
-  color: #fff;
+  color: var(--color-bg-page);
 }
 
 .card:hover .acronym {
-  color: #fff;
+  color: var(--color-bg-page);
 }
 
 .card:hover .name {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-bg-page);
 }
 
 .card:hover .desc {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-bg-page);
 }
 
 .icon {

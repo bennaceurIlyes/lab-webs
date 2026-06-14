@@ -39,6 +39,12 @@ export default function ArticleDetail() {
     });
   }, [id, lang]);
 
+  const copyToClipboard = (text, label) => {
+    navigator.clipboard.writeText(text).then(() => {
+      alert(`${label} ${lang === 'ar' ? 'تم نسخه بنجاح!' : 'copied successfully!'}`);
+    });
+  };
+
   function formatDate(dateStr) {
     if (!dateStr) return '';
     const d = new Date(dateStr);
@@ -85,15 +91,69 @@ export default function ArticleDetail() {
         <div className={styles.container}>
           <div className={styles.detailCard}>
             <div className={`${styles.detailMeta} flex-row-reverse-rtl`}>
-              <Tag label={lang === 'ar' ? 'منشور علمي' : (lang === 'fr' ? 'Publication' : 'Publication')} />
+              <Tag label={article.article_type === 'journal' ? (lang === 'ar' ? 'مقال مجلة' : 'Journal Article') : (lang === 'ar' ? 'مقال مؤتمر' : 'Conference Paper')} />
               <span className={styles.date}>{formatDate(article.published_at)}</span>
+              {article.doi && (
+                <span 
+                  onClick={() => copyToClipboard(article.doi, 'DOI')} 
+                  className={styles.date} 
+                  style={{cursor: 'pointer', marginLeft: 'auto', textDecoration: 'underline', color: 'var(--color-primary)'}}
+                  title="Click to copy DOI"
+                >
+                  DOI: {article.doi} ⚙️
+                </span>
+              )}
             </div>
 
+            {/* Metrics cards grid */}
+            <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1px', background: 'var(--color-border)', borderBottom: '1px solid var(--color-border)'}}>
+              <div style={{background: 'var(--color-bg-card)', padding: '20px', textAlign: 'center'}}>
+                <div style={{fontSize: '12px', color: 'var(--color-slate-600)', textTransform: 'uppercase', marginBottom: '4px'}}>{lang === 'ar' ? 'الاقتباسات (Scopus)' : 'Citations (Scopus)'}</div>
+                <div style={{fontSize: '28px', fontWeight: '700', color: 'var(--color-primary)'}}>{article.citations_count || 0}</div>
+              </div>
+              <div style={{background: 'var(--color-bg-card)', padding: '20px', textAlign: 'center'}}>
+                <div style={{fontSize: '12px', color: 'var(--color-slate-600)', textTransform: 'uppercase', marginBottom: '4px'}}>{lang === 'ar' ? 'التحميلات (Vercel)' : 'Downloads (Vercel)'}</div>
+                <div style={{fontSize: '28px', fontWeight: '700', color: 'var(--color-secondary)'}}>{article.downloads_count || 0}</div>
+              </div>
+              <div style={{background: 'var(--color-bg-card)', padding: '20px', textAlign: 'center'}}>
+                <div style={{fontSize: '12px', color: 'var(--color-slate-600)', textTransform: 'uppercase', marginBottom: '4px'}}>{lang === 'ar' ? 'مؤشر Altmetric' : 'Altmetric Score'}</div>
+                <div style={{fontSize: '28px', fontWeight: '700', color: 'var(--color-accent)'}}>{article.altmetric_score || 0}</div>
+              </div>
+            </div>
+
+            {/* Abstract Section */}
             <div className={styles.contentSection}>
               <h2 className={styles.subHeading}>{lang === 'ar' ? 'ملخص المقال' : (lang === 'fr' ? "Résumé de l'article" : 'Abstract / Description')}</h2>
               <p className={styles.descriptionText}>
                 {article.description || (lang === 'ar' ? 'لا يوجد وصف متاح.' : 'No description available.')}
               </p>
+            </div>
+
+            {/* Academic Metadata Table */}
+            <div className={styles.contentSection}>
+              <h2 className={styles.subHeading}>{lang === 'ar' ? 'معلومات النشر والمصادر' : 'Publication & Context'}</h2>
+              <div style={{display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px', marginTop: '16px'}}>
+                <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed var(--color-border)', paddingBottom: '6px'}}>
+                  <span style={{color: 'var(--color-slate-600)'}}>{lang === 'ar' ? 'المجلة العلمية:' : 'Journal:'}</span>
+                  <span style={{fontWeight: '600', color: 'var(--color-text-dark)'}}>{article.journal_name || 'Saharan Renewable Energy'}</span>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed var(--color-border)', paddingBottom: '6px'}}>
+                  <span style={{color: 'var(--color-slate-600)'}}>{lang === 'ar' ? 'المجلد / العدد:' : 'Volume / Issue:'}</span>
+                  <span style={{fontWeight: '600', color: 'var(--color-text-dark)'}}>{article.volume || '1'} / {article.issue || '1'}</span>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed var(--color-border)', paddingBottom: '6px'}}>
+                  <span style={{color: 'var(--color-slate-600)'}}>{lang === 'ar' ? 'الصفحات:' : 'Pages:'}</span>
+                  <span style={{fontWeight: '600', color: 'var(--color-text-dark)'}}>{article.pages || '1-10'}</span>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed var(--color-border)', paddingBottom: '6px'}}>
+                  <span style={{color: 'var(--color-slate-600)'}}>{lang === 'ar' ? 'الرقم التسلسلي ISSN:' : 'ISSN:'}</span>
+                  <span style={{fontWeight: '600', color: 'var(--color-text-dark)'}}>{article.issn || 'N/A'}</span>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'space-between', paddingBottom: '6px'}}>
+                  <span style={{color: 'var(--color-slate-600)'}}>{lang === 'ar' ? 'مصدر التمويل:' : 'Funding Source:'}</span>
+                  <span style={{fontWeight: '600', color: 'var(--color-text-dark)'}}>{article.funding_source || 'University of Bechar'}</span>
+                </div>
+              </div>
             </div>
 
             {/* Authors Section */}
@@ -107,6 +167,11 @@ export default function ArticleDetail() {
                       {primaryAuthor.full_name}
                     </Link>
                     <span className={styles.authorMeta}>{primaryAuthor.grade} — {primaryAuthor.specialty}</span>
+                    {primaryAuthor.orcid && (
+                      <a href={`https://orcid.org/${primaryAuthor.orcid}`} target="_blank" rel="noopener noreferrer" style={{fontSize: '12px', color: '#A3E635', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px'}}>
+                        💚 ORCID: {primaryAuthor.orcid}
+                      </a>
+                    )}
                   </div>
                 )}
                 {coAuthors.map(co => (
@@ -116,6 +181,11 @@ export default function ArticleDetail() {
                       {co.full_name}
                     </Link>
                     <span className={styles.authorMeta}>{co.grade} — {co.specialty}</span>
+                    {co.orcid && (
+                      <a href={`https://orcid.org/${co.orcid}`} target="_blank" rel="noopener noreferrer" style={{fontSize: '12px', color: '#A3E635', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px'}}>
+                        💚 ORCID: {co.orcid}
+                      </a>
+                    )}
                   </div>
                 ))}
               </div>

@@ -125,6 +125,44 @@ export default function MemberProfile() {
                     <span className={styles.label}>{lang === 'ar' ? 'تاريخ الانضمام' : (lang === 'fr' ? 'Membre depuis' : 'Joined Lab')}:</span>
                     <span className={styles.value}>{formatDate(member.joined_at)}</span>
                   </div>
+
+                  {/* Research Interests / Topics */}
+                  {member.research_topics && member.research_topics.length > 0 && (
+                    <div className={styles.detailRow} style={{marginTop: '10px'}}>
+                      <span className={styles.label}>{lang === 'ar' ? 'الاهتمامات البحثية:' : 'Research Areas:'}</span>
+                      <div style={{display: 'flex', flexWrap: 'wrap', gap: '4px', marginTop: '4px'}}>
+                        {member.research_topics.map(topic => (
+                          <span key={topic} style={{fontSize: '11px', color: 'var(--color-primary)', background: 'rgba(6, 182, 212, 0.1)', padding: '2px 8px', borderRadius: '4px', fontWeight: '600'}}>
+                            {topic}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Academic External Links */}
+                  {(member.orcid || member.google_scholar_url || member.research_gate_url) && (
+                    <div className={styles.detailRow} style={{marginTop: '10px'}}>
+                      <span className={styles.label}>{lang === 'ar' ? 'معرفات أكاديمية:' : 'Digital Identifiers:'}</span>
+                      <div style={{display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '6px'}}>
+                        {member.orcid && (
+                          <a href={`https://orcid.org/${member.orcid}`} target="_blank" rel="noopener noreferrer" style={{fontSize: '12px', color: '#A3E635', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px'}}>
+                            💚 ORCID: {member.orcid}
+                          </a>
+                        )}
+                        {member.google_scholar_url && (
+                          <a href={member.google_scholar_url} target="_blank" rel="noopener noreferrer" style={{fontSize: '12px', color: 'var(--color-primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px'}}>
+                            🎓 Google Scholar
+                          </a>
+                        )}
+                        {member.research_gate_url && (
+                          <a href={member.research_gate_url} target="_blank" rel="noopener noreferrer" style={{fontSize: '12px', color: 'var(--color-secondary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px'}}>
+                            🌐 ResearchGate
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className={styles.divider} />
@@ -135,9 +173,25 @@ export default function MemberProfile() {
               </div>
             </div>
 
-            {/* Right Card: Bio and Publications list */}
+            {/* Right Card: Bio, Metrics dashboard & Publications list */}
             <div className={styles.contentCol}>
               
+              {/* Metrics dashboard */}
+              <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1px', background: 'var(--color-border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: '1px solid var(--color-border)'}}>
+                <div style={{background: 'var(--color-bg-card)', padding: '20px', textAlign: 'center'}}>
+                  <div style={{fontSize: '11px', color: 'var(--color-slate-600)', textTransform: 'uppercase', marginBottom: '4px'}}>{lang === 'ar' ? 'مؤشر H-Index' : 'H-Index'}</div>
+                  <div style={{fontSize: '24px', fontWeight: '700', color: 'var(--color-primary)'}}>{member.h_index || 0}</div>
+                </div>
+                <div style={{background: 'var(--color-bg-card)', padding: '20px', textAlign: 'center'}}>
+                  <div style={{fontSize: '11px', color: 'var(--color-slate-600)', textTransform: 'uppercase', marginBottom: '4px'}}>{lang === 'ar' ? 'إجمالي الاقتباسات' : 'Citations'}</div>
+                  <div style={{fontSize: '24px', fontWeight: '700', color: 'var(--color-secondary)'}}>{member.citations_count || 0}</div>
+                </div>
+                <div style={{background: 'var(--color-bg-card)', padding: '20px', textAlign: 'center'}}>
+                  <div style={{fontSize: '11px', color: 'var(--color-slate-600)', textTransform: 'uppercase', marginBottom: '4px'}}>{lang === 'ar' ? 'المنشورات' : 'Publications'}</div>
+                  <div style={{fontSize: '24px', fontWeight: '700', color: 'var(--color-text-dark)'}}>{member.publications_count || articles.length}</div>
+                </div>
+              </div>
+
               {/* Bio block */}
               <div className={styles.bioCard}>
                 <h2 className={styles.sectionHeading}>{lang === 'ar' ? 'السيرة العلمية' : (lang === 'fr' ? 'Biographie' : 'Scientific Biography')}</h2>
@@ -174,7 +228,7 @@ export default function MemberProfile() {
                           </Link>
                           {art.journal_link && (
                             <a href={art.journal_link} target="_blank" rel="noopener noreferrer" className={styles.pubJournalBtn}>
-                              🌐 {t('pubViewJournal')}
+                              🌐 {t('pubViewJournal') || 'View Journal'}
                             </a>
                           )}
                           {art.pdf_link && art.pdf_link !== '#' && (

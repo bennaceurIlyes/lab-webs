@@ -6,7 +6,6 @@ import SectionTitle from '../components/ui/SectionTitle';
 import NewsGrid from '../components/sections/NewsGrid';
 import EventsList from '../components/sections/EventsList';
 import LeadershipPreview from '../components/sections/LeadershipPreview';
-import PartnersStrip from '../components/sections/PartnersStrip';
 import styles from './Home.module.css';
 
 export default function Home() {
@@ -29,7 +28,6 @@ export default function Home() {
       </section>
 
       <LeadershipPreview />
-      <PartnersStrip />
     </main>
   );
 }

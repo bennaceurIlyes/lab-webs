@@ -4,13 +4,6 @@ import { Link } from 'react-router-dom';
 import LdreasLogo from '../ui/LdreasLogo';
 import styles from './Footer.module.css';
 
-const partners = [
-  { name: 'MESRS', id: 'mesrs' },
-  { name: 'DGRSDT', id: 'dgrsdt' },
-  { name: 'UTMB', id: 'utmb' },
-  { name: 'CDER', id: 'cder' },
-];
-
 export default function Footer() {
   const { lang, setLang } = useLanguage();
   const { t } = useTranslation();
@@ -44,17 +37,6 @@ export default function Footer() {
           <p className={styles.contactLine}>
             <a href="mailto:contact@ldreas.dz" className={styles.footerLink}>contact@ldreas.dz</a>
           </p>
-        </div>
-
-        <div className={styles.columnPartners}>
-          <h4 className={styles.columnTitle}>{t('partnerLogos')}</h4>
-          <div className={styles.partnerGrid}>
-            {partners.map(p => (
-              <div key={p.id} className={styles.partnerLogo} title={p.name}>
-                <span>{p.name}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 

@@ -20,8 +20,8 @@
 
 .section {
   padding: var(--space-16) 0 var(--space-24);
-  background-color: var(--color-bg-main);
-  border-top: 1px solid var(--color-surface);
+  background-color: var(--color-bg-page);
+  border-top: 1px solid var(--color-border);
 }
 
 /* ── Grid ── */
@@ -33,9 +33,9 @@
 
 /* ── Team Card ── */
 .card {
-  background: var(--color-white);
-  border: 1px solid var(--color-surface);
-  border-radius: 12px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
   padding: var(--space-8);
   display: flex;
   flex-direction: column;
@@ -43,10 +43,8 @@
   position: relative;
   overflow: hidden;
   animation: fadeSlideUp 0.5s ease both;
-  transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease,
-    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Gradient top bar */
@@ -61,7 +59,7 @@
   background-size: 200% auto;
   transform: scaleX(0);
   transform-origin: left;
-  border-radius: 12px 12px 0 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -73,17 +71,15 @@
   right: -100px;
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(0, 51, 102, 0.04) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
 
 .card:hover {
-  border-color: rgba(0, 51, 102, 0.25);
-  box-shadow:
-    0 8px 30px rgba(0, 51, 102, 0.09),
-    0 2px 8px rgba(0, 51, 102, 0.05);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
   transform: translateY(-5px);
 }
 
@@ -108,22 +104,22 @@
   font-family: var(--font-body);
   font-size: 10px;
   font-weight: 700;
-  color: var(--color-white);
+  color: var(--color-bg-main);
   background: var(--color-primary);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   padding: 3px var(--space-3);
-  border-radius: 20px;
+  border-radius: var(--radius-full);
   transition: background 0.2s ease;
 }
 
 .card:hover .acronym {
-  background: var(--color-accent);
+  background: var(--color-secondary);
 }
 
 .count {
   font-size: var(--size-xs);
-  color: var(--color-slate-400);
+  color: var(--color-slate-600);
   font-weight: 500;
   display: inline-flex;
   align-items: center;
@@ -140,19 +136,19 @@
   font-family: var(--font-display);
   font-size: var(--size-lg);
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-text-dark);
   margin: 0 0 var(--space-4) 0;
   line-height: 1.3;
 }
 
 .titleLink {
-  color: var(--color-primary);
+  color: var(--color-text-dark);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .titleLink:hover {
-  color: var(--color-accent);
+  color: var(--color-primary);
   text-decoration: none;
 }
 
@@ -174,7 +170,7 @@
 
 /* ── Leader Info ── */
 .leaderInfo {
-  border-top: 1px solid var(--color-surface);
+  border-top: 1px solid var(--color-border);
   padding-top: var(--space-4);
   margin-bottom: var(--space-4);
   font-size: var(--size-sm);
@@ -185,7 +181,7 @@
 }
 
 .leaderLabel {
-  color: var(--color-slate-400);
+  color: var(--color-slate-600);
   font-weight: 500;
   font-size: var(--size-xs);
   text-transform: uppercase;
@@ -193,20 +189,20 @@
 }
 
 .leaderName {
-  color: var(--color-accent);
+  color: var(--color-primary);
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .leaderName:hover {
-  color: var(--color-primary);
+  color: var(--color-secondary);
   text-decoration: underline;
 }
 
 /* ── Card Footer ── */
 .cardFooter {
-  border-top: 1px solid var(--color-surface);
+  border-top: 1px solid var(--color-border);
   padding-top: var(--space-4);
   margin-top: auto;
 }
@@ -221,10 +217,10 @@
   font-weight: 600;
   color: var(--color-primary);
   text-decoration: none;
-  border: 1px solid var(--color-surface);
+  border: 1px solid var(--color-border);
   padding: var(--space-2) var(--space-5);
-  border-radius: 4px;
-  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
 }
 
 .viewBtn::after {
@@ -235,7 +231,7 @@
 .viewBtn:hover {
   border-color: var(--color-primary);
   background: var(--color-primary);
-  color: var(--color-white);
+  color: var(--color-bg-main);
   text-decoration: none;
 }
 
@@ -263,3 +259,4 @@
     padding: var(--space-6);
   }
 }
+

@@ -384,12 +384,8 @@ const LOCALIZED_DICTS = {
 
 // LocalDB initialization helper
 function getLocalDB() {
-  const data = localStorage.getItem('ldreas_showcase_db');
-  if (!data) {
-    localStorage.setItem('ldreas_showcase_db', JSON.stringify(SEED_DATA));
-    return SEED_DATA;
-  }
-  return JSON.parse(data);
+  localStorage.setItem('ldreas_showcase_db', JSON.stringify(SEED_DATA));
+  return SEED_DATA;
 }
 
 // Translate record fields helper

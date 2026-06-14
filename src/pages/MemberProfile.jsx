@@ -138,7 +138,7 @@ export default function MemberProfile() {
 
                   {/* Research Interests / Topics */}
                   {member.research_topics && member.research_topics.length > 0 && (
-                    <div className={styles.detailRow} style={{marginTop: '10px'}}>
+                    <div className={styles.detailRowWithMargin}>
                       <span className={styles.label}>{lang === 'ar' ? 'الاهتمامات البحثية:' : 'Research Areas:'}</span>
                       <div className={styles.topicContainer}>
                         {member.research_topics.map(topic => (
@@ -152,7 +152,7 @@ export default function MemberProfile() {
 
                   {/* Academic External Links */}
                   {(member.orcid || member.google_scholar_url || member.research_gate_url) && (
-                    <div className={styles.detailRow} style={{marginTop: '10px'}}>
+                    <div className={styles.detailRowWithMargin}>
                       <span className={styles.label}>{lang === 'ar' ? 'معرفات أكاديمية:' : 'Identifiers:'}</span>
                       <div className={styles.linksContainer}>
                         {member.orcid && (
@@ -276,9 +276,9 @@ export default function MemberProfile() {
           </div>
 
           <div className={styles.footerActions}>
-            <button onClick={() => window.history.back()} className={styles.backBtn}>
-              {lang === 'ar' ? '← العودة للخلف' : (lang === 'fr' ? '← Retour' : '← Back')}
-            </button>
+            <Link to="/teams" className={styles.backBtn}>
+              {lang === 'ar' ? '← العودة للفرق' : (lang === 'fr' ? '← Retour aux équipes' : '← Back to Teams')}
+            </Link>
           </div>
 
         </div>

@@ -39,9 +39,12 @@ export default function ArticleDetail() {
     });
   }, [id, lang]);
 
-  const copyToClipboard = (text, label) => {
-    navigator.clipboard.writeText(text).then(() => {
-      alert(`${label} ${lang === 'ar' ? 'تم نسخه بنجاح!' : 'copied successfully!'}`);
+  const [doiCopied, setDoiCopied] = useState(false);
+
+  const copyDoi = (doi) => {
+    navigator.clipboard.writeText(doi).then(() => {
+      setDoiCopied(true);
+      setTimeout(() => setDoiCopied(false), 2000);
     });
   };
 
@@ -94,30 +97,29 @@ export default function ArticleDetail() {
               <Tag label={article.article_type === 'journal' ? (lang === 'ar' ? 'مقال مجلة' : 'Journal Article') : (lang === 'ar' ? 'مقال مؤتمر' : 'Conference Paper')} />
               <span className={styles.date}>{formatDate(article.published_at)}</span>
               {article.doi && (
-                <span 
-                  onClick={() => copyToClipboard(article.doi, 'DOI')} 
-                  className={styles.date} 
-                  style={{cursor: 'pointer', marginLeft: 'auto', textDecoration: 'underline', color: 'var(--color-primary)'}}
+                <button 
+                  onClick={() => copyDoi(article.doi)} 
+                  className={styles.doiCopyBtn}
                   title="Click to copy DOI"
                 >
-                  DOI: {article.doi}
-                </span>
+                  DOI: {article.doi} {doiCopied && <span className={styles.copiedText}>({lang === 'ar' ? 'تم النسخ' : 'Copied'})</span>}
+                </button>
               )}
             </div>
 
             {/* Metrics cards grid */}
-            <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1px', background: 'var(--color-border)', borderBottom: '1px solid var(--color-border)'}}>
-              <div style={{background: 'var(--color-bg-card)', padding: '20px', textAlign: 'center'}}>
-                <div style={{fontSize: '12px', color: 'var(--color-slate-600)', textTransform: 'uppercase', marginBottom: '4px'}}>{lang === 'ar' ? 'الاقتباسات (Scopus)' : 'Citations (Scopus)'}</div>
-                <div style={{fontSize: '28px', fontWeight: '700', color: 'var(--color-primary)'}}>{article.citations_count || 0}</div>
+            <div className={styles.metricsGrid}>
+              <div className={styles.metricCard}>
+                <div className={styles.metricLabel}>{lang === 'ar' ? 'الاقتباسات (Scopus)' : 'Citations (Scopus)'}</div>
+                <div className={styles.metricValPrimary}>{article.citations_count || 0}</div>
               </div>
-              <div style={{background: 'var(--color-bg-card)', padding: '20px', textAlign: 'center'}}>
-                <div style={{fontSize: '12px', color: 'var(--color-slate-600)', textTransform: 'uppercase', marginBottom: '4px'}}>{lang === 'ar' ? 'التحميلات (Vercel)' : 'Downloads (Vercel)'}</div>
-                <div style={{fontSize: '28px', fontWeight: '700', color: 'var(--color-secondary)'}}>{article.downloads_count || 0}</div>
+              <div className={styles.metricCard}>
+                <div className={styles.metricLabel}>{lang === 'ar' ? 'التحميلات (Vercel)' : 'Downloads (Vercel)'}</div>
+                <div className={styles.metricValSecondary}>{article.downloads_count || 0}</div>
               </div>
-              <div style={{background: 'var(--color-bg-card)', padding: '20px', textAlign: 'center'}}>
-                <div style={{fontSize: '12px', color: 'var(--color-slate-600)', textTransform: 'uppercase', marginBottom: '4px'}}>{lang === 'ar' ? 'مؤشر Altmetric' : 'Altmetric Score'}</div>
-                <div style={{fontSize: '28px', fontWeight: '700', color: 'var(--color-accent)'}}>{article.altmetric_score || 0}</div>
+              <div className={styles.metricCard}>
+                <div className={styles.metricLabel}>{lang === 'ar' ? 'مؤشر Altmetric' : 'Altmetric Score'}</div>
+                <div className={styles.metricValAccent}>{article.altmetric_score || 0}</div>
               </div>
             </div>
 

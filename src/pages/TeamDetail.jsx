@@ -179,13 +179,12 @@ export default function TeamDetail() {
                         <p className={styles.memberSpecialty}>{m.specialty}</p>
                         
                         <div className={styles.memberActions}>
+                          <Link to={`/members/${m.id}`} className={styles.memberProfileBtn}>
+                            {lang === 'ar' ? 'الملف الشخصي' : 'Profile'}
+                          </Link>
                           <a href={`mailto:${m.email}`} className={styles.memberEmailBtn}>
                             {lang === 'ar' ? 'اتصال' : 'Email'}
                           </a>
-                          <span className={styles.actionDivider}>/</span>
-                          <Link to={`/members/${m.id}`} className={styles.memberProfileLink}>
-                            {lang === 'ar' ? 'الملف الشخصي' : 'Profile'}
-                          </Link>
                         </div>
                       </div>
                     ))}

@@ -203,7 +203,9 @@
   gap: var(--space-6);
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
+  border-radius: 8px;
   padding: var(--space-6);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 .authorPhoto {
@@ -211,6 +213,7 @@
   height: 70px;
   object-fit: cover;
   border: 1px solid var(--color-border);
+  border-radius: 50%;
   flex-shrink: 0;
 }
 

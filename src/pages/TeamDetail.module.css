@@ -72,7 +72,7 @@
 /* ── Layout Grid ── */
 .layoutGrid {
   display: grid;
-  grid-template-columns: 1fr 340px;
+  grid-template-columns: 1.3fr 1fr;
   gap: var(--space-10);
   align-items: start;
 }
@@ -101,20 +101,31 @@
 }
 
 .leaderCard {
-  display: grid;
-  grid-template-columns: 180px 1fr;
+  display: flex;
+  align-items: center;
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
+  border-radius: 8px;
   padding: var(--space-6);
   gap: var(--space-8);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: var(--transition);
+}
+
+.leaderCard:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .leaderPhotoWrap {
-  width: 100%;
-  aspect-ratio: 4/5;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
   border: 1px solid var(--color-border);
   overflow: hidden;
   background: var(--color-surface);
+  flex-shrink: 0;
 }
 
 .leaderPhoto {
@@ -124,8 +135,9 @@
 }
 
 .leaderPhotoPlaceholder {
-  width: 100%;
-  aspect-ratio: 4/5;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   display: flex;
@@ -135,6 +147,7 @@
   font-size: var(--size-3xl);
   font-weight: 700;
   color: var(--color-slate-600);
+  flex-shrink: 0;
 }
 
 .leaderInfo {
@@ -223,17 +236,29 @@
 .memberCard {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
+  border-radius: 8px;
   padding: var(--space-5);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: var(--transition);
+}
+
+.memberCard:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .memberPhotoWrap {
-  width: 100px;
-  height: 120px;
+  width: 90px;
+  height: 90px;
   overflow: hidden;
   border: 1px solid var(--color-border);
+  border-radius: 50%;
   background: var(--color-surface);
   margin-bottom: var(--space-4);
 }
@@ -245,10 +270,11 @@
 }
 
 .memberPhotoPlaceholder {
-  width: 100%;
-  height: 100%;
+  width: 90px;
+  height: 90px;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -286,8 +312,10 @@
 .memberActions {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-2);
   margin-top: auto;
+  width: 100%;
 }
 .memberProfileBtn, .memberEmailBtn {
   font-family: var(--font-body);
@@ -336,7 +364,16 @@
 .projectCard {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
+  border-radius: 8px;
   padding: var(--space-5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: var(--transition);
+}
+
+.projectCard:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .projectHeader {

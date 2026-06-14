@@ -49,10 +49,10 @@ export default function TeamDetail() {
 
   function getProjectStateColor(state) {
     switch(state) {
-      case 'completed': return 'success';
-      case 'ongoing': return 'warning';
-      case 'planned': return 'neutral';
-      default: return 'neutral';
+      case 'completed': return 'green';
+      case 'ongoing': return 'blue';
+      case 'planned': return 'orange';
+      default: return 'blue';
     }
   }
 
@@ -209,7 +209,7 @@ export default function TeamDetail() {
                   {projects.map(p => (
                     <div key={p.id} className={styles.projectCard}>
                       <div className={styles.projectHeader}>
-                        <Tag label={getProjectStateLabel(p.state)} type={getProjectStateColor(p.state)} />
+                        <Tag label={getProjectStateLabel(p.state)} variant={getProjectStateColor(p.state)} />
                         <span className={styles.timeline}>
                           {formatDate(p.started_at)} - {formatDate(p.expected_end_date)}
                         </span>

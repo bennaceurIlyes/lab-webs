@@ -55,12 +55,12 @@ export default function NewsDetail() {
   return (
     <main id="main-content">
       {/* Page Hero */}
-      <section className={styles.pageHero}>
-        <div className={styles.heroInner}>
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+      <section className="pageHero">
+        <div className="heroInner">
+          <nav className="breadcrumb" aria-label="Breadcrumb">
             <Link to="/">{t('navHome')}</Link> / <Link to="/news">{t('navNews')}</Link> / {lang === 'ar' ? 'تفاصيل الخبر' : (lang === 'fr' ? 'Détails' : 'Detail')}
           </nav>
-          <h1 className={styles.heroTitle}>{newsItem.title}</h1>
+          <h1 className="heroTitle">{newsItem.title}</h1>
         </div>
       </section>
 
@@ -79,14 +79,15 @@ export default function NewsDetail() {
               </div>
             )}
 
-            <p className={styles.detailDesc}>{newsItem.description}</p>
-            <div className={styles.divider} />
-            <div 
-              className={styles.detailContent} 
-              dangerouslySetInnerHTML={{
-                __html: newsItem.content.replace(/\n/g, '<br />')
-              }} 
-            />
+            <div className={styles.bodyWrapper}>
+              <p className={styles.detailDesc}>{newsItem.description}</p>
+              <div 
+                className={styles.detailContent} 
+                dangerouslySetInnerHTML={{
+                  __html: newsItem.content.replace(/\n/g, '<br />')
+                }} 
+              />
+            </div>
 
             <div className={styles.footerActions}>
               <Link to="/news" className={styles.backBtn}>

@@ -1,36 +1,14 @@
-/* About page styles */
-.pageHero {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-  padding: var(--space-16) 0 var(--space-12);
-  color: #fff;
-}
-
-.heroInner {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--space-6);
-}
-
-.breadcrumb {
-  font-size: var(--size-sm);
-  opacity: 0.7;
-  margin-bottom: var(--space-3);
-}
-
-.heroTitle {
-  font-family: var(--font-heading);
-  font-size: var(--size-4xl);
-  font-weight: 900;
-}
-
+/* About page — institutional layout */
 .section {
   padding: var(--space-16) 0;
+  background: var(--color-white);
+  border-top: 1px solid var(--color-surface);
 }
 
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--gutter);
 }
 
 .twoCol {
@@ -49,24 +27,23 @@
 .sectionHeading {
   font-family: var(--font-display);
   font-size: var(--size-3xl);
-  color: var(--color-navy-900);
-  border-inline-start: 4px solid var(--color-accent-500);
-  padding-inline-start: var(--space-4);
+  color: var(--color-primary);
+  border-bottom: 1px solid var(--color-surface);
+  padding-bottom: var(--space-4);
+  margin: 0;
 }
 
 .text {
   font-size: var(--size-base);
-  line-height: 1.8;
-  color: var(--color-text);
+  line-height: 1.7;
+  color: var(--color-slate-600);
 }
 
 .mission {
-  border-inline-start: 4px solid var(--color-accent-500);
+  border-inline-start: 2px solid var(--color-secondary);
   padding: var(--space-4) var(--space-6);
-  background: var(--color-sand-50);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: var(--color-bg-main);
   font-family: var(--font-body);
-  font-style: italic;
   color: var(--color-slate-600);
   line-height: 1.7;
 }
@@ -78,8 +55,8 @@
 }
 
 .highlightCard {
-  background: var(--color-bg);
-  border-radius: var(--radius-md);
+  background: var(--color-white);
+  border: 1px solid var(--color-surface);
   padding: var(--space-4);
   text-align: center;
   display: flex;
@@ -88,25 +65,23 @@
 }
 
 .highlightNumber {
-  font-family: var(--font-heading);
+  font-family: var(--font-display);
   font-size: var(--size-3xl);
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-primary);
 }
 
 .highlightLabel {
   font-size: var(--size-sm);
-  color: var(--color-text-muted);
+  color: var(--color-slate-400);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.04em;
 }
 
 .directorCard {
-  background: var(--color-bg-container);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border);
+  background: var(--color-white);
+  border: 1px solid var(--color-surface);
   padding: var(--space-8);
-  box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -115,12 +90,10 @@
 
 .directorPhotoWrap {
   width: 140px;
-  height: 140px;
-  border-radius: 50%;
+  height: 160px;
   overflow: hidden;
-  border: 3px solid var(--color-accent);
+  border: 1px solid var(--color-surface);
   margin-bottom: var(--space-4);
-  box-shadow: var(--shadow-sm);
 }
 
 .directorPhoto {
@@ -130,7 +103,7 @@
 }
 
 .directorName {
-  font-family: var(--font-heading);
+  font-family: var(--font-display);
   font-size: var(--size-lg);
   font-weight: 700;
   color: var(--color-primary);
@@ -140,28 +113,27 @@
 .directorTitleText {
   font-size: var(--size-xs);
   color: var(--color-accent);
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
   margin: var(--space-1) 0 var(--space-4) 0;
 }
 
 .directorQuote {
   font-size: var(--size-sm);
-  font-style: italic;
   line-height: 1.6;
-  color: var(--color-text-muted);
+  color: var(--color-slate-600);
   margin: 0;
 }
 
 .axesBlock {
   margin-top: var(--space-16);
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--color-surface);
   padding-top: var(--space-12);
 }
 
 .axesHeading {
-  font-family: var(--font-heading);
-  font-size: 2rem;
+  font-family: var(--font-display);
+  font-size: var(--size-3xl);
   font-weight: 700;
   color: var(--color-primary);
   text-align: center;
@@ -171,65 +143,53 @@
 .axesGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
+  gap: var(--gutter);
 }
 
 .axisCard {
-  background: var(--color-bg-container);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  background: var(--color-white);
+  border: 1px solid var(--color-surface);
   padding: var(--space-6);
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--transition), box-shadow var(--transition);
 }
 
 .axisCard:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+  border-color: var(--color-slate-400);
 }
 
 .axisIcon {
-  font-size: var(--size-3xl);
+  font-size: var(--size-2xl);
   margin-bottom: var(--space-4);
 }
 
 .axisTitle {
-  font-family: var(--font-heading);
-  font-size: var(--size-md);
+  font-family: var(--font-display);
+  font-size: var(--size-lg);
   font-weight: 700;
-  color: var(--color-text-dark);
+  color: var(--color-primary);
   margin: 0 0 var(--space-2) 0;
 }
 
 .axisDesc {
   font-size: var(--size-sm);
   line-height: 1.6;
-  color: var(--color-text-muted);
+  color: var(--color-slate-600);
   margin: 0;
 }
-
-
 
 @media (max-width: 768px) {
   .twoCol {
     grid-template-columns: 1fr;
   }
 
-  .heroTitle {
-    font-size: var(--size-3xl);
-  }
-
-  .highlights {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
   .axesGrid {
     grid-template-columns: 1fr;
   }
-}
 
-@media (max-width: 480px) {
   .highlights {
     grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding: var(--space-12) 0;
   }
 }

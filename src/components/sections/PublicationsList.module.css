@@ -1,51 +1,66 @@
-/* PublicationsList styles — table-style list with left accent border */
 .section {
   background: var(--color-white);
   padding: var(--space-16) 0;
+  border-top: 1px solid var(--color-surface);
 }
 
 .inner {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--gutter);
 }
 
 .list {
   display: flex;
   flex-direction: column;
+  border: 1px solid var(--color-surface);
 }
 
 .row {
-  border-inline-start: 3px solid var(--color-accent-500);
-  padding: var(--space-3) var(--space-6);
+  padding: var(--space-6);
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--space-2);
+  border-bottom: 1px solid var(--color-surface);
+}
+
+.row:last-child {
+  border-bottom: none;
 }
 
 .altRow {
-  background: var(--color-sand-50);
+  background: var(--color-bg-main);
 }
 
 .authors {
   font-family: var(--font-body);
   font-size: var(--size-sm);
-  color: var(--color-slate-600);
-  font-style: italic;
+  color: var(--color-accent);
+  font-style: normal;
+  margin: 0;
+}
+
+.authorLink {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.authorLink:hover {
+  text-decoration: underline;
 }
 
 .title {
   font-family: var(--font-display);
   font-weight: 700;
-  color: var(--color-navy-900);
+  color: var(--color-primary);
   text-decoration: none;
   font-size: var(--size-lg);
   line-height: 1.4;
-  transition: color var(--transition);
 }
 
 .title:hover {
-  color: var(--color-accent-600);
+  color: var(--color-accent);
+  text-decoration: underline;
 }
 
 .journal {
@@ -53,44 +68,36 @@
   font-size: var(--size-sm);
   color: var(--color-slate-600);
   font-style: italic;
+  margin: 0;
 }
 
 .meta {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
   margin-top: var(--space-1);
 }
 
 .year {
   font-family: var(--font-body);
   font-size: var(--size-sm);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-slate-400);
 }
 
 .doi {
   font-family: var(--font-body);
   font-size: var(--size-xs);
-  color: var(--color-accent-500);
+  color: var(--color-accent);
   text-decoration: none;
-  border-bottom: 1px solid var(--color-accent-500);
-  transition: color var(--transition), border-color var(--transition);
 }
 
 .doi:hover {
-  color: var(--color-accent-600);
-  border-color: var(--color-accent-600);
+  text-decoration: underline;
 }
 
 @media (max-width: 768px) {
   .row {
-    padding: var(--space-3) var(--space-4);
-  }
-
-  .meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-1);
+    padding: var(--space-4);
   }
 }

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
 import { dbService } from '../lib/dbService';
 import { Link } from 'react-router-dom';
+import PageHero from '../components/layout/PageHero';
 import styles from './TeamsList.module.css';
 
 export default function TeamsList() {
@@ -33,15 +34,11 @@ export default function TeamsList() {
 
   return (
     <main id="main-content">
-      {/* Page Hero */}
-      <section className={styles.pageHero}>
-        <div className={styles.heroInner}>
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-            <Link to="/">{t('navHome')}</Link> / {t('navTeam') || 'Teams'}
-          </nav>
-          <h1 className={styles.heroTitle}>{t('projectsTitle') || 'Research Teams'}</h1>
-        </div>
-      </section>
+      <PageHero title={t('projectsTitle')} subtitle={t('projectsSubtitle')}>
+        <Link to="/">{t('navHome')}</Link>
+        <span aria-hidden="true"> / </span>
+        <span>{t('navTeam')}</span>
+      </PageHero>
 
       {/* Grid List */}
       <section className={styles.section}>
@@ -75,7 +72,7 @@ export default function TeamsList() {
                 
                 <div className={styles.cardFooter}>
                   <Link to={`/teams/${team.id}`} className={styles.viewBtn}>
-                    {lang === 'ar' ? 'عرض تفاصيل الفرقة ➔' : (lang === 'fr' ? 'Détails de l\'équipe ➔' : 'View Team Details ➔')}
+                    {lang === 'ar' ? 'عرض الفريق →' : (lang === 'fr' ? 'Voir l\'équipe →' : 'View team →')}
                   </Link>
                 </div>
               </div>

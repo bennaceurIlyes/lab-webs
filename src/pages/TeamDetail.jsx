@@ -89,13 +89,13 @@ export default function TeamDetail() {
   return (
     <main id="main-content">
       {/* Page Hero */}
-      <section className={styles.pageHero}>
-        <div className={styles.heroInner}>
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+      <section className="pageHero">
+        <div className="heroInner">
+          <nav className="breadcrumb" aria-label="Breadcrumb">
             <Link to="/">{t('navHome')}</Link> / <Link to="/teams">{t('navTeam') || 'Teams'}</Link> / {team.acronym}
           </nav>
           <span className={styles.teamTag}>{lang === 'ar' ? 'فرقة بحثية معتمدة' : (lang === 'fr' ? 'Équipe de Recherche' : 'Accredited Research Team')}</span>
-          <h1 className={styles.heroTitle}>{team.name} ({team.acronym})</h1>
+          <h1 className="heroTitle">{team.name} ({team.acronym})</h1>
         </div>
       </section>
 

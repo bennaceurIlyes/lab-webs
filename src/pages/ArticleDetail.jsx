@@ -71,12 +71,12 @@ export default function ArticleDetail() {
   return (
     <main id="main-content">
       {/* Page Hero */}
-      <section className={styles.pageHero}>
-        <div className={styles.heroInner}>
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+      <section className="pageHero">
+        <div className="heroInner">
+          <nav className="breadcrumb" aria-label="Breadcrumb">
             <Link to="/">{t('navHome')}</Link> / <Link to="/articles">{t('navPublications')}</Link> / {lang === 'ar' ? 'تفاصيل المقال' : (lang === 'fr' ? 'Détails de l\'article' : 'Article Details')}
           </nav>
-          <h1 className={styles.heroTitle}>{article.name}</h1>
+          <h1 className="heroTitle">{article.name}</h1>
         </div>
       </section>
 
@@ -90,68 +90,61 @@ export default function ArticleDetail() {
             </div>
 
             <div className={styles.contentSection}>
-              <h2 className={styles.subHeading}>{lang === 'ar' ? 'ملخص المقال' : (lang === 'fr' ? 'Résumé de l\'article' : 'Abstract / Description')}</h2>
+              <h2 className={styles.subHeading}>{lang === 'ar' ? 'ملخص المقال' : (lang === 'fr' ? "Résumé de l'article" : 'Abstract / Description')}</h2>
               <p className={styles.descriptionText}>
                 {article.description || (lang === 'ar' ? 'لا يوجد وصف متاح.' : 'No description available.')}
               </p>
             </div>
 
-            <div className={styles.divider} />
-
             {/* Authors Section */}
             <div className={styles.authorsSection}>
-              <h3 className={styles.authorsHeading}>{lang === 'ar' ? 'المؤلفون' : (lang === 'fr' ? 'Auteurs' : 'Authors')}</h3>
-              
+              <h2 className={styles.authorsHeading}>{lang === 'ar' ? 'المؤلفون' : (lang === 'fr' ? 'Auteurs' : 'Authors')}</h2>
               <div className={styles.authorList}>
-                {/* Primary Author */}
                 {primaryAuthor && (
                   <div className={styles.authorCard}>
                     <div className={styles.authorBadge}>{lang === 'ar' ? 'الكاتب الرئيسي' : 'Primary Author'}</div>
                     <Link to={`/members/${primaryAuthor.id}`} className={styles.authorName}>
                       {primaryAuthor.full_name}
                     </Link>
-                    <span className={styles.authorMeta}>{primaryAuthor.grade} - {primaryAuthor.specialty}</span>
+                    <span className={styles.authorMeta}>{primaryAuthor.grade} — {primaryAuthor.specialty}</span>
                   </div>
                 )}
-
-                {/* Co Authors */}
                 {coAuthors.map(co => (
                   <div key={co.id} className={styles.authorCard}>
                     <div className={styles.coAuthorBadge}>{lang === 'ar' ? 'مشارك' : 'Co-Author'}</div>
                     <Link to={`/members/${co.id}`} className={styles.authorName}>
                       {co.full_name}
                     </Link>
-                    <span className={styles.authorMeta}>{co.grade} - {co.specialty}</span>
+                    <span className={styles.authorMeta}>{co.grade} — {co.specialty}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className={styles.divider} />
-
             {/* Links and Downloads */}
-            <div className={styles.linksSection}>
-              <h3 className={styles.linksHeading}>{lang === 'ar' ? 'الروابط والتحميل' : (lang === 'fr' ? 'Liens & Téléchargements' : 'Links & Downloads')}</h3>
-              <div className={styles.linksRow}>
-                {article.journal_link && (
-                  <a href={article.journal_link} target="_blank" rel="noopener noreferrer" className={styles.journalCta}>
-                    🌐 {t('pubViewJournal')}
-                  </a>
-                )}
-                {article.pdf_link && article.pdf_link !== '#' && (
-                  <a href={article.pdf_link} target="_blank" rel="noopener noreferrer" className={styles.pdfCta}>
-                    📥 {t('pubDownloadPdf')}
-                  </a>
-                )}
+            {(article.journal_link || (article.pdf_link && article.pdf_link !== '#')) && (
+              <div className={styles.linksSection}>
+                <h2 className={styles.linksHeading}>{lang === 'ar' ? 'الروابط والتحميل' : (lang === 'fr' ? 'Liens & Téléchargements' : 'Links & Downloads')}</h2>
+                <div className={styles.linksRow}>
+                  {article.journal_link && (
+                    <a href={article.journal_link} target="_blank" rel="noopener noreferrer" className={styles.journalCta}>
+                      {t('pubViewJournal')}
+                    </a>
+                  )}
+                  {article.pdf_link && article.pdf_link !== '#' && (
+                    <a href={article.pdf_link} target="_blank" rel="noopener noreferrer" className={styles.pdfCta}>
+                      {t('pubDownloadPdf')}
+                    </a>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
 
             <div className={styles.footerActions}>
               <Link to="/articles" className={styles.backBtn}>
                 {lang === 'ar' ? '← العودة للمنشورات' : (lang === 'fr' ? '← Retour aux publications' : '← Back to Publications')}
               </Link>
             </div>
-
           </div>
         </div>
       </section>

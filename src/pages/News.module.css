@@ -1,114 +1,132 @@
-/* News page styles */
-.pageHero {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-  padding: var(--space-16) 0 var(--space-12);
-  color: #fff;
-}
+/* ============================================
+   News Page — Institutional News Listing
+   ============================================ */
 
 .heroInner {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--gutter);
 }
 
-.breadcrumb {
-  font-size: var(--size-sm);
-  opacity: 0.7;
-  margin-bottom: var(--space-3);
-}
-
-.heroTitle {
-  font-family: var(--font-heading);
-  font-size: var(--size-4xl);
-  font-weight: 900;
-}
-
+/* ── Main section ── */
 .section {
-  padding: var(--space-16) 0;
-  background: var(--color-bg);
+  padding: var(--space-16) 0 var(--space-24);
+  background: var(--color-bg-main);
 }
 
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--gutter);
 }
 
+/* ── Filter row ── */
 .filters {
   display: flex;
   gap: var(--space-2);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-10);
   flex-wrap: wrap;
+  border-bottom: 1px solid var(--color-surface);
+  padding-bottom: var(--space-6);
 }
 
 .filterBtn {
   padding: var(--space-2) var(--space-4);
+  font-family: var(--font-body);
   font-size: var(--size-sm);
-  font-weight: 600;
-  border: 1px solid var(--color-border);
-  border-radius: 20px;
-  background: #fff;
-  color: var(--color-text);
+  font-weight: 500;
+  border: 1px solid var(--color-surface);
+  background: var(--color-white);
+  color: var(--color-text-base);
   cursor: pointer;
-  transition: all var(--transition);
+  transition: border-color var(--transition), color var(--transition), background var(--transition);
 }
 
 .filterBtn:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .filterActive {
-  background: var(--color-accent);
-  color: #fff;
-  border-color: var(--color-accent);
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
 }
 
 .filterActive:hover {
-  color: #fff;
+  color: var(--color-white);
+  background: var(--color-navy-700);
 }
 
+/* ── Grid layout ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-6);
+  gap: var(--gutter);
 }
 
+/* ── News Card ── */
 .card {
+  background: var(--color-white);
+  border: 1px solid var(--color-surface);
   display: flex;
   flex-direction: column;
-  background: #fff;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
+  position: relative;
   overflow: hidden;
-  transition: all var(--transition);
+  transition: border-color var(--transition);
+}
+
+/* Accent bar on the left top */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--color-surface);
+  transition: background var(--transition);
+  z-index: 1;
 }
 
 .card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  border-color: var(--color-primary);
 }
 
+.card:hover::before {
+  background: var(--color-primary);
+}
+
+/* ── Image ── */
 .imageWrap {
   width: 100%;
-  height: 180px;
+  height: 200px;
   overflow: hidden;
+  border-bottom: 1px solid var(--color-surface);
+  position: relative;
 }
 
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.4s ease;
 }
 
+.card:hover .image {
+  transform: scale(1.04);
+}
+
+/* ── Content area ── */
 .content {
-  padding: var(--space-4) var(--space-6);
+  padding: var(--space-6);
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
+/* ── Meta (tag + date) ── */
 .meta {
   display: flex;
   align-items: center;
@@ -116,82 +134,89 @@
 }
 
 .date {
-  font-size: var(--size-sm);
-  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: var(--size-xs);
+  color: var(--color-slate-400);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
+/* ── Article title ── */
 .title {
-  font-family: var(--font-heading);
-  font-size: var(--size-base);
+  font-family: var(--font-display);
+  font-size: var(--size-lg);
   font-weight: 700;
-  color: var(--color-text);
-  line-height: 1.4;
+  color: var(--color-primary);
+  line-height: 1.35;
+  margin: 0;
 }
 
+/* ── Excerpt ── */
 .excerpt {
   font-size: var(--size-sm);
-  color: var(--color-text-muted);
-  line-height: 1.5;
+  color: var(--color-slate-600);
+  line-height: 1.6;
+  flex: 1;
+  margin: 0;
+
+  /* Clamp to 3 lines */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  flex: 1;
 }
 
+/* ── Read more CTA ── */
 .readMoreBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   font-family: var(--font-body);
   font-size: var(--size-sm);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-accent);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  text-align: left;
+  text-decoration: none;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-surface);
+  margin-top: var(--space-2);
   transition: color var(--transition);
 }
 
-html[dir="rtl"] .readMoreBtn {
-  text-align: right;
-}
-
 .readMoreBtn:hover {
-  color: var(--color-accent-hover);
-  text-decoration: underline;
+  color: var(--color-primary);
 }
 
+/* ── Back button ── */
 .backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   font-family: var(--font-body);
   font-size: var(--size-sm);
-  font-weight: 600;
-  color: var(--color-accent);
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 500;
+  color: var(--color-primary);
+  background: none;
+  border: 1px solid var(--color-surface);
   padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-sm);
   cursor: pointer;
-  margin-bottom: var(--space-4);
-  color: #fff;
-  transition: all var(--transition);
+  margin-bottom: var(--space-8);
+  text-decoration: none;
+  transition: border-color var(--transition), color var(--transition);
 }
 
 .backBtn:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  border-color: var(--color-primary);
+  color: var(--color-accent);
 }
 
+/* ── Detail view (for older detail states kept in this module) ── */
 .detailCard {
-  background: var(--color-bg-container);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  background: var(--color-white);
+  border: 1px solid var(--color-surface);
   padding: var(--space-8);
-  box-shadow: var(--shadow-md);
   max-width: 800px;
   margin: 0 auto;
-}
-
-html[dir="rtl"] .detailCard {
-  text-align: right;
 }
 
 .detailMeta {
@@ -199,13 +224,15 @@ html[dir="rtl"] .detailCard {
   align-items: center;
   gap: var(--space-4);
   margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-surface);
 }
 
 .detailPhotoWrap {
   width: 100%;
   max-height: 400px;
   overflow: hidden;
-  border-radius: var(--radius-md);
+  border: 1px solid var(--color-surface);
   margin-bottom: var(--space-6);
 }
 
@@ -218,25 +245,32 @@ html[dir="rtl"] .detailCard {
 .detailDesc {
   font-size: var(--size-lg);
   font-weight: 500;
-  color: var(--color-text-dark);
+  color: var(--color-text-base);
   line-height: 1.6;
   margin: 0 0 var(--space-6) 0;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-surface);
   padding-bottom: var(--space-4);
 }
 
 .detailContent {
   font-size: var(--size-base);
   line-height: 1.8;
-  color: var(--color-text);
+  color: var(--color-slate-600);
 }
 
-@media (max-width: 768px) {
+/* ── Responsive ── */
+@media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr;
   }
 
-  .heroTitle {
-    font-size: var(--size-3xl);
+  .imageWrap {
+    height: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .detailCard {
+    padding: var(--space-6);
   }
 }

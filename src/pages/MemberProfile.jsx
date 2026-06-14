@@ -78,13 +78,13 @@ export default function MemberProfile() {
   return (
     <main id="main-content">
       {/* Page Hero */}
-      <section className={styles.pageHero}>
-        <div className={styles.heroInner}>
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+      <section className="pageHero">
+        <div className="heroInner">
+          <nav className="breadcrumb" aria-label="Breadcrumb">
             <Link to="/">{t('navHome')}</Link> / {lang === 'ar' ? 'ملف الباحث' : (lang === 'fr' ? 'Profil du chercheur' : 'Researcher Profile')}
           </nav>
           <span className={styles.roleTag}>{getRoleLabel(member.role)}</span>
-          <h1 className={styles.heroTitle}>{member.full_name}</h1>
+          <h1 className="heroTitle">{member.full_name}</h1>
         </div>
       </section>
 

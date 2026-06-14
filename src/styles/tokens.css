@@ -1,91 +1,92 @@
-/* Design tokens — LDREAS Saharan inspired premium aesthetic styling */
+/* LDREAS Institutional Design System */
 :root {
-  /* Color Palette */
-  --color-navy-900:   #003366;   /* Deep Institutional Blue */
-  --color-navy-800:   #002244;   
-  --color-navy-700:   #004488;   
-  
-  --color-sand-50:    #FFFFFF;   /* page background */
-  --color-sand-100:   #F9FAFB;   /* surface/card background */
-  
-  --color-accent-500: #C84E00; /* Saharan Ochre */
-  --color-accent-600: #A03D00; /* hover state */
-  --color-accent-cool: #F4F4F4; /* accent background */
-  
-  --color-slate-600:  #5A6678;   /* body text on light backgrounds */
-  --color-slate-400:  #8B95A6;   /* muted/secondary text, subtitles */
-  
-  --color-white:      #FFFFFF;
-  
-  --color-news-tag-bg: #E4EEFB;  /* light blue "NEWS" tag background */
-  --color-news-tag-text: #2C5C9E;
-  
-  /* Semantic mappings to existing variables to maintain some compatibility */
-  --color-primary:        var(--color-navy-900);
-  --color-primary-dark:   var(--color-navy-900);
+  /* Core palette */
+  --color-primary:        #0A192F;
+  --color-secondary:      #D4AF37;
+  --color-accent:         #008080;
+  --color-accent-hover:   #006666;
+  --color-bg-main:        #F8F9FA;
+  --color-surface:        #E9ECEF;
+  --color-text-base:      #212529;
+
+  /* Semantic aliases (backward compatibility) */
+  --color-navy-900:       var(--color-primary);
+  --color-navy-800:       #081422;
+  --color-navy-700:       #0F2544;
+  --color-sand-50:        #FFFFFF;
+  --color-sand-100:       var(--color-bg-main);
+  --color-accent-500:     var(--color-accent);
+  --color-accent-600:     var(--color-accent-hover);
+  --color-accent-cool:    var(--color-surface);
+  --color-slate-600:      #495057;
+  --color-slate-400:      #6C757D;
+  --color-white:          #FFFFFF;
+  --color-news-tag-bg:    transparent;
+  --color-news-tag-text:  var(--color-accent);
+
+  --color-primary-dark:   var(--color-primary);
   --color-primary-light:  var(--color-navy-700);
-  --color-accent:         var(--color-accent-500);
-  --color-accent-hover:   var(--color-accent-600);
-  --color-sand:           var(--color-sand-100);
-  --color-beige:          var(--color-sand-50);
-  
-  --color-bg-outer:       var(--color-sand-50);
+  --color-sand:           var(--color-bg-main);
+  --color-beige:          var(--color-bg-main);
+  --color-bg-outer:       var(--color-bg-main);
   --color-bg-container:   var(--color-white);
-  --color-bg-page:        var(--color-sand-50);
-  --color-bg:             var(--color-bg-page);
+  --color-bg-page:        var(--color-bg-main);
+  --color-bg:             var(--color-bg-main);
   --color-bg-card:        var(--color-white);
-  
   --color-text:           var(--color-slate-600);
-  --color-text-dark:      var(--color-navy-900);
+  --color-text-dark:      var(--color-text-base);
   --color-text-muted:     var(--color-slate-400);
-  --color-border:         #E2E8F0;
-  
-  --color-success:        #10B981;
-  --color-warning:        #F59E0B;
-  --color-danger:         #EF4444;
+  --color-border:         var(--color-surface);
+
+  --color-success:        #198754;
+  --color-warning:        #CC8800;
+  --color-danger:         #DC3545;
 
   /* Typography */
-  --font-display: "IBM Plex Serif", Georgia, serif;       /* headlines, hero text, section titles */
-  --font-body:    "Inter", Arial, sans-serif;     /* body copy, nav, UI labels */
-  --font-arabic:  "IBM Plex Sans Arabic", sans-serif; /* all Arabic content */
-  
-  /* Fallbacks for existing component usage */
+  --font-display: "Merriweather", Georgia, "Times New Roman", serif;
+  --font-body:    "Inter", system-ui, -apple-system, sans-serif;
+  --font-arabic:  "Noto Naskh Arabic", "Traditional Arabic", serif;
   --font-heading: var(--font-display);
 
-  /* Spacing & Sizes */
-  --size-xs:   0.75rem;
-  --size-sm:   0.875rem;
-  --size-base: 1rem;
-  --size-lg:   1.125rem;
-  --size-xl:   1.25rem;
-  --size-2xl:  1.5rem;
-  --size-3xl:  1.875rem;
-  --size-4xl:  2.25rem;
+  /* Type scale */
+  --size-xs:   0.8125rem;  /* 13px */
+  --size-sm:   0.875rem;   /* 14px */
+  --size-base: 1.125rem;   /* 18px */
+  --size-lg:   1.25rem;
+  --size-xl:   1.375rem;
+  --size-2xl:  1.75rem;    /* H3 ~28px */
+  --size-3xl:  2.25rem;    /* H2 ~36px */
+  --size-4xl:  3rem;       /* H1 ~48px */
 
-  --space-1:  0.25rem;
-  --space-2:  0.5rem;
-  --space-3:  0.75rem;
-  --space-4:  1rem;
-  --space-6:  1.5rem;
-  --space-8:  1.5rem; /* 24px card gap */
-  --space-12: 2.5rem;
-  --space-16: 4rem;
-  --space-24: 7.5rem; /* 120px Desktop section padding */
+  /* Spacing (8px base unit) */
+  --space-1:  0.25rem;  /* 4px */
+  --space-2:  0.5rem;   /* 8px */
+  --space-3:  0.75rem;  /* 12px */
+  --space-4:  1rem;     /* 16px */
+  --space-6:  1.5rem;   /* 24px */
+  --space-8:  2rem;     /* 32px */
+  --space-12: 4rem;     /* 64px */
+  --space-16: 6rem;     /* 96px */
+  --space-24: 7.5rem;
 
-  --radius-sm: 0.25rem; /* ~4px */
-  --radius-md: 0.5rem;  /* 8px */
-  --radius-lg: 0.75rem; /* 12px */
+  /* Layout */
+  --max-width: 1280px;
+  --gutter:    24px;
 
-  --shadow-sm: 0 1px 3px rgba(11, 24, 48, 0.05);
-  --shadow-md: 0 4px 12px rgba(11, 24, 48, 0.06);
-  --shadow-lg: 0 10px 25px rgba(11, 24, 48, 0.1);
-  --shadow-side: 0 0 20px rgba(11, 24, 48, 0.04);
+  /* Institutional: sharp corners only */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
 
-  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  --max-width:  1280px; /* Updated from 1200px */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-side: none;
+  --shadow-scroll: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  --transition: 0.15s ease;
 }
 
-/* Arabic Typography override at root */
 html[lang="ar"] {
   --font-display: var(--font-arabic);
   --font-body: var(--font-arabic);

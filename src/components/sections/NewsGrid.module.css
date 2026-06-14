@@ -1,4 +1,4 @@
-/* NewsGrid styles — horizontal news cards with image and content */
+/* NewsGrid — institutional news cards */
 .newsColumn {
   display: flex;
   flex-direction: column;
@@ -8,32 +8,31 @@
 .card {
   display: flex;
   background: var(--color-white);
-  border-radius: var(--radius-md);
-  border: 1px solid #E5E7EB;
+  border: 1px solid var(--color-surface);
   overflow: hidden;
-  transition: all var(--transition);
-  text-decoration: none;
+  transition: border-color var(--transition);
 }
 
 .card:hover {
-  border-color: var(--color-navy-900);
+  border-color: var(--color-slate-400);
 }
 
-.card:hover .image {
-  transform: scale(1.03);
+.card:hover .title {
+  text-decoration: underline;
 }
 
 .imageWrap {
   flex-shrink: 0;
-  width: 240px;
+  width: 220px;
   overflow: hidden;
+  border-inline-end: 1px solid var(--color-surface);
 }
 
 .image {
   width: 100%;
   height: 100%;
+  min-height: 160px;
   object-fit: cover;
-  transition: transform 0.4s ease;
 }
 
 .content {
@@ -61,40 +60,31 @@
   font-family: var(--font-display);
   font-size: var(--size-xl);
   font-weight: 700;
-  color: var(--color-navy-900);
+  color: var(--color-primary);
   line-height: 1.3;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  margin-bottom: var(--space-2);
+  margin: 0 0 var(--space-2) 0;
 }
 
 .excerpt {
   font-family: var(--font-body);
-  font-size: var(--size-base);
+  font-size: var(--size-sm);
   color: var(--color-slate-600);
   line-height: 1.6;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
   flex: 1;
+  margin: 0;
 }
 
 .readMore {
   font-family: var(--font-body);
   font-size: var(--size-sm);
-  font-weight: 600;
-  color: var(--color-accent-500);
+  font-weight: 500;
+  color: var(--color-accent);
   text-decoration: none;
   margin-top: var(--space-4);
-  transition: all var(--transition);
   align-self: flex-start;
 }
 
 .readMore:hover {
-  color: var(--color-accent-600);
   text-decoration: underline;
 }
 
@@ -105,6 +95,11 @@
 
   .imageWrap {
     width: 100%;
-    aspect-ratio: 16 / 9;
+    border-inline-end: none;
+    border-bottom: 1px solid var(--color-surface);
+  }
+
+  .image {
+    min-height: 180px;
   }
 }

@@ -46,6 +46,11 @@ export default function NavBar() {
     megaTimeout.current = setTimeout(() => setMegaOpen(null), 150);
   }
 
+  function isNavActive(path) {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname === path || location.pathname.startsWith(`${path}/`);
+  }
+
   return (
     <nav
       className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}
@@ -73,7 +78,7 @@ export default function NavBar() {
             >
               <Link
                 to={item.path}
-                className={`${styles.navLink} ${location.pathname === item.path ? styles.activeLink : ''}`}
+                className={`${styles.navLink} ${isNavActive(item.path) ? styles.activeLink : ''}`}
                 aria-haspopup={item.hasMega ? 'true' : undefined}
                 aria-expanded={item.hasMega ? megaOpen === item.key : undefined}
               >

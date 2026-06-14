@@ -25,13 +25,6 @@ export default function Header() {
             <button className={`${styles.langBtn} ${lang === 'en' ? styles.activeLang : ''}`} onClick={() => setLang('en')} aria-label="EN" title="EN">EN</button>
           </div>
           
-          <button className={styles.iconBtn} aria-label="Search">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </button>
-          
           <Link to="/login" className={styles.loginLink}>Portal Login</Link>
         </div>
       </div>

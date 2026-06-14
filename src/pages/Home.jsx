@@ -1,12 +1,12 @@
 import { useTranslation } from '../hooks/useTranslation';
-import SectionTitle from '../components/ui/SectionTitle';
 import HeroBanner from '../components/sections/HeroBanner';
-import StatsBar from '../components/sections/StatsBar';
+import TeamsPreview from '../components/sections/TeamsPreview';
+import PublicationsList from '../components/sections/PublicationsList';
+import SectionTitle from '../components/ui/SectionTitle';
 import NewsGrid from '../components/sections/NewsGrid';
 import EventsList from '../components/sections/EventsList';
-import TeamsPreview from '../components/sections/TeamsPreview';
+import LeadershipPreview from '../components/sections/LeadershipPreview';
 import PartnersStrip from '../components/sections/PartnersStrip';
-import PublicationsList from '../components/sections/PublicationsList';
 import styles from './Home.module.css';
 
 export default function Home() {
@@ -15,17 +15,8 @@ export default function Home() {
   return (
     <main id="main-content">
       <HeroBanner />
-      <StatsBar />
-
-      {/* Lab Mission Statement Section */}
-      <section className={styles.missionSection} aria-label={t('missionTitle')}>
-        <div className={styles.container}>
-          <div className={styles.missionCard}>
-            <h2 className={styles.missionTitle}>{t('missionTitle')}</h2>
-            <p className={styles.missionText}>{t('missionText')}</p>
-          </div>
-        </div>
-      </section>
+      <TeamsPreview />
+      <PublicationsList />
 
       <section className={styles.newsEventsSection} aria-label={t('newsTitle')}>
         <div className={styles.container}>
@@ -37,9 +28,8 @@ export default function Home() {
         </div>
       </section>
 
-      <TeamsPreview />
+      <LeadershipPreview />
       <PartnersStrip />
-      <PublicationsList />
     </main>
   );
 }

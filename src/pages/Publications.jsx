@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
 import { dbService } from '../lib/dbService';
 import { Link } from 'react-router-dom';
+import PageHero from '../components/layout/PageHero';
 import styles from './Publications.module.css';
 
 export default function Publications() {
@@ -35,15 +36,11 @@ export default function Publications() {
 
   return (
     <main id="main-content">
-      {/* Page Hero */}
-      <section className={styles.pageHero}>
-        <div className={styles.heroInner}>
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-            <Link to="/">{t('navHome')}</Link> / {t('navPublications')}
-          </nav>
-          <h1 className={styles.heroTitle}>{t('publicationsTitle')}</h1>
-        </div>
-      </section>
+      <PageHero title={t('publicationsTitle')} subtitle={t('latestArticles')}>
+        <Link to="/">{t('navHome')}</Link>
+        <span aria-hidden="true"> / </span>
+        <span>{t('navPublications')}</span>
+      </PageHero>
 
       {/* Publications list and search */}
       <section className={styles.section}>
@@ -64,47 +61,36 @@ export default function Publications() {
             {filteredArticles.length > 0 ? (
               filteredArticles.map((art, idx) => (
                 <div key={art.id} className={`${styles.row} ${idx % 2 === 1 ? styles.altRow : ''} flex-row-reverse-rtl`}>
-                  <div className={styles.metaCol}>
+                  <p className={styles.authorLine}>
+                    {art.primary_author_id ? (
+                      <Link to={`/members/${art.primary_author_id}`} className={styles.authorLink}>
+                        {getAuthorName(art.primary_author_id)}
+                      </Link>
+                    ) : (
+                      'LDREAS'
+                    )}
+                  </p>
+                  <h3 className={styles.articleTitle}>
+                    <Link to={`/articles/${art.id}`} className={styles.articleTitleLink}>
+                      {art.name}
+                    </Link>
+                  </h3>
+                  {art.published_at && (
                     <span className={styles.dateBlock}>
-                      {art.published_at ? new Date(art.published_at).toLocaleDateString(lang === 'ar' ? 'ar-DZ' : 'en-US', {
-                        year: 'numeric',
-                        month: 'short'
-                      }) : ''}
+                      {new Date(art.published_at).getFullYear()}
                     </span>
-                  </div>
-                  
-                  <div className={styles.mainCol}>
-                    <h3 className={styles.articleTitle}>
-                      <Link to={`/articles/${art.id}`} className={styles.articleTitleLink}>
-                        {art.name}
-                      </Link>
-                    </h3>
-                    <p className={styles.authorLine}>
-                      <strong>{lang === 'ar' ? 'الكاتب الرئيسي' : 'Primary Author'}:</strong>{' '}
-                      {art.primary_author_id ? (
-                        <Link to={`/members/${art.primary_author_id}`} className={styles.authorLink}>
-                          {getAuthorName(art.primary_author_id)}
-                        </Link>
-                      ) : (
-                        'LDREAS'
-                      )}
-                    </p>
-                    
-                    <div className={styles.actionsRow}>
-                      <Link to={`/articles/${art.id}`} className={styles.detailLink}>
-                        ℹ️ {lang === 'ar' ? 'تفاصيل المقال' : (lang === 'fr' ? 'Détails de l\'article' : 'Article Details')}
-                      </Link>
-                      {art.journal_link && (
-                        <a href={art.journal_link} target="_blank" rel="noopener noreferrer" className={styles.journalLink}>
-                          🔗 {t('pubViewJournal')}
-                        </a>
-                      )}
-                      {art.pdf_link && art.pdf_link !== '#' && (
-                        <a href={art.pdf_link} target="_blank" rel="noopener noreferrer" className={styles.pdfLink}>
-                          📄 {t('pubDownloadPdf')}
-                        </a>
-                      )}
-                    </div>
+                  )}
+                  <div className={styles.actionsRow}>
+                    {art.journal_link && (
+                      <a href={art.journal_link} target="_blank" rel="noopener noreferrer" className={styles.journalLink}>
+                        {t('pubViewJournal')}
+                      </a>
+                    )}
+                    {art.pdf_link && art.pdf_link !== '#' && (
+                      <a href={art.pdf_link} target="_blank" rel="noopener noreferrer" className={styles.pdfLink}>
+                        {t('pubDownloadPdf')}
+                      </a>
+                    )}
                   </div>
                 </div>
               ))

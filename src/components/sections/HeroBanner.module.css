@@ -1,97 +1,57 @@
 .hero {
-  position: relative;
-  min-height: 560px;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  overflow: hidden;
+  background-color: var(--color-bg-main);
   padding: var(--space-16) 0;
-  background-color: var(--color-navy-900);
-}
-
-.background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, var(--color-navy-900) 0%, var(--color-navy-800) 50%, var(--color-navy-700) 100%);
-  z-index: 1;
+  border-bottom: 1px solid var(--color-surface);
 }
 
 .inner {
-  position: relative;
-  z-index: 2;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--gutter);
   width: 100%;
 }
 
-.splitLayout {
+.grid {
   display: grid;
-  grid-template-columns: 60% 40%;
-  gap: var(--space-8);
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gutter);
   align-items: center;
 }
 
-html[dir="rtl"] .splitLayout {
-  direction: rtl;
+.content {
+  grid-column: span 7;
 }
 
-.contentMain {
-  color: var(--color-white);
-  padding-right: var(--space-8);
+.visual {
+  grid-column: span 5;
 }
 
-html[dir="rtl"] .contentMain {
-  padding-right: 0;
-  padding-left: var(--space-8);
-}
-
-.contentVisual {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.visualGrid {
-  width: 100%;
-  max-width: 400px;
-  aspect-ratio: 1;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.15) 2px, transparent 2px);
-  background-size: 24px 24px;
-  opacity: 0.5;
-}
-
-.tag {
-  display: inline-block;
+.eyebrow {
   font-family: var(--font-body);
   font-size: var(--size-sm);
-  font-weight: 700;
+  font-weight: 500;
+  color: var(--color-accent);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-accent-500);
-  margin-bottom: var(--space-4);
+  letter-spacing: 0.06em;
+  margin: 0 0 var(--space-4) 0;
 }
 
 .title {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 5vw, 4.5rem);
-  font-weight: 600;
-  line-height: 1.15;
-  color: var(--color-white);
-  margin: 0 0 var(--space-4) 0;
+  font-size: var(--size-4xl);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-primary);
+  margin: 0 0 var(--space-6) 0;
 }
 
 .subtitle {
   font-family: var(--font-body);
-  font-size: var(--size-lg);
+  font-size: var(--size-base);
   line-height: 1.6;
-  letter-spacing: 0.02em;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--color-slate-600);
   margin: 0 0 var(--space-8) 0;
+  max-width: 52ch;
 }
 
 .actions {
@@ -103,62 +63,63 @@ html[dir="rtl"] .contentMain {
 
 .ctaPrimary {
   font-family: var(--font-body);
-  font-size: var(--size-base);
-  font-weight: 600;
+  font-size: var(--size-sm);
+  font-weight: 500;
   padding: var(--space-3) var(--space-6);
-  border-radius: 0;
   text-decoration: none;
-  transition: all var(--transition);
-  display: inline-block;
-  text-align: center;
-  background-color: var(--color-accent-500);
+  background-color: var(--color-primary);
   color: var(--color-white);
-  border: 1px solid var(--color-accent-500);
+  border: 1px solid var(--color-primary);
+  transition: background-color var(--transition);
 }
 
 .ctaPrimary:hover {
-  background-color: var(--color-accent-600);
-  border-color: var(--color-accent-600);
-  transform: translateY(-2px);
+  background-color: var(--color-navy-700);
 }
 
 .ctaSecondary {
   font-family: var(--font-body);
-  font-size: var(--size-base);
-  font-weight: 600;
+  font-size: var(--size-sm);
+  font-weight: 500;
+  color: var(--color-accent);
   text-decoration: none;
-  color: var(--color-white);
   display: inline-flex;
   align-items: center;
-  transition: opacity var(--transition);
+  gap: var(--space-2);
 }
 
 .ctaSecondary:hover {
-  opacity: 0.8;
   text-decoration: underline;
 }
 
 .arrow {
-  margin-inline-start: var(--space-2);
-  transition: transform var(--transition);
+  display: inline-block;
 }
 
-.ctaSecondary:hover .arrow {
-  transform: translateX(4px);
-}
-
-html[dir="rtl"] .ctaSecondary:hover .arrow {
-  transform: translateX(-4px);
+.image {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  object-fit: cover;
+  border: 1px solid var(--color-surface);
+  display: block;
 }
 
 @media (max-width: 900px) {
-  .splitLayout {
+  .grid {
     grid-template-columns: 1fr;
   }
-  .contentVisual {
-    display: none;
+
+  .content,
+  .visual {
+    grid-column: span 1;
   }
-  .contentMain {
-    padding: 0;
+
+  .title {
+    font-size: var(--size-3xl);
+  }
+
+  .image {
+    min-height: 240px;
   }
 }

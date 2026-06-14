@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
 import { dbService } from '../lib/dbService';
+import PageHero from '../components/layout/PageHero';
 import styles from './About.module.css';
 
 export default function About() {
@@ -44,15 +46,11 @@ export default function About() {
 
   return (
     <main id="main-content">
-      {/* Page Hero */}
-      <section className={styles.pageHero}>
-        <div className={styles.heroInner}>
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-            <span>{t('aboutBreadcrumb')}</span>
-          </nav>
-          <h1 className={styles.heroTitle}>{t('aboutTitle')}</h1>
-        </div>
-      </section>
+      <PageHero title={t('aboutTitle')} subtitle={t('aboutIntroText')}>
+        <Link to="/">{t('navHome')}</Link>
+        <span aria-hidden="true"> / </span>
+        <span>{t('navAbout')}</span>
+      </PageHero>
 
       {/* About content */}
       <section className={styles.section}>

@@ -3,6 +3,7 @@ import { useTranslation } from '../hooks/useTranslation';
 import { dbService } from '../lib/dbService';
 import { Link } from 'react-router-dom';
 import Tag from '../components/ui/Tag';
+import PageHero from '../components/layout/PageHero';
 import styles from './News.module.css';
 
 export default function News() {
@@ -22,15 +23,11 @@ export default function News() {
 
   return (
     <main id="main-content">
-      {/* Page Hero */}
-      <section className={styles.pageHero}>
-        <div className={styles.heroInner}>
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-            <Link to="/">{t('navHome')}</Link> / {t('navNews')}
-          </nav>
-          <h1 className={styles.heroTitle}>{t('newsPageTitle')}</h1>
-        </div>
-      </section>
+      <PageHero title={t('newsPageTitle')} subtitle={t('newsSubtitle')}>
+        <Link to="/">{t('navHome')}</Link>
+        <span aria-hidden="true"> / </span>
+        <span>{t('navNews')}</span>
+      </PageHero>
 
       {/* Grid */}
       <section className={styles.section}>
@@ -38,7 +35,7 @@ export default function News() {
           {/* News list */}
           <div className={styles.grid}>
             {newsList.map(item => (
-              <article key={item.id} className={`${styles.card} flex-row-reverse-rtl`}>
+              <article key={item.id} className={styles.card}>
                 {item.photo_url && (
                   <div className={styles.imageWrap}>
                     <img src={item.photo_url} alt="" className={styles.image} loading="lazy" />

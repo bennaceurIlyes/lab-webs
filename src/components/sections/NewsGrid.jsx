@@ -58,10 +58,9 @@ export default function NewsGrid() {
               <img
                 src={item.photo_url}
                 alt=""
-                className={`${styles.image} image-brand-filter`}
+                className={styles.image}
                 loading="lazy"
               />
-              <div className="image-brand-overlay" />
             </div>
           )}
           <div className={styles.content}>

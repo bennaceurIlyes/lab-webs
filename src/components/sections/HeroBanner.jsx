@@ -16,21 +16,46 @@ export default function HeroBanner() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Text Content */}
           <div className="lg:col-span-7 flex flex-col space-y-6 text-start">
-            <div className="flex items-center gap-4 flex-row-reverse-rtl mb-2">
-              <LdreasLogo className="h-16 w-16 md:h-20 md:w-20 border border-border shadow-sm bg-white p-1 rounded-full shrink-0" />
-              <div className="flex flex-col text-start">
-                <span className="text-[10px] md:text-xs text-[#c2410c] font-bold uppercase tracking-widest leading-none mb-1.5">
-                  {lang === 'ar' ? 'مخبر بحث معتمد' : 'Accredited Research Laboratory'}
-                </span>
-                <span className="text-sm sm:text-base md:text-lg font-bold text-primary tracking-wide leading-tight">
-                  {t('universityLabel')}
-                </span>
+            <div className="flex flex-col space-y-4">
+              {/* Institution Header Lockup */}
+              <div className="flex items-center gap-4 flex-row-reverse-rtl border-b border-border pb-4 mb-2">
+                <LdreasLogo className="h-16 w-16 md:h-20 md:w-20 border border-border bg-white p-1.5 rounded-full shrink-0 shadow-sm" />
+                <div className="flex flex-col text-start">
+                  <span className="text-[10px] md:text-xs text-[#c2410c] font-bold uppercase tracking-widest leading-none mb-1.5">
+                    {lang === 'ar' ? 'مخبر بحث معتمد' : 'Accredited Research Laboratory'}
+                  </span>
+                  <span className="text-base sm:text-lg md:text-xl font-extrabold text-primary tracking-wide leading-tight">
+                    {t('universityLabel')}
+                  </span>
+                  {/* Bilingual sub-tag */}
+                  <span className="text-xs text-muted-foreground font-medium mt-1">
+                    {lang === 'ar' ? 'Université TAHRI Mohammed, Béchar' : 'جامعة طاهري محمد، بشار'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Lab Title Lockup */}
+              <div className="space-y-3">
+                <h1 id="hero-title" className="text-2xl sm:text-3xl md:text-4xl lg:text-[36px] xl:text-[40px] font-extrabold font-serif text-foreground tracking-tight leading-[1.25]">
+                  {lang === 'ar' ? (
+                    t('instituteName')
+                  ) : (
+                    <>
+                      {t('instituteName')}{' '}
+                      <span className="text-[#ea580c] font-sans font-bold">({t('instituteAcronym')})</span>
+                    </>
+                  )}
+                </h1>
+                
+                {/* Bilingual subtitle for high prestige */}
+                <p className="text-xs sm:text-sm md:text-base font-medium text-muted-foreground leading-relaxed italic font-serif">
+                  {lang === 'ar' 
+                    ? 'Laboratoire de Développement des Energies Renouvelables et Leurs Applications dans les Zones Sahariennes' 
+                    : 'مخبر تطوير الطاقات المتجددة وتطبيقاتها في المناطق الصحراوية'
+                  }
+                </p>
               </div>
             </div>
-            
-            <h1 id="hero-title" className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-[46px] font-extrabold font-serif text-foreground tracking-tight leading-tight">
-              {t('instituteName')} <span className="text-primary font-sans font-bold">({t('instituteAcronym')})</span>
-            </h1>
             
             <div className="border-l-4 border-[#c2410c] pl-4 py-1.5 italic text-foreground/85 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-4">
               <p className="font-bold text-primary not-italic mb-1">{t('heroTitle')}</p>

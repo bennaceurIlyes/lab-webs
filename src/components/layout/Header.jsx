@@ -51,7 +51,7 @@ export default function Header() {
               </Link>
             ) : (
               <Link
-                to="/login"
+                to="/auth/login"
                 className="text-slate-500 hover:text-[#1a2b4a] font-medium transition-colors"
               >
                 {lang === 'fr' ? 'Portail' : 'Portal Login'}

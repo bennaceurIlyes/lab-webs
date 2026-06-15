@@ -117,24 +117,24 @@ export default function Login() {
 
                 <button
                   type="button"
-                  onClick={() => handleQuickFill('m.kadi@univ-bechar.dz')}
+                  onClick={() => handleQuickFill('ghezali.mohammed@univ-bechar.dz')}
                   className="text-left w-full text-xs border border-border p-2 bg-secondary/20 hover:bg-secondary/40 transition-colors flex justify-between items-center"
                 >
                   <div>
-                    <span className="font-semibold block text-foreground">Dr. Mohamed KADI</span>
-                    <span className="text-[10px] text-muted-foreground">m.kadi@univ-bechar.dz</span>
+                    <span className="font-semibold block text-foreground">Pr. GHEZALI Mohammed</span>
+                    <span className="text-[10px] text-muted-foreground">ghezali.mohammed@univ-bechar.dz</span>
                   </div>
                   <span className="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 font-bold uppercase tracking-wider">Team Leader</span>
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => handleQuickFill('a.nouri@univ-bechar.dz')}
+                  onClick={() => handleQuickFill('nouri.abdelkader@univ-bechar.dz')}
                   className="text-left w-full text-xs border border-border p-2 bg-secondary/20 hover:bg-secondary/40 transition-colors flex justify-between items-center"
                 >
                   <div>
-                    <span className="font-semibold block text-foreground">Prof. Abdelkader NOURI</span>
-                    <span className="text-[10px] text-muted-foreground">a.nouri@univ-bechar.dz</span>
+                    <span className="font-semibold block text-foreground">Pr. NOURI Abdelkader</span>
+                    <span className="text-[10px] text-muted-foreground">nouri.abdelkader@univ-bechar.dz</span>
                   </div>
                   <span className="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 font-bold uppercase tracking-wider">Lab Manager</span>
                 </button>

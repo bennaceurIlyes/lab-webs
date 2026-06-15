@@ -10,7 +10,7 @@
   "navHome": "Accueil",
   "navAbout": "À Propos",
   "navResearch": "Recherche",
-  "navTeam": "Équipes",
+  "navTeam": "Équipe",
   "navTeamsProjects": "Équipes & Projets",
   "navEquipment": "Équipements",
   "navNews": "Actualités",
@@ -87,6 +87,7 @@
 
   "newsPageTitle": "Actualités & Événements",
   "newsBreadcrumb": "Accueil / Actualités",
+  "eventsBreadcrumb": "Accueil / Événements",
   
   "publicationsTitle": "Publications & Articles Scientifiques",
   "publicationsBreadcrumb": "Accueil / Publications",

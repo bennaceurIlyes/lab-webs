@@ -13,11 +13,13 @@ const News = lazy(() => import('./pages/News'));
 const NewsDetail = lazy(() => import('./pages/NewsDetail'));
 const Publications = lazy(() => import('./pages/Publications'));
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
-const TeamsList = lazy(() => import('./pages/TeamsList'));
+const Team = lazy(() => import('./pages/Team'));
 const TeamDetail = lazy(() => import('./pages/TeamDetail'));
 const MemberProfile = lazy(() => import('./pages/MemberProfile'));
 const Login = lazy(() => import('./pages/Login'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Events = lazy(() => import('./pages/Events'));
+const Contact = lazy(() => import('./pages/Contact'));
 
 export default function App() {
   return (
@@ -36,13 +38,19 @@ export default function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/news" element={<News />} />
                 <Route path="/news/:id" element={<NewsDetail />} />
+                <Route path="/publications" element={<Publications />} />
                 <Route path="/articles" element={<Publications />} />
-                <Route path="/teams" element={<TeamsList />} />
+                <Route path="/team" element={<Team />} />
+                <Route path="/teams" element={<Team />} />
+                <Route path="/team/:id" element={<TeamDetail />} />
                 <Route path="/teams/:id" element={<TeamDetail />} />
                 <Route path="/projects/:id" element={<ProjectDetail />} />
                 <Route path="/members/:id" element={<MemberProfile />} />
+                <Route path="/auth/login" element={<Login />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/events" element={<Events />} />
+                <Route path="/contact" element={<Contact />} />
               </Routes>
             </Suspense>
             <Footer />

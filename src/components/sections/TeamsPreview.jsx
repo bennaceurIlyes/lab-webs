@@ -34,7 +34,7 @@ export default function TeamsPreview() {
               </div>
               <div className="pt-4 mt-4 border-t border-border/60">
                 <Link
-                  to={`/teams/${team.id}`}
+                  to={`/team/${team.id}`}
                   className="text-xs font-bold text-primary hover:underline"
                 >
                   {lang === 'fr' ? "Voir l'équipe →" : 'View team →'}

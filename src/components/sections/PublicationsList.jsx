@@ -22,7 +22,7 @@ export default function PublicationsList() {
       <div className="container-custom">
         <SectionTitle
           title={t('latestArticles')}
-          rightLink="/articles"
+          rightLink="/publications"
           rightLinkText={t('pubViewHal') || 'View All Publications →'}
         />
         <div className="divide-y divide-border border-y border-border">

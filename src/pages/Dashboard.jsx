@@ -449,6 +449,54 @@ export default function Dashboard() {
     );
   };
 
+  // Lab Manager: Toggle Role promotion/demotion
+  const handleToggleRole = (memberId, currentRole) => {
+    const nextRole = currentRole === 'team_leader' ? 'member' : 'team_leader';
+    const confirmTitle = nextRole === 'team_leader' ? 'Promote to Team Leader' : 'Demote to Member';
+    const confirmDesc = nextRole === 'team_leader'
+      ? 'Are you sure you want to promote this researcher to a Team Leader?'
+      : 'Are you sure you want to demote this Team Leader to a regular Member? This will also remove them from leading any assigned team.';
+      
+    requestConfirm(confirmTitle, confirmDesc, async () => {
+      try {
+        await dbService.updateMemberProfile(memberId, { role: nextRole });
+        
+        // If demoting, clear team leadership reference
+        if (nextRole === 'member') {
+          const db = JSON.parse(localStorage.getItem('lderas_showcase_db') || '{}');
+          if (db.teams) {
+            db.teams = db.teams.map(t => t.team_leader_id === memberId ? { ...t, team_leader_id: null } : t);
+            localStorage.setItem('lderas_showcase_db', JSON.stringify(db));
+          }
+        }
+        
+        await loadDashboardData();
+        triggerSuccess(lang === 'fr' ? 'Rôle mis à jour avec succès !' : 'User role updated successfully!');
+      } catch (err) {
+        triggerError(err.message);
+      }
+    });
+  };
+
+  // Lab Manager: Toggle Deactivation status
+  const handleToggleDeactivate = (memberId, currentStatus) => {
+    const nextStatus = !currentStatus;
+    const confirmTitle = nextStatus ? 'Deactivate Member' : 'Activate Member';
+    const confirmDesc = nextStatus
+      ? 'Are you sure you want to deactivate this researcher? They will be locked out of the dashboard.'
+      : 'Are you sure you want to activate this researcher account?';
+      
+    requestConfirm(confirmTitle, confirmDesc, async () => {
+      try {
+        await dbService.updateMemberProfile(memberId, { deactivated: nextStatus });
+        await loadDashboardData();
+        triggerSuccess(lang === 'fr' ? 'Statut du membre mis à jour !' : 'Member status updated successfully!');
+      } catch (err) {
+        triggerError(err.message);
+      }
+    });
+  };
+
   if (authLoading || !user) {
     return (
       <main className="flex items-center justify-center py-20">
@@ -1390,17 +1438,56 @@ export default function Dashboard() {
                                   {m.email} | {m.grade} | {m.specialty || 'No Specialty'}
                                 </p>
                               </div>
-                              <div className="shrink-0 flex items-center">
+                              <div className="shrink-0 flex items-center gap-2 flex-wrap">
+                                {m.deactivated && (
+                                  <Badge variant="destructive" className="rounded-none text-[8px] uppercase tracking-wider font-semibold py-0.5 px-2 h-5">
+                                    {lang === 'fr' ? 'Désactivé' : 'Deactivated'}
+                                  </Badge>
+                                )}
+                                
                                 {m.id !== user.id && (
-                                  <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => handleRemoveMemberFromLab(m.id)}
-                                    className="border-destructive/20 text-destructive hover:bg-destructive/10 h-8 font-semibold text-xs rounded-none"
-                                  >
-                                    <Trash2 className="h-3.5 w-3.5 mr-1.5" />
-                                    {lang === 'ar' ? 'إزالة نهائياً' : 'Remove Permanently'}
-                                  </Button>
+                                  <>
+                                    {/* Promote/Demote Toggle */}
+                                    {m.role !== 'lab_leader' && (
+                                      <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => handleToggleRole(m.id, m.role)}
+                                        className="h-8 text-[10px] font-bold tracking-wider uppercase rounded-none px-2 border-border text-foreground hover:bg-secondary"
+                                      >
+                                        {m.role === 'team_leader' 
+                                          ? (lang === 'fr' ? 'Rétrograder' : 'Demote')
+                                          : (lang === 'fr' ? 'Promouvoir' : 'Promote')}
+                                      </Button>
+                                    )}
+
+                                    {/* Activate/Deactivate Toggle */}
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() => handleToggleDeactivate(m.id, m.deactivated)}
+                                      className={`h-8 text-[10px] font-bold tracking-wider uppercase rounded-none px-2 border-border ${
+                                        m.deactivated 
+                                          ? 'text-emerald-600 hover:bg-emerald-50' 
+                                          : 'text-orange-600 hover:bg-orange-50'
+                                      }`}
+                                    >
+                                      {m.deactivated 
+                                        ? (lang === 'fr' ? 'Activer' : 'Activate') 
+                                        : (lang === 'fr' ? 'Désactiver' : 'Deactivate')}
+                                    </Button>
+
+                                    {/* Remove Permanently */}
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() => handleRemoveMemberFromLab(m.id)}
+                                      className="border-destructive/20 text-destructive hover:bg-destructive/10 h-8 font-bold text-[10px] tracking-wider uppercase rounded-none px-2"
+                                    >
+                                      <Trash2 className="h-3 w-3 mr-1" />
+                                      {lang === 'fr' ? 'Supprimer' : 'Delete'}
+                                    </Button>
+                                  </>
                                 )}
                               </div>
                             </div>

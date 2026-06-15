@@ -41,6 +41,9 @@ export function AuthProvider({ children }) {
     const found = members.find(m => m.email.toLowerCase() === email.toLowerCase());
     
     if (found && (password === 'password' || found.password_hash)) {
+      if (found.deactivated) {
+        throw new Error('This account has been deactivated. Please contact the Lab Director. / Ce compte a été désactivé. Veuillez contacter le Directeur.');
+      }
       setUser(found);
       localStorage.setItem('lderas_active_user', JSON.stringify(found));
       return found;

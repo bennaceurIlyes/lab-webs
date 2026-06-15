@@ -19,12 +19,9 @@ export default function HeroBanner() {
                   {t('universityLabel')}
                 </div>
                 <div className="text-[10px] sm:text-xs text-muted-foreground font-semibold uppercase tracking-wider mt-1.5">
-                  {lang === 'ar' 
-                    ? 'كلية العلوم الدقيقة • قسم الفيزياء' 
-                    : (lang === 'fr' 
-                      ? 'Faculté des Sciences Exactes • Département de Physique' 
-                      : 'Faculty of Exact Sciences • Department of Physics'
-                    )
+                  {lang === 'fr' 
+                    ? 'Faculté des Sciences Exactes • Département de Physique' 
+                    : 'Faculty of Exact Sciences • Department of Physics'
                   }
                 </div>
               </div>
@@ -32,24 +29,15 @@ export default function HeroBanner() {
               {/* Lab Title Lockup */}
               <div className="space-y-3">
                 <h1 id="hero-title" className="text-2xl sm:text-3xl md:text-4xl lg:text-[36px] xl:text-[40px] font-extrabold font-serif text-foreground tracking-tight leading-[1.25]">
-                  {lang === 'ar' ? (
-                    <>
-                      {t('instituteName')}{' '}
-                      <span className="text-primary font-sans font-bold">({t('instituteAcronym')})</span>
-                    </>
-                  ) : (
-                    <>
-                      {t('instituteName')}{' '}
-                      <span className="text-primary font-sans font-bold">({t('instituteAcronym')})</span>
-                    </>
-                  )}
+                  {t('instituteName')}{' '}
+                  <span className="text-primary font-sans font-bold">({t('instituteAcronym')})</span>
                 </h1>
                 
                 {/* Bilingual subtitle for high prestige */}
                 <p className="text-xs sm:text-sm md:text-base font-medium text-muted-foreground leading-relaxed italic font-serif">
-                  {lang === 'ar' 
+                  {lang === 'fr' 
                     ? 'Laboratoire de Développement des Energies Renouvelables et Leurs Applications dans les Zones Sahariennes' 
-                    : 'مخبر تطوير الطاقات المتجددة وتطبيقاتها في المناطق الصحراوية'
+                    : 'Laboratory of Development of Renewable Energies and Their Applications in Saharan Zones'
                   }
                 </p>
               </div>

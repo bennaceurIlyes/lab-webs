@@ -49,18 +49,7 @@
   }
 }
 
-/* RTL layout helpers */
-html[dir="rtl"] body {
-  text-align: right;
-}
 
-.flex-row-reverse-rtl:not(.grid) {
-  @apply flex;
-}
-
-html[dir="rtl"] .flex-row-reverse-rtl:not(.grid) {
-  flex-direction: row-reverse;
-}
 
 /* Accessibility skip link */
 .skip-link {
@@ -76,8 +65,4 @@ html[dir="rtl"] .flex-row-reverse-rtl:not(.grid) {
   @apply max-w-6xl mx-auto px-4 md:px-8 w-full;
 }
 
-/* Custom font switches based on document language */
-html[lang="ar"] {
-  --font-display: "Cairo", "Noto Naskh Arabic", serif;
-  --font-body: "Cairo", "Noto Naskh Arabic", sans-serif;
-}
+

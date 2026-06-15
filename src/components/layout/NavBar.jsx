@@ -38,7 +38,7 @@ export default function NavBar() {
     return location.pathname === path || location.pathname.startsWith(`${path}/`);
   }
 
-  const isRtl = lang === 'ar';
+
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur py-2" role="navigation" aria-label="Main navigation">
@@ -55,7 +55,7 @@ export default function NavBar() {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center">
-          <NavigationMenu dir={isRtl ? "rtl" : "ltr"}>
+          <NavigationMenu dir="ltr">
             <NavigationMenuList className="flex items-center gap-1">
               {navItems.map((item) => (
                 <NavigationMenuItem key={item.key}>
@@ -73,7 +73,7 @@ export default function NavBar() {
                 <NavigationMenuContent className="min-w-[320px] md:min-w-[400px]">
                   <div className="p-4 grid gap-3">
                     <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-border pb-1.5 mb-1">
-                      {lang === 'ar' ? 'الفرق البحثية المعتمدة' : (lang === 'fr' ? 'Équipes de Recherche' : 'Research Teams')}
+                      {lang === 'fr' ? 'Équipes de Recherche' : 'Research Teams'}
                     </div>
                     <ul className="grid gap-2">
                       {teams.map((team) => (
@@ -94,7 +94,7 @@ export default function NavBar() {
                           to="/teams"
                           className="block text-center text-xs font-semibold text-primary hover:underline"
                         >
-                          {lang === 'ar' ? 'عرض جميع الفرق ←' : (lang === 'fr' ? 'Voir toutes les équipes →' : 'View all teams →')}
+                          {lang === 'fr' ? 'Voir toutes les équipes →' : 'View all teams →'}
                         </Link>
                       </li>
                     </ul>
@@ -113,7 +113,7 @@ export default function NavBar() {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side={isRtl ? "left" : "right"} className="w-[300px] sm:w-[350px]">
+            <SheetContent side="right" className="w-[300px] sm:w-[350px]">
               <SheetHeader className="text-start">
                 <SheetTitle className="font-bold text-primary">LDERAS</SheetTitle>
               </SheetHeader>
@@ -149,7 +149,7 @@ export default function NavBar() {
                       onClick={() => setMobileOpen(false)}
                       className="text-xs font-semibold text-primary hover:underline pt-2"
                     >
-                      {lang === 'ar' ? 'جميع الفرق ←' : (lang === 'fr' ? 'Toutes les équipes →' : 'All teams →')}
+                      {lang === 'fr' ? 'Toutes les équipes →' : 'All teams →'}
                     </Link>
                   </div>
                 </div>

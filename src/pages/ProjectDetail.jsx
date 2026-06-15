@@ -9,21 +9,21 @@ import { Separator } from '../components/ui/Separator';
 import { Calendar, Mail, Users } from 'lucide-react';
 
 const STATE = {
-  ongoing: { en: 'Ongoing', fr: 'En cours', ar: 'جاري', variant: 'default' },
-  completed: { en: 'Completed', fr: 'Terminé', ar: 'مكتمل', variant: 'secondary' },
-  planned: { en: 'Planned', fr: 'Planifié', ar: 'مخطط', variant: 'outline' },
+  ongoing: { en: 'Ongoing', fr: 'En cours', variant: 'default' },
+  completed: { en: 'Completed', fr: 'Terminé', variant: 'secondary' },
+  planned: { en: 'Planned', fr: 'Planifié', variant: 'outline' },
 };
 
 function StateBadge({ state, lang }) {
   const s = STATE[state] ?? STATE.planned;
-  const lbl = lang === 'ar' ? s.ar : lang === 'fr' ? s.fr : s.en;
+  const lbl = lang === 'fr' ? s.fr : s.en;
   return <Badge variant={s.variant}>{lbl}</Badge>;
 }
 
 function fmtDate(str, lang) {
   if (!str) return '';
   return new Date(str).toLocaleDateString(
-    lang === 'ar' ? 'ar-DZ' : lang === 'fr' ? 'fr-FR' : 'en-US',
+    lang === 'fr' ? 'fr-FR' : 'en-US',
     { year: 'numeric', month: 'long', day: 'numeric' }
   );
 }
@@ -81,10 +81,10 @@ export default function ProjectDetail() {
       <main className="container-custom py-12">
         <div className="max-w-md mx-auto border border-border p-6 bg-card text-center space-y-4">
           <h2 className="text-lg font-serif font-bold">
-            {lang === 'ar' ? 'المشروع غير موجود' : (lang === 'fr' ? 'Projet non trouvé' : 'Project not found')}
+            {lang === 'fr' ? 'Projet non trouvé' : 'Project not found'}
           </h2>
           <Link to="/teams" className="inline-block text-xs font-semibold text-primary hover:underline">
-            {lang === 'ar' ? '← العودة للفرق' : (lang === 'fr' ? '← Retour aux équipes' : '← Back to Teams')}
+            {lang === 'fr' ? '← Retour aux équipes' : '← Back to Teams'}
           </Link>
         </div>
       </main>
@@ -98,7 +98,7 @@ export default function ProjectDetail() {
         <span aria-hidden="true" className="mx-1.5 select-none text-muted-foreground/60"> / </span>
         <Link to="/teams">{t('navTeamsProjects')}</Link>
         <span aria-hidden="true" className="mx-1.5 select-none text-muted-foreground/60"> / </span>
-        <span>{lang === 'ar' ? 'تفاصيل المشروع' : (lang === 'fr' ? 'Détails du projet' : 'Project Details')}</span>
+        <span>{lang === 'fr' ? 'Détails du projet' : 'Project Details'}</span>
       </PageHero>
 
       <section className="py-16 bg-background">
@@ -135,7 +135,7 @@ export default function ProjectDetail() {
               <div className="space-y-4">
                 <h3 className="text-sm font-bold uppercase tracking-wider text-foreground flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-primary" />
-                  {lang === 'ar' ? 'الجدول الزمني للمشروع' : (lang === 'fr' ? 'Calendrier du projet' : 'Project Timeline')}
+                  {lang === 'fr' ? 'Calendrier du projet' : 'Project Timeline'}
                 </h3>
                 
                 {/* Visual Timeline progress bar */}
@@ -143,13 +143,13 @@ export default function ProjectDetail() {
                   <div className="flex justify-between text-xs font-semibold text-muted-foreground flex-row-reverse-rtl">
                     <div>
                       <span className="block text-[10px] uppercase text-muted-foreground/60">
-                        {lang === 'ar' ? 'تاريخ البدء' : (lang === 'fr' ? 'Date de début' : 'Start Date')}
+                        {lang === 'fr' ? 'Date de début' : 'Start Date'}
                       </span>
                       <span className="text-foreground">{fmtDate(project.started_at, lang)}</span>
                     </div>
                     <div className="text-end">
                       <span className="block text-[10px] uppercase text-muted-foreground/60">
-                        {lang === 'ar' ? 'تاريخ الانتهاء المتوقع' : (lang === 'fr' ? 'Date de fin prévue' : 'Expected End')}
+                        {lang === 'fr' ? 'Date de fin prévue' : 'Expected End'}
                       </span>
                       <span className="text-foreground">
                         {project.expected_end_date ? fmtDate(project.expected_end_date, lang) : 'Ongoing'}
@@ -173,13 +173,13 @@ export default function ProjectDetail() {
               <div className="border border-border p-6 bg-card/50 space-y-6">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
                   <Users className="h-4 w-4 text-primary" />
-                  {lang === 'ar' ? 'الباحثون المشاركون' : (lang === 'fr' ? 'Membres du projet' : 'Project Researchers')}
+                  {lang === 'fr' ? 'Membres du projet' : 'Project Researchers'}
                 </h3>
                 
                 {team && (
                   <div className="space-y-1.5 border-b border-border pb-4">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 block">
-                      {lang === 'ar' ? 'الفرقة البحثية' : (lang === 'fr' ? 'Équipe de recherche' : 'Research Team')}
+                      {lang === 'fr' ? 'Équipe de recherche' : 'Research Team'}
                     </span>
                     <Link to={`/teams/${team.id}`} className="font-serif font-bold text-sm text-foreground hover:text-primary transition-colors block">
                       {team.name} ({team.acronym})
@@ -215,11 +215,11 @@ export default function ProjectDetail() {
           <div className="pt-10">
             {team ? (
               <Link to={`/teams/${team.id}`} className="text-xs font-semibold text-primary hover:underline">
-                {lang === 'ar' ? `← العودة لفرقة ${team.acronym}` : (lang === 'fr' ? `← Retour à l'équipe ${team.acronym}` : `← Back to Team ${team.acronym}`)}
+                {lang === 'fr' ? `← Retour à l'équipe ${team.acronym}` : `← Back to Team ${team.acronym}`}
               </Link>
             ) : (
               <Link to="/teams" className="text-xs font-semibold text-primary hover:underline">
-                {lang === 'ar' ? '← العودة للفرق' : (lang === 'fr' ? '← Retour aux équipes' : '← Back to Teams')}
+                {lang === 'fr' ? '← Retour aux équipes' : '← Back to Teams'}
               </Link>
             )}
           </div>

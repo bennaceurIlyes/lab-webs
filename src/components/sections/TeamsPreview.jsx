@@ -8,15 +8,11 @@ export default function TeamsPreview() {
   const { lang } = useTranslation();
   const { teams } = useTeams();
 
-  const sectionTitle = lang === 'ar'
-    ? 'مجالات البحث'
-    : (lang === 'fr' ? 'Axes de Recherche' : 'Research Areas');
+  const sectionTitle = lang === 'fr' ? 'Axes de Recherche' : 'Research Areas';
 
-  const sectionSubtitle = lang === 'ar'
-    ? 'الفرق العلمية TER، PVES و WEAS'
-    : (lang === 'fr'
-      ? 'Équipes de recherche TER, PVES et WEAS'
-      : 'TER, PVES and WEAS research teams');
+  const sectionSubtitle = lang === 'fr'
+    ? 'Équipes de recherche TER, PVES et WEAS'
+    : 'TER, PVES and WEAS research teams';
 
   return (
     <section className="py-16 bg-background border-b border-border" aria-label={sectionTitle}>
@@ -41,7 +37,7 @@ export default function TeamsPreview() {
                   to={`/teams/${team.id}`}
                   className="text-xs font-bold text-primary hover:underline"
                 >
-                  {lang === 'ar' ? 'عرض الفريق ←' : (lang === 'fr' ? "Voir l'équipe →" : 'View team →')}
+                  {lang === 'fr' ? "Voir l'équipe →" : 'View team →'}
                 </Link>
               </div>
             </Card>

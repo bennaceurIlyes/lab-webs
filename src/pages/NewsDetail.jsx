@@ -77,7 +77,7 @@ export default function NewsDetail() {
   function formatDate(dateStr) {
     if (!dateStr) return '';
     const d = new Date(dateStr);
-    return d.toLocaleDateString(lang === 'ar' ? 'ar-DZ' : (lang === 'fr' ? 'fr-FR' : 'en-US'), {
+    return d.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {
       day: 'numeric', month: 'long', year: 'numeric',
       hour: '2-digit', minute: '2-digit'
     });
@@ -104,9 +104,9 @@ export default function NewsDetail() {
     return (
       <main className="container-custom py-12">
         <div className="max-w-md mx-auto border border-border p-6 bg-card text-center space-y-4">
-          <h2 className="text-lg font-serif font-bold">{lang === 'ar' ? 'المستجد غير موجود' : (lang === 'fr' ? 'Actualité non trouvée' : 'News item not found')}</h2>
+          <h2 className="text-lg font-serif font-bold">{lang === 'fr' ? 'Actualité non trouvée' : 'News item not found'}</h2>
           <Link to="/news" className="inline-block text-xs font-semibold text-primary hover:underline">
-            {lang === 'ar' ? '← العودة للأخبار' : (lang === 'fr' ? '← Retour aux actualités' : '← Back to News')}
+            {lang === 'fr' ? '← Retour aux actualités' : '← Back to News'}
           </Link>
         </div>
       </main>
@@ -125,7 +125,7 @@ export default function NewsDetail() {
         <span aria-hidden="true" className="mx-1.5 select-none text-muted-foreground/60"> / </span>
         <Link to="/news">{t('navNews')}</Link>
         <span aria-hidden="true" className="mx-1.5 select-none text-muted-foreground/60"> / </span>
-        <span>{lang === 'ar' ? 'تفاصيل الخبر' : (lang === 'fr' ? 'Détails' : 'Detail')}</span>
+        <span>{lang === 'fr' ? 'Détails' : 'Detail'}</span>
       </PageHero>
 
       <section className="py-16 bg-background">
@@ -136,7 +136,7 @@ export default function NewsDetail() {
             <article className="lg:col-span-2 space-y-8">
               <div className="flex items-center gap-3 text-xs text-muted-foreground flex-row-reverse-rtl">
                 <Badge variant="outline" className="text-[10px] font-semibold">
-                  {newsItem.category === 'breakthrough' ? (lang === 'ar' ? 'إنجاز علمي' : 'Breakthrough') : (lang === 'ar' ? 'فعالية' : 'Event')}
+                  {newsItem.category === 'breakthrough' ? 'Breakthrough' : 'Event'}
                 </Badge>
                 <span>{formatDate(newsItem.published_at || newsItem.created_at)}</span>
                 {newsItem.view_count && (
@@ -144,7 +144,7 @@ export default function NewsDetail() {
                     <span>•</span>
                     <span className="flex items-center gap-1">
                       <Eye className="h-3.5 w-3.5" />
-                      {newsItem.view_count} {lang === 'ar' ? 'مشاهدة' : (lang === 'fr' ? 'vues' : 'views')}
+                      {newsItem.view_count} {lang === 'fr' ? 'vues' : 'views'}
                     </span>
                   </>
                 )}
@@ -179,7 +179,7 @@ export default function NewsDetail() {
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 flex-row-reverse-rtl">
                       <div>
                         <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider block">
-                          {lang === 'ar' ? 'كاتب المقال' : (lang === 'fr' ? 'Rédigé par' : 'Written by')}
+                          {lang === 'fr' ? 'Rédigé par' : 'Written by'}
                         </span>
                         <h4 className="font-bold text-sm text-foreground hover:text-primary transition-colors">
                           <Link to={`/members/${author.id}`}>{author.full_name}</Link>
@@ -194,7 +194,7 @@ export default function NewsDetail() {
 
               <div className="pt-6">
                 <Link to="/news" className="text-xs font-semibold text-primary hover:underline">
-                  {lang === 'ar' ? '← العودة للأخبار' : (lang === 'fr' ? '← Retour aux actualités' : '← Back to News')}
+                  {lang === 'fr' ? '← Retour aux actualités' : '← Back to News'}
                 </Link>
               </div>
             </article>
@@ -205,7 +205,7 @@ export default function NewsDetail() {
               {/* Sharing widget */}
               <Card className="p-6 shadow-none border-border">
                 <h4 className="font-serif font-bold text-sm text-foreground border-b border-border pb-2 mb-4">
-                  {lang === 'ar' ? 'مشاركة الخبر' : (lang === 'fr' ? 'Partager l\'article' : 'Share Article')}
+                  {lang === 'fr' ? 'Partager l\'article' : 'Share Article'}
                 </h4>
                 <div className="space-y-2 text-xs">
                   <Button
@@ -215,7 +215,7 @@ export default function NewsDetail() {
                     className="w-full justify-start gap-2.5 font-semibold text-muted-foreground hover:text-foreground"
                   >
                     <Link2 className="h-4 w-4" />
-                    <span>{copied ? (lang === 'ar' ? 'تم النسخ!' : 'Copied!') : (lang === 'ar' ? 'نسخ الرابط' : 'Copy Link')}</span>
+                    <span>{copied ? 'Copied!' : 'Copy Link'}</span>
                   </Button>
 
                   <Button variant="outline" size="sm" asChild className="w-full justify-start gap-2.5 font-semibold text-muted-foreground hover:text-foreground">
@@ -246,13 +246,13 @@ export default function NewsDetail() {
               {relatedArticles.length > 0 && (
                 <Card className="p-6 shadow-none border-border">
                   <h4 className="font-serif font-bold text-sm text-foreground border-b border-border pb-2 mb-4">
-                    {lang === 'ar' ? 'منشورات ذات صلة' : (lang === 'fr' ? 'Publications associées' : 'Related Research')}
+                    {lang === 'fr' ? 'Publications associées' : 'Related Research'}
                   </h4>
                   <div className="space-y-4">
                     {relatedArticles.map(art => (
                       <div key={art.id} className="space-y-1.5">
                         <Badge variant="outline" className="text-[9px] font-semibold tracking-wider uppercase">
-                          {art.article_type === 'journal' ? (lang === 'ar' ? 'مقال دوري' : 'Journal') : (lang === 'ar' ? 'مؤتمر' : 'Conference')}
+                          {art.article_type === 'journal' ? 'Journal' : 'Conference'}
                         </Badge>
                         <h5 className="font-serif font-bold text-xs text-foreground hover:text-primary transition-colors leading-snug">
                           <Link to={`/articles/${art.id}`}>{art.name}</Link>

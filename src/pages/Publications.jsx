@@ -114,7 +114,7 @@ export default function Publications() {
 
   return (
     <main id="main-content">
-      <PageHero title={t('publicationsTitle')} subtitle={lang === 'ar' ? 'تصفح المستودع العلمي وأبحاث المختبر الأكاديمية المعتمدة' : (lang === 'fr' ? 'Explorez les travaux et publications de notre laboratoire' : 'Explore the repository of peer-reviewed articles and research papers')}>
+      <PageHero title={t('publicationsTitle')} subtitle={lang === 'fr' ? 'Explorez les travaux et publications de notre laboratoire' : 'Explore the repository of peer-reviewed articles and research papers'}>
         <Link to="/">{t('navHome')}</Link>
         <span aria-hidden="true" className="mx-1.5 select-none text-muted-foreground/60"> / </span>
         <span>{t('navPublications')}</span>
@@ -127,12 +127,12 @@ export default function Publications() {
             {/* Sidebar Filters */}
             <aside className={`space-y-6 lg:block ${showMobileFilters ? 'block bg-secondary/30 p-4' : 'hidden'}`}>
               <h2 className="text-sm font-bold uppercase tracking-wider text-foreground border-b border-border pb-2">
-                {lang === 'ar' ? 'تصفية النتائج' : (lang === 'fr' ? 'Filtres' : 'Filter Results')}
+                {lang === 'fr' ? 'Filtres' : 'Filter Results'}
               </h2>
 
               {/* Year Filter */}
               <div className="space-y-2">
-                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{lang === 'ar' ? 'السنة' : 'Year'}</h3>
+                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Year</h3>
                 <div className="flex flex-col gap-1.5 text-sm">
                   {['2026', '2025', '2024'].map(year => (
                     <label key={year} className="flex items-center gap-2 cursor-pointer select-none">
@@ -150,11 +150,11 @@ export default function Publications() {
 
               {/* Article Type Filter */}
               <div className="space-y-2">
-                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{lang === 'ar' ? 'نوع المنشور' : 'Publication Type'}</h3>
+                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Publication Type</h3>
                 <div className="flex flex-col gap-1.5 text-sm">
                   {[
-                    { value: 'journal', label: lang === 'ar' ? 'مقال مجلة' : 'Journal Article' },
-                    { value: 'conference', label: lang === 'ar' ? 'مقال مؤتمر' : 'Conference Paper' }
+                    { value: 'journal', label: 'Journal Article' },
+                    { value: 'conference', label: 'Conference Paper' }
                   ].map(type => (
                     <label key={type.value} className="flex items-center gap-2 cursor-pointer select-none">
                       <input
@@ -171,7 +171,7 @@ export default function Publications() {
 
               {/* Research Area Filter */}
               <div className="space-y-2">
-                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{lang === 'ar' ? 'الفرقة البحثية' : 'Research Team'}</h3>
+                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Research Team</h3>
                 <div className="flex flex-col gap-1.5 text-sm">
                   {teams.map(team => (
                     <label key={team.id} className="flex items-center gap-2 cursor-pointer select-none">
@@ -199,7 +199,7 @@ export default function Publications() {
                     setSelectedAreas([]);
                   }}
                 >
-                  {lang === 'ar' ? 'إعادة تعيين الفلاتر' : 'Clear Filters'}
+                  Clear Filters
                 </Button>
               )}
             </aside>
@@ -220,7 +220,7 @@ export default function Publications() {
                   <input
                     type="text"
                     className="border border-border bg-background px-4 py-2 text-sm w-full focus:ring-2 focus:ring-primary focus:outline-none"
-                    placeholder={lang === 'ar' ? 'البحث عن عنوان، مؤلف، كلمة مفتاحية أو معرف DOI...' : 'Search by title, author, keyword or DOI...'}
+                    placeholder="Search by title, author, keyword or DOI..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
@@ -232,10 +232,10 @@ export default function Publications() {
                   className="border border-border bg-background p-2 text-sm font-medium focus:ring-2 focus:ring-primary focus:outline-none shrink-0 cursor-pointer"
                   aria-label="Sort publications"
                 >
-                  <option value="newest">{lang === 'ar' ? 'الأحدث أولاً' : 'Newest First'}</option>
-                  <option value="oldest">{lang === 'ar' ? 'الأقدم أولاً' : 'Oldest First'}</option>
-                  <option value="citations">{lang === 'ar' ? 'الأعلى اقتباساً' : 'Most Cited'}</option>
-                  <option value="title">{lang === 'ar' ? 'الترتيب الأبجدي' : 'Alphabetical'}</option>
+                  <option value="newest">Newest First</option>
+                  <option value="oldest">Oldest First</option>
+                  <option value="citations">Most Cited</option>
+                  <option value="title">Alphabetical</option>
                 </select>
               </div>
 
@@ -271,7 +271,7 @@ export default function Publications() {
                           <div className="flex items-center shrink-0">
                             <Button variant="outline" size="sm" asChild>
                               <a href={art.journal_link} target="_blank" rel="noopener noreferrer">
-                                {lang === 'ar' ? 'رابط المجلة' : (lang === 'fr' ? 'Lien de la revue' : 'Journal Link')}
+                                {lang === 'fr' ? 'Lien de la revue' : 'Journal Link'}
                               </a>
                             </Button>
                           </div>
@@ -298,7 +298,7 @@ export default function Publications() {
           <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>
               <DialogTitle className="font-serif font-bold text-foreground">
-                {lang === 'ar' ? 'تصدير مرجع البحث' : 'Export Citation Reference'}
+                Export Citation Reference
               </DialogTitle>
             </DialogHeader>
 
@@ -332,13 +332,13 @@ export default function Publications() {
                   size="sm"
                   onClick={() => setActiveCitation(null)}
                 >
-                  {lang === 'ar' ? 'إغلاق' : 'Close'}
+                  Close
                 </Button>
                 <Button
                   size="sm"
                   onClick={handleCopyCitation}
                 >
-                  {copied ? (lang === 'ar' ? 'تم النسخ!' : 'Copied!') : (lang === 'ar' ? 'نسخ للمحفظة' : 'Copy to Clipboard')}
+                  {copied ? 'Copied!' : 'Copy to Clipboard'}
                 </Button>
               </div>
             </div>

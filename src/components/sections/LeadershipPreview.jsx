@@ -16,7 +16,7 @@ export default function LeadershipPreview() {
     <section className="py-16 bg-background" aria-label={t('directorTitle')}>
       <div className="container-custom space-y-12">
         <SectionTitle
-          title={lang === 'ar' ? 'القيادة العلمية' : (lang === 'fr' ? 'Direction & Leadership' : 'Leadership')}
+          title={lang === 'fr' ? 'Direction & Leadership' : 'Leadership'}
           subtitle={t('teamSubtitle')}
         />
 
@@ -45,7 +45,7 @@ export default function LeadershipPreview() {
             <div className="flex-1 space-y-4">
               <div>
                 <span className="text-xs font-bold text-primary tracking-widest uppercase block mb-1 font-sans">
-                  {lang === 'ar' ? 'مدير المختبر' : (lang === 'fr' ? 'Directeur du laboratoire' : 'Laboratory Director')}
+                  {lang === 'fr' ? 'Directeur du laboratoire' : 'Laboratory Director'}
                 </span>
                 <h3 className="text-xl md:text-2xl font-serif font-bold text-foreground hover:text-primary transition-colors">
                   <Link to={`/members/${director.id}`}>
@@ -61,7 +61,7 @@ export default function LeadershipPreview() {
               </p>
               <div className="pt-2 font-sans font-semibold">
                 <Link to={`/members/${director.id}`} className="text-xs font-bold text-primary hover:underline">
-                  {lang === 'ar' ? 'عرض الملف الشخصي الأكاديمي ←' : (lang === 'fr' ? 'Voir le profil académique →' : 'View Academic Profile →')}
+                  {lang === 'fr' ? 'Voir le profil académique →' : 'View Academic Profile →'}
                 </Link>
               </div>
             </div>
@@ -72,7 +72,7 @@ export default function LeadershipPreview() {
         {teamLeaders.length > 0 && (
           <div className="space-y-6">
             <h4 className="text-xs font-bold uppercase tracking-widest text-foreground/80 border-b border-border pb-2 text-start font-sans">
-              {lang === 'ar' ? 'رؤساء فرق البحث' : (lang === 'fr' ? 'Chefs d\'équipes de recherche' : 'Research Team Leaders')}
+              {lang === 'fr' ? 'Chefs d\'équipes de recherche' : 'Research Team Leaders'}
             </h4>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 flex-row-reverse-rtl">
@@ -100,7 +100,7 @@ export default function LeadershipPreview() {
                       )}
                       <div>
                         <span className="text-[10px] font-bold text-primary tracking-wider uppercase block font-sans">
-                          {lang === 'ar' ? 'رئيس فريق بحث' : (lang === 'fr' ? 'Chef d\'équipe' : 'Team Leader')}
+                           {lang === 'fr' ? 'Chef d\'équipe' : 'Team Leader'}
                         </span>
                         <h4 className="text-sm font-serif font-bold hover:text-primary transition-colors mt-0.5">
                           <Link to={`/members/${leader.id}`}>
@@ -119,7 +119,7 @@ export default function LeadershipPreview() {
                     
                     <div className="pt-2 text-start font-sans font-semibold border-t border-border/40">
                       <Link to={`/members/${leader.id}`} className="text-xs font-bold text-primary hover:underline">
-                        {lang === 'ar' ? 'عرض الملف ←' : (lang === 'fr' ? 'Voir le profil →' : 'View profile →')}
+                        {lang === 'fr' ? 'Voir le profil →' : 'View profile →'}
                       </Link>
                     </div>
                   </Card>

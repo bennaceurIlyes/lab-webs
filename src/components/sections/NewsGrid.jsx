@@ -13,7 +13,7 @@ export default function NewsGrid() {
 
   function formatDate(dateStr) {
     const d = new Date(dateStr);
-    return d.toLocaleDateString(lang === 'ar' ? 'ar-DZ' : (lang === 'fr' ? 'fr-FR' : 'en-US'), {
+    return d.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
@@ -38,7 +38,7 @@ export default function NewsGrid() {
             <div>
               <div className="flex items-center gap-2 mb-2 flex-row-reverse-rtl">
                 <Badge variant="secondary" className="text-[10px]">
-                  {lang === 'ar' ? 'مستجدات' : (lang === 'fr' ? 'Actualité' : 'News')}
+                  {lang === 'fr' ? 'Actualité' : 'News'}
                 </Badge>
                 <span className="text-xs text-muted-foreground">{formatDate(item.published_at || item.created_at)}</span>
               </div>

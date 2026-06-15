@@ -43,7 +43,7 @@ export default function TeamsList() {
                         {team.acronym}
                       </span>
                       <Badge variant="secondary" className="text-[10px] py-0.5 px-2">
-                        {getMemberCount(team.id)} {lang === 'ar' ? 'أعضاء' : (lang === 'fr' ? 'membres' : 'members')}
+                        {getMemberCount(team.id)} {lang === 'fr' ? 'membres' : 'members'}
                       </Badge>
                     </div>
 
@@ -61,7 +61,7 @@ export default function TeamsList() {
                   <CardFooter className="pt-0 flex flex-col items-start gap-4 border-t border-border/45 p-6">
                     {team.team_leader_id && (
                       <div className="text-xs">
-                        <span className="text-muted-foreground">{lang === 'ar' ? 'رئيس فرقة البحث' : (lang === 'fr' ? 'Chef d\'équipe' : 'Team Leader')}: </span>
+                        <span className="text-muted-foreground">{lang === 'fr' ? 'Chef d\'équipe' : 'Team Leader'}: </span>
                         <Link to={`/members/${team.team_leader_id}`} className="font-semibold text-foreground hover:text-primary transition-colors">
                           {getLeaderName(team.team_leader_id)}
                         </Link>
@@ -69,7 +69,7 @@ export default function TeamsList() {
                     )}
 
                     <Link to={`/teams/${team.id}`} className="text-xs font-semibold text-primary hover:underline">
-                      {lang === 'ar' ? 'عرض الفريق ←' : (lang === 'fr' ? 'Voir l\'équipe →' : 'View team →')}
+                      {lang === 'fr' ? 'Voir l\'équipe →' : 'View team →'}
                     </Link>
                   </CardFooter>
                 </Card>

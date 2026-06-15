@@ -18,52 +18,52 @@ export default function About() {
 
   const themes = [
     {
-      title: lang === 'ar' ? 'تحسين أداء المكونات الكهروضوئية' : (lang === 'fr' ? 'Optimisation des composants optoélectroniques' : 'Optoelectronic Components Optimization'),
-      desc: lang === 'ar'
-        ? 'تحسين أداء الخلايا الشمسية من خلال دراسة جودة التلامسات والواجهات والناقلية والمردود الكمي والطاقوي.'
-        : (lang === 'fr' ? 'Amélioration des performances des cellules solaires : qualité des contacts, interfaces, conductivité et rendement quantique.' : 'Improving solar cell performance: contact quality, interfaces, conductivity, quantum and energy efficiency.')
+      title: lang === 'fr' ? 'Optimisation des composants optoélectroniques' : 'Optoelectronic Components Optimization',
+      desc: lang === 'fr' 
+        ? 'Amélioration des performances des cellules solaires : qualité des contacts, interfaces, conductivité et rendement quantique.' 
+        : 'Improving solar cell performance: contact quality, interfaces, conductivity, quantum and energy efficiency.'
     },
     {
-      title: lang === 'ar' ? 'المحاكاة بالطرق الأولى (ab-Initio)' : (lang === 'fr' ? 'Simulation ab-Initio des matériaux' : 'Ab-Initio Materials Simulation'),
-      desc: lang === 'ar'
-        ? 'نمذجة ودراسة الخصائص الفيزيائية للمواد المستعملة في الطاقات المتجددة باستخدام طرق المبادئ الأولى.'
-        : (lang === 'fr' ? 'Simulation et étude par méthodes ab-Initio des propriétés physiques des matériaux pour les énergies renouvelables.' : 'Simulation and ab-Initio study of physical properties of materials for renewable energy applications.')
+      title: lang === 'fr' ? 'Simulation ab-Initio des matériaux' : 'Ab-Initio Materials Simulation',
+      desc: lang === 'fr' 
+        ? 'Simulation et étude par méthodes ab-Initio des propriétés physiques des matériaux pour les énergies renouvelables.' 
+        : 'Simulation and ab-Initio study of physical properties of materials for renewable energy applications.'
     },
     {
-      title: lang === 'ar' ? 'محاكاة الخلايا الشمسية متعددة الأطياف' : (lang === 'fr' ? 'Simulation des cellules solaires avancées' : 'Advanced Solar Cell Simulation'),
-      desc: lang === 'ar'
-        ? 'محاكاة خصائص الخلايا الشمسية القائمة على السيليكون (Si)، ومركبات IV-IV، والمواد III-V و II-VI بتكوينات متعددة الأطياف.'
-        : (lang === 'fr' ? 'Simulation des caractérisations des cellules solaires à base de Si, IV-IV et les matériaux III-V et II-VI de différentes configurations multi-spectrales.' : 'Simulation of solar cell characterizations based on Si, IV-IV, and III-V / II-VI materials in multi-spectral configurations.')
+      title: lang === 'fr' ? 'Simulation des cellules solaires avancées' : 'Advanced Solar Cell Simulation',
+      desc: lang === 'fr' 
+        ? 'Simulation des caractérisations des cellules solaires à base de Si, IV-IV et les matériaux III-V et II-VI de différentes configurations multi-spectrales.' 
+        : 'Simulation of solar cell characterizations based on Si, IV-IV, and III-V / II-VI materials in multi-spectral configurations.'
     },
     {
-      title: lang === 'ar' ? 'خلايا شمسية ذات طبقات رقيقة (Chalcopyrites)' : (lang === 'fr' ? 'Cellules solaires à couches minces chalcopyrites' : 'Thin-Film Chalcopyrite Solar Cells'),
-      desc: lang === 'ar'
-        ? 'دراسة وتحسين كفاءة وأداء الخلايا الشمسية ذات الطبقات الرقيقة المصنوعة من مواد النحاس والإنديوم والسيلينيوم.'
-        : (lang === 'fr' ? 'Études et optimisation des performances des cellules solaires à couches minces à base de matériaux chalcopyrites.' : 'Study and optimization of thin-film solar cell performance based on chalcopyrite materials.')
+      title: lang === 'fr' ? 'Cellules solaires à couches minces chalcopyrites' : 'Thin-Film Chalcopyrite Solar Cells',
+      desc: lang === 'fr' 
+        ? 'Études et optimisation des performances des cellules solaires à couches minces à base de matériaux chalcopyrites.' 
+        : 'Study and optimization of thin-film solar cell performance based on chalcopyrite materials.'
     },
     {
-      title: lang === 'ar' ? 'خلايا شمسية عضوية بصبغات' : (lang === 'fr' ? 'Caractérisation des cellules solaires à colorant' : 'Dye-Sensitized Solar Cells (DSSC)'),
-      desc: lang === 'ar'
-        ? 'دراسة وتحديد خصائص الخلايا الشمسية العضوية الحساسة للأصباغ لتقييم كفاءتها واستقرارها.'
-        : (lang === 'fr' ? 'Caractérisation expérimentale des cellules solaires organiques à colorant pour évaluer leur rendement.' : 'Characterization of organic dye-sensitized solar cells to evaluate their efficiency and stability.')
+      title: lang === 'fr' ? 'Caractérisation des cellules solaires à colorant' : 'Dye-Sensitized Solar Cells (DSSC)',
+      desc: lang === 'fr' 
+        ? 'Caractérisation expérimentale des cellules solaires organiques à colorant pour évaluer leur rendement.' 
+        : 'Characterization of organic dye-sensitized solar cells to evaluate their efficiency and stability.'
     },
     {
-      title: lang === 'ar' ? 'دراسة تدهور الأنظمة الكهروضوئية' : (lang === 'fr' ? 'Dégradation des composants sous climat saharien' : 'PV Component Saharan Degradation'),
-      desc: lang === 'ar'
-        ? 'دراسة تأثير الظروف المناخية القاسية والعواصف الرملية والحرارة في الصحراء على تدهور الألواح والأنظمة الكهروضوئية.'
-        : (lang === 'fr' ? 'Étude de la dégradation des composants et des systèmes photovoltaïques vis-à-vis des conditions climatiques et atmosphériques.' : 'Investigation of PV component and system degradation under Saharan climatic, sand, and atmospheric conditions.')
+      title: lang === 'fr' ? 'Dégradation des composants sous climat saharien' : 'PV Component Saharan Degradation',
+      desc: lang === 'fr' 
+        ? 'Étude de la dégradation des composants et des systèmes photovoltaïques vis-à-vis des conditions climatiques et atmosphériques.' 
+        : 'Investigation of PV component and system degradation under Saharan climatic, sand, and atmospheric conditions.'
     },
     {
-      title: lang === 'ar' ? 'التحكم وتحسين أنظمة الطاقة' : (lang === 'fr' ? 'Dimensionnement et contrôle des systèmes' : 'Energy System Sizing & Control'),
-      desc: lang === 'ar'
-        ? 'حساب الحجم، ومراقبة وتحسين أداء أنظمة الطاقة المتجددة والهجينة لضمان كفاءة عالية واستمرارية التغذية.'
-        : (lang === 'fr' ? 'Dimensionnement, contrôle et optimisation des systèmes d\'énergies renouvelables pour une efficacité optimale.' : 'Sizing, smart control, and optimization of renewable and hybrid energy systems for micro-grids.')
+      title: lang === 'fr' ? 'Dimensionnement et contrôle des systèmes' : 'Energy System Sizing & Control',
+      desc: lang === 'fr' 
+        ? 'Dimensionnement, contrôle et optimisation des systèmes d\'énergies renouvelables pour une efficacité optimale.' 
+        : 'Sizing, smart control, and optimization of renewable and hybrid energy systems for micro-grids.'
     },
     {
-      title: lang === 'ar' ? 'تحضير الخلايا بطرق الطلاء الكيميائي' : (lang === 'fr' ? 'Réalisation par voies chimiques et physiques' : 'Chemical Thin-Film Deposition Methods'),
-      desc: lang === 'ar'
-        ? 'تحضير الخلايا الشمسية ذات الطبقات الرقيقة (العادية وتحت التركيز) باستعمال طرق الطلاء الدوار، الجل-محلول، والرش الكيميائي الحراري.'
-        : (lang === 'fr' ? 'Réalisation des cellules solaires à couches minces standard, multispectrales et sous concentration par les méthodes sol-gel, spin coating et spray pyrolyse.' : 'Fabrication of standard and multi-spectral thin-film solar cells via sol-gel, spin coating, and spray pyrolysis.')
+      title: lang === 'fr' ? 'Réalisation par voies chimiques et physiques' : 'Chemical Thin-Film Deposition Methods',
+      desc: lang === 'fr' 
+        ? 'Réalisation des cellules solaires à couches minces standard, multispectrales et sous concentration par les méthodes sol-gel, spin coating et spray pyrolyse.' 
+        : 'Fabrication of standard and multi-spectral thin-film solar cells via sol-gel, spin coating, and spray pyrolysis.'
     }
   ];
 
@@ -85,7 +85,7 @@ export default function About() {
                 <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-6">{t('aboutIntroText')}</p>
               </div>
 
-              <blockquote className="border-l-4 border-primary pl-4 py-2 italic my-6 text-sm text-foreground bg-secondary/35 rounded-r-[var(--radius)] rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-4 rtl:rounded-l-[var(--radius)] rtl:rounded-r-none">
+              <blockquote className="border-l-4 border-primary pl-4 py-2 italic my-6 text-sm text-foreground bg-secondary/35">
                 <p className="font-semibold text-primary not-italic mb-1">{t('missionTitle')}</p>
                 <p className="leading-relaxed">"{t('missionText')}"</p>
               </blockquote>
@@ -98,24 +98,20 @@ export default function About() {
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-xs sm:text-sm">
                   <div>
-                    <span className="text-muted-foreground block text-[11px] uppercase tracking-wider font-semibold">{lang === 'ar' ? 'الاسم بالفرنسية' : 'Nom du Laboratoire'}</span>
+                    <span className="text-muted-foreground block text-[11px] uppercase tracking-wider font-semibold">{lang === 'fr' ? 'Nom du Laboratoire' : 'Laboratory Name'}</span>
                     <span className="text-foreground font-medium">Laboratoire de Développement des Energies Renouvelables et Leurs Applications dans les Zones Sahariennes</span>
                   </div>
                   <div>
-                    <span className="text-muted-foreground block text-[11px] uppercase tracking-wider font-semibold">{lang === 'ar' ? 'الاسم بالعربية' : 'Nom National'}</span>
-                    <span className="text-foreground font-medium font-arabic">مخبر تطوير الطاقات المتجددة وتطبيقاتها في المناطق الصحراوية</span>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground block text-[11px] uppercase tracking-wider font-semibold">{lang === 'ar' ? 'المؤسسة الوصية' : 'Établissement de rattachement'}</span>
+                    <span className="text-muted-foreground block text-[11px] uppercase tracking-wider font-semibold">{lang === 'fr' ? 'Établissement de rattachement' : 'Affiliation Institution'}</span>
                     <span className="text-foreground font-medium">{t('universityLabel')}</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <span className="text-muted-foreground block text-[11px] uppercase tracking-wider font-semibold">{lang === 'ar' ? 'تاريخ التأسيس' : 'Date de création'}</span>
+                      <span className="text-muted-foreground block text-[11px] uppercase tracking-wider font-semibold">{lang === 'fr' ? 'Date de création' : 'Creation Date'}</span>
                       <span className="text-foreground font-medium">10 Février 2020</span>
                     </div>
                     <div>
-                      <span className="text-muted-foreground block text-[11px] uppercase tracking-wider font-semibold">{lang === 'ar' ? 'رقم القرار' : 'N° d\'arrêté'}</span>
+                      <span className="text-muted-foreground block text-[11px] uppercase tracking-wider font-semibold">{lang === 'fr' ? 'N° d\'arrêté' : 'Decree Number'}</span>
                       <span className="text-foreground font-medium">N° 05</span>
                     </div>
                   </div>
@@ -163,17 +159,16 @@ export default function About() {
                     rel="noopener noreferrer" 
                     className="inline-flex items-center justify-center w-full bg-primary text-primary-foreground py-2 px-3 shadow-sm hover:bg-primary/95 transition-colors duration-150 rounded-[var(--radius)] font-semibold text-center"
                   >
-                    {lang === 'ar' ? 'السيرة الذاتية للمدير ↗' : (lang === 'fr' ? 'CV du Directeur ↗' : "Director's CV ↗")}
+                    {lang === 'fr' ? 'CV du Directeur ↗' : "Director's CV ↗"}
                   </a>
                 </div>
               </div>
             </Card>
           </div>
 
-          {/* Research Axes Section */}
           <div className="mt-20 border-t border-border pt-16">
             <h2 className="text-2xl md:text-3xl font-bold font-serif text-foreground text-center mb-12">
-              {lang === 'ar' ? 'محاور وثيمات البحث العلمي' : (lang === 'fr' ? 'Thématiques de Recherche' : 'Scientific Research Themes')}
+              {lang === 'fr' ? 'Thématiques de Recherche' : 'Scientific Research Themes'}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 flex-row-reverse-rtl">
               {themes.map((th, idx) => (

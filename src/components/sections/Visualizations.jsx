@@ -54,12 +54,10 @@ export default function Visualizations() {
       <div className={styles.container}>
         <div className={styles.header}>
           <h2 className={styles.title}>
-            {lang === 'ar' ? 'الرصد التجريبي والتحليلات المخبرية' : 'Experimental Monitoring & Lab Analytics'}
+            Experimental Monitoring & Lab Analytics
           </h2>
           <p className={styles.subtitle}>
-            {lang === 'ar' 
-              ? 'بيانات حية من محطة رصد الساورة وإحصائيات استخدام العتاد العلمي' 
-              : 'Live telemetry from the Saoura Solar station and laboratory equipment metrics'}
+            Live telemetry from the Saoura Solar station and laboratory equipment metrics
           </p>
         </div>
 
@@ -67,7 +65,7 @@ export default function Visualizations() {
           {/* Chart 1: Solar / Wind Telemetry */}
           <div className={styles.chartCard}>
             <h3 className={styles.chartTitle}>
-              {lang === 'ar' ? 'إنتاج الطاقة اللحظي (واط/م²) - محطة بشار' : 'Instantaneous Irradiance (W/m²) - Béchar Station'}
+              Instantaneous Irradiance (W/m²) - Béchar Station
             </h3>
             <div className={styles.chartWrap}>
               <ResponsiveContainer width="100%" height={260}>
@@ -89,7 +87,7 @@ export default function Visualizations() {
                   <Legend verticalAlign="top" height={36} />
                   <Area 
                     type="monotone" 
-                    name={lang === 'ar' ? 'إشعاع شمسي' : 'Solar Irradiance'} 
+                    name="Solar Irradiance" 
                     dataKey="solar" 
                     stroke="var(--color-accent)" 
                     fillOpacity={1} 
@@ -97,7 +95,7 @@ export default function Visualizations() {
                   />
                   <Area 
                     type="monotone" 
-                    name={lang === 'ar' ? 'سرعة الرياح المقارنة' : 'Simulated Wind'} 
+                    name="Simulated Wind" 
                     dataKey="wind" 
                     stroke="var(--color-primary-light)" 
                     fillOpacity={1} 
@@ -111,7 +109,7 @@ export default function Visualizations() {
           {/* Chart 2: Equipment Status */}
           <div className={styles.chartCard}>
             <h3 className={styles.chartTitle}>
-              {lang === 'ar' ? 'حالة جاهزية الأجهزة العلمية بالمخبر' : 'Scientific Equipment Operational Readiness'}
+              Scientific Equipment Operational Readiness
             </h3>
             <div className={styles.chartWrap}>
               <ResponsiveContainer width="100%" height={260}>
@@ -129,7 +127,7 @@ export default function Visualizations() {
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value) => [`${value} ${lang === 'ar' ? 'أجهزة' : 'units'}`, '']}/>
+                  <Tooltip formatter={(value) => [`${value} units`, '']}/>
                   <Legend verticalAlign="bottom" height={36} iconType="circle" />
                 </PieChart>
               </ResponsiveContainer>

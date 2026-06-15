@@ -25,7 +25,7 @@ export default function Footer() {
 
         {/* Quick Links */}
         <div className="flex flex-col space-y-3">
-          <h4 className="font-semibold text-foreground">{lang === 'ar' ? 'روابط سريعة' : (lang === 'fr' ? 'Liens Rapides' : 'Quick Links')}</h4>
+          <h4 className="font-semibold text-foreground">{lang === 'fr' ? 'Liens Rapides' : 'Quick Links'}</h4>
           <ul className="space-y-2 text-xs">
             <li><Link to="/" className="text-foreground/70 hover:text-primary transition-colors">{t('navHome')}</Link></li>
             <li><Link to="/about" className="text-foreground/70 hover:text-primary transition-colors">{t('navAbout')}</Link></li>
@@ -55,8 +55,6 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-1.5 font-semibold">
-            <button className={`hover:text-primary transition-colors px-1 ${lang === 'ar' ? 'text-primary' : ''}`} onClick={() => setLang('ar')} aria-label="AR">AR</button>
-            <span className="text-border select-none">|</span>
             <button className={`hover:text-primary transition-colors px-1 ${lang === 'fr' ? 'text-primary' : ''}`} onClick={() => setLang('fr')} aria-label="FR">FR</button>
             <span className="text-border select-none">|</span>
             <button className={`hover:text-primary transition-colors px-1 ${lang === 'en' ? 'text-primary' : ''}`} onClick={() => setLang('en')} aria-label="EN">EN</button>

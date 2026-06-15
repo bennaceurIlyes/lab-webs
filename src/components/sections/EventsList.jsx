@@ -9,25 +9,25 @@ export default function EventsList() {
     {
       id: 'ev_1',
       day: '15',
-      month: lang === 'ar' ? 'أكتوبر' : (lang === 'fr' ? 'Octobre' : 'October'),
-      title: lang === 'ar' ? 'ندوة الطاقة الشمسية المركزة' : (lang === 'fr' ? 'Séminaire Solaire Concentré' : 'Concentrated Solar Seminar'),
-      type: lang === 'ar' ? 'ندوة' : 'Seminar',
+      month: lang === 'fr' ? 'Octobre' : 'October',
+      title: lang === 'fr' ? 'Séminaire Solaire Concentré' : 'Concentrated Solar Seminar',
+      type: 'Seminar',
       location: 'Auditorium, Béchar'
     },
     {
       id: 'ev_2',
       day: '08',
-      month: lang === 'ar' ? 'نوفمبر' : (lang === 'fr' ? 'Novembre' : 'November'),
-      title: lang === 'ar' ? 'مناقشة دكتوراه: تخزين الطاقة الحرارية' : (lang === 'fr' ? 'Soutenance de Thèse: PCM' : 'PhD Defense: PCM Storage'),
-      type: lang === 'ar' ? 'مناقشة' : 'Defense',
+      month: lang === 'fr' ? 'Novembre' : 'November',
+      title: lang === 'fr' ? 'Soutenance de Thèse: PCM' : 'PhD Defense: PCM Storage',
+      type: 'Defense',
       location: 'Block C, Room 14'
     },
     {
       id: 'ev_3',
       day: '12',
-      month: lang === 'ar' ? 'ديسمبر' : (lang === 'fr' ? 'Décembre' : 'December'),
-      title: lang === 'ar' ? 'يوم دراسي: طاقة الرياح بالجنوب' : (lang === 'fr' ? 'Journée d\'étude Éolienne' : 'Saharan Wind Study Day'),
-      type: lang === 'ar' ? 'ورشة عمل' : 'Workshop',
+      month: lang === 'fr' ? 'Décembre' : 'December',
+      title: lang === 'fr' ? 'Journée d\'étude Éolienne' : 'Saharan Wind Study Day',
+      type: 'Workshop',
       location: 'Lab Room 05, University of Béchar'
     }
   ];

@@ -94,13 +94,13 @@ export default function Login() {
               </div>
 
               <Button type="submit" disabled={loading} className="w-full font-semibold">
-                {loading ? (lang === 'ar' ? 'جاري الدخول...' : 'Logging in...') : (t('loginBtn') || 'Login')}
+                {loading ? 'Logging in...' : (t('loginBtn') || 'Login')}
               </Button>
             </form>
 
             <div className="border-t border-border pt-4 text-start space-y-3">
               <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground block">
-                {lang === 'ar' ? 'حسابات تجريبية سريعة:' : 'Quick Autofill Credentials:'}
+                Quick Autofill Credentials:
               </span>
               <div className="grid grid-cols-1 gap-2">
                 <button

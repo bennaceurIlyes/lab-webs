@@ -56,7 +56,7 @@ export default function PublicationsList() {
                 {pub.journal_link && (
                   <div className="flex items-center shrink-0">
                     <a href={pub.journal_link} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-primary hover:underline">
-                      {lang === 'ar' ? 'رابط المجلة' : (lang === 'fr' ? 'Lien de la revue' : 'Journal Link')}
+                      {lang === 'fr' ? 'Lien de la revue' : 'Journal Link'}
                     </a>
                   </div>
                 )}

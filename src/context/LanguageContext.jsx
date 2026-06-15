@@ -5,7 +5,7 @@ const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
   const [lang, setLangState] = useState(() => {
-    return localStorage.getItem('lderas_lang') || 'ar';
+    return localStorage.getItem('lderas_lang') || 'en';
   });
 
   const setLang = (newLang) => {
@@ -15,13 +15,12 @@ export function LanguageProvider({ children }) {
 
   useEffect(() => {
     // Update HTML dir and lang tags
-    const dir = lang === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.dir = dir;
+    document.documentElement.dir = 'ltr';
     document.documentElement.lang = lang;
     
-    // Add RTL/LTR class to body for custom CSS logic
+    // Default to LTR layout class
     document.body.classList.remove('rtl-layout', 'ltr-layout');
-    document.body.classList.add(`${dir}-layout`);
+    document.body.classList.add('ltr-layout');
   }, [lang]);
 
   return (

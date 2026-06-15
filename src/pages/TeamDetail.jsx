@@ -8,14 +8,14 @@ import { Separator } from '../components/ui/Separator';
 import { Calendar, Mail, Users, FlaskConical, ArrowRight } from 'lucide-react';
 
 const STATE = {
-  ongoing: { en: 'Ongoing', fr: 'En cours', ar: 'جاري', variant: 'default' },
-  completed: { en: 'Completed', fr: 'Terminé', ar: 'مكتمل', variant: 'secondary' },
-  planned: { en: 'Planned', fr: 'Planifié', ar: 'مخطط', variant: 'outline' },
+  ongoing: { en: 'Ongoing', fr: 'En cours', variant: 'default' },
+  completed: { en: 'Completed', fr: 'Terminé', variant: 'secondary' },
+  planned: { en: 'Planned', fr: 'Planifié', variant: 'outline' },
 };
 
 function StateBadge({ state, lang }) {
   const s = STATE[state] ?? STATE.planned;
-  const lbl = lang === 'ar' ? s.ar : lang === 'fr' ? s.fr : s.en;
+  const lbl = lang === 'fr' ? s.fr : s.en;
   return <Badge variant={s.variant}>{lbl}</Badge>;
 }
 
@@ -28,7 +28,7 @@ function initials(name = '') {
 function fmtDate(str, lang) {
   if (!str) return '';
   return new Date(str).toLocaleDateString(
-    lang === 'ar' ? 'ar-DZ' : lang === 'fr' ? 'fr-FR' : 'en-US',
+    lang === 'fr' ? 'fr-FR' : 'en-US',
     { year: 'numeric', month: 'short' }
   );
 }
@@ -50,7 +50,7 @@ function MemberCard({ member, lang, isLeader = false }) {
             <div className="flex items-center gap-1.5 flex-wrap flex-row-reverse-rtl">
               {isLeader && (
                 <Badge variant="default" className="text-[9px] px-1 py-0 font-semibold leading-none">
-                  {lang === 'ar' ? 'الرئيس' : (lang === 'fr' ? 'Chef' : 'Leader')}
+                  {lang === 'fr' ? 'Chef' : 'Leader'}
                 </Badge>
               )}
               <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">{member.grade} ({member.degree})</span>
@@ -84,7 +84,7 @@ function MemberCard({ member, lang, isLeader = false }) {
           )}
         </div>
         <Link to={`/members/${member.id}`} className="text-primary font-semibold hover:underline flex items-center gap-1 shrink-0">
-          <span>{lang === 'ar' ? 'الملف الكامل' : (lang === 'fr' ? 'Profil' : 'Profile')}</span>
+          <span>{lang === 'fr' ? 'Profil' : 'Profile'}</span>
           <ArrowRight className="h-3.5 w-3.5" />
         </Link>
       </CardFooter>
@@ -138,7 +138,7 @@ export default function TeamDetail() {
     return (
       <main className="container-custom py-12">
         <div className="max-w-md mx-auto border border-border p-6 bg-card text-center space-y-4">
-          <h2 className="text-lg font-serif font-bold">{lang === 'fr' ? 'Équipe introuvable' : lang === 'ar' ? 'الفرقة غير موجودة' : 'Team not found'}</h2>
+          <h2 className="text-lg font-serif font-bold">{lang === 'fr' ? 'Équipe introuvable' : 'Team not found'}</h2>
           <Link to="/teams" className="inline-block text-xs font-semibold text-primary hover:underline">
             ← Back
           </Link>
@@ -163,7 +163,7 @@ export default function TeamDetail() {
           <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8 flex-row-reverse-rtl">
             <div className="max-w-2xl space-y-4">
               <span className="text-xs font-bold text-primary tracking-wider uppercase block">
-                {lang === 'ar' ? 'فرقة بحثية معتمدة' : lang === 'fr' ? 'Équipe de Recherche' : 'Research Team'}
+                {lang === 'fr' ? 'Équipe de Recherche' : 'Research Team'}
               </span>
               <h1 className="text-3xl md:text-4xl font-bold font-serif text-foreground tracking-tight leading-tight">
                 {team.name}
@@ -177,14 +177,14 @@ export default function TeamDetail() {
                 <span className="block text-2xl font-bold font-serif text-foreground">{members.length}</span>
                 <span className="text-[10px] text-muted-foreground font-semibold flex items-center justify-center gap-1 mt-1">
                   <Users className="h-3 w-3" />
-                  {lang === 'ar' ? 'باحثون' : lang === 'fr' ? 'Chercheurs' : 'Researchers'}
+                  {lang === 'fr' ? 'Chercheurs' : 'Researchers'}
                 </span>
               </div>
               <div className="text-center px-4 flex-1 border-l border-border">
                 <span className="block text-2xl font-bold font-serif text-foreground">{projects.length}</span>
                 <span className="text-[10px] text-muted-foreground font-semibold flex items-center justify-center gap-1 mt-1">
                   <FlaskConical className="h-3 w-3" />
-                  {lang === 'ar' ? 'مشاريع' : lang === 'fr' ? 'Projets' : 'Projects'}
+                  {lang === 'fr' ? 'Projets' : 'Projects'}
                 </span>
               </div>
             </div>
@@ -200,7 +200,7 @@ export default function TeamDetail() {
           {leader && (
             <div className="space-y-6">
               <h2 className="text-lg font-serif font-bold text-foreground border-b border-border pb-2 animate-none">
-                {lang === 'ar' ? 'رئيس الفرقة' : lang === 'fr' ? "Chef d'équipe" : 'Team Leader'}
+                {lang === 'fr' ? "Chef d'équipe" : 'Team Leader'}
               </h2>
               <div className="max-w-md">
                 <MemberCard member={leader} lang={lang} isLeader={true} />
@@ -212,7 +212,7 @@ export default function TeamDetail() {
           {regular.length > 0 && (
             <div className="space-y-6">
               <h2 className="text-lg font-serif font-bold text-foreground border-b border-border pb-2">
-                {lang === 'ar' ? 'أعضاء الفريق' : lang === 'fr' ? 'Membres' : 'Team Members'}
+                {lang === 'fr' ? 'Membres' : 'Team Members'}
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 flex-row-reverse-rtl">
                 {regular.map(m => (
@@ -225,7 +225,7 @@ export default function TeamDetail() {
           {/* Research Projects */}
           <div className="space-y-6">
             <h2 className="text-lg font-serif font-bold text-foreground border-b border-border pb-2">
-              {lang === 'ar' ? 'المشاريع البحثية' : lang === 'fr' ? 'Projets de Recherche' : 'Research Projects'}
+              {lang === 'fr' ? 'Projets de Recherche' : 'Research Projects'}
             </h2>
 
             {projects.length > 0 ? (
@@ -255,14 +255,14 @@ export default function TeamDetail() {
             ) : (
               <div className="py-12 text-center text-muted-foreground text-sm border border-dashed border-border flex flex-col items-center justify-center gap-2">
                 <FlaskConical className="h-6 w-6 text-muted-foreground/60" />
-                <p>{lang === 'ar' ? 'لا توجد مشاريع مسجلة.' : lang === 'fr' ? 'Aucun projet enregistré.' : 'No research projects recorded yet.'}</p>
+                <p>{lang === 'fr' ? 'Aucun projet enregistré.' : 'No research projects recorded yet.'}</p>
               </div>
             )}
           </div>
 
           <div className="pt-6">
             <Link to="/teams" className="text-xs font-semibold text-primary hover:underline">
-              ← {lang === 'ar' ? 'العودة للفرق' : lang === 'fr' ? 'Retour aux équipes' : 'Back to Teams'}
+              ← {lang === 'fr' ? 'Retour aux équipes' : 'Back to Teams'}
             </Link>
           </div>
 

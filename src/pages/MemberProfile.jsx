@@ -98,12 +98,12 @@ export default function MemberProfile() {
   return (
     <main id="main-content">
       {/* Page Hero */}
-      <section className="bg-secondary/20 border-b border-border py-12 md:py-16">
+      <section className="bg-background border-b border-border py-12 md:py-16">
         <div className="container-custom">
           <nav className="text-xs uppercase tracking-wider text-primary font-semibold mb-4" aria-label="Breadcrumb">
             <Link to="/">{t('navHome')}</Link>
-            <span className="mx-1.5 select-none text-muted-foreground/60">/</span>
-            <span className="text-muted-foreground">{lang === 'ar' ? 'ملف الباحث' : (lang === 'fr' ? 'Profil du chercheur' : 'Researcher Profile')}</span>
+            <span className="mx-1.5 select-none text-foreground/40">/</span>
+            <span className="text-foreground/70">{lang === 'ar' ? 'ملف الباحث' : (lang === 'fr' ? 'Profil du chercheur' : 'Researcher Profile')}</span>
           </nav>
           <div className="space-y-3">
             <Badge variant="default" className="text-[10px] font-semibold tracking-wider uppercase">

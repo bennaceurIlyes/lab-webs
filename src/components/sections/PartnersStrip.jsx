@@ -12,7 +12,7 @@ export default function PartnersStrip() {
   const { t } = useTranslation();
 
   return (
-    <section className="py-8 bg-secondary/30 border-b border-border" aria-label={t('partnerLogos')}>
+    <section className="py-8 bg-background border-b border-border" aria-label={t('partnerLogos')}>
       <div className="container-custom">
         <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4 block flex-row-reverse-rtl">{t('partnerLogos')}</span>
         <div className="flex items-center justify-around gap-6 flex-wrap flex-row-reverse-rtl">

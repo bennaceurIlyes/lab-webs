@@ -1,12 +1,13 @@
 import { useTranslation } from '../../hooks/useTranslation';
 import { Link } from 'react-router-dom';
 import heroImg from '../../assets/hero.png';
+import LdreasLogo from '../ui/LdreasLogo';
 
 export default function HeroBanner() {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-background via-background/95 to-secondary/30 border-b border-border py-16 md:py-24" aria-labelledby="hero-title">
+    <section className="relative overflow-hidden bg-background border-b border-border py-16 md:py-24" aria-labelledby="hero-title">
       {/* Decorative gradient overlay */}
       <div className="absolute top-0 right-0 -z-10 h-72 w-72 rounded-full bg-accent/20 blur-3xl" />
       <div className="absolute bottom-0 left-0 -z-10 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
@@ -15,18 +16,23 @@ export default function HeroBanner() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Text Content */}
           <div className="lg:col-span-7 flex flex-col space-y-6 text-start">
-            <div className="flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-[#EA580C] animate-pulse" aria-hidden="true" />
-              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-primary">
-                {t('universityLabel')}
-              </span>
+            <div className="flex items-center gap-4 flex-row-reverse-rtl mb-2">
+              <LdreasLogo className="h-16 w-16 md:h-20 md:w-20 border border-border shadow-sm bg-white p-1 rounded-full shrink-0" />
+              <div className="flex flex-col text-start">
+                <span className="text-[10px] md:text-xs text-[#c2410c] font-bold uppercase tracking-widest leading-none mb-1.5">
+                  {lang === 'ar' ? 'مخبر بحث معتمد' : 'Accredited Research Laboratory'}
+                </span>
+                <span className="text-sm sm:text-base md:text-lg font-bold text-primary tracking-wide leading-tight">
+                  {t('universityLabel')}
+                </span>
+              </div>
             </div>
             
-            <h1 id="hero-title" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold font-serif text-foreground tracking-tight leading-tight">
-              {t('instituteName')}
+            <h1 id="hero-title" className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-[46px] font-extrabold font-serif text-foreground tracking-tight leading-tight">
+              {t('instituteName')} <span className="text-primary font-sans font-bold">({t('instituteAcronym')})</span>
             </h1>
             
-            <div className="border-l-4 border-accent pl-4 py-1 italic text-muted-foreground text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-4">
+            <div className="border-l-4 border-[#c2410c] pl-4 py-1.5 italic text-foreground/85 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-4">
               <p className="font-bold text-primary not-italic mb-1">{t('heroTitle')}</p>
               <p>{t('heroSubtitle')}</p>
             </div>

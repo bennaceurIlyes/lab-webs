@@ -150,14 +150,14 @@ export default function TeamDetail() {
   return (
     <main id="main-content">
       {/* Page Header */}
-      <section className="bg-secondary/20 border-b border-border py-12 md:py-16">
+      <section className="bg-background border-b border-border py-12 md:py-16">
         <div className="container-custom">
           <nav className="text-xs uppercase tracking-wider text-primary font-semibold mb-4" aria-label="Breadcrumb">
             <Link to="/">{t('navHome')}</Link>
-            <span className="mx-1 select-none text-muted-foreground">/</span>
+            <span className="mx-1 select-none text-foreground/40">/</span>
             <Link to="/teams">{t('navTeam') || 'Teams'}</Link>
-            <span className="mx-1 select-none text-muted-foreground">/</span>
-            <span className="text-muted-foreground">{team.acronym}</span>
+            <span className="mx-1 select-none text-foreground/40">/</span>
+            <span className="text-foreground/70">{team.acronym}</span>
           </nav>
 
           <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8 flex-row-reverse-rtl">
@@ -168,7 +168,7 @@ export default function TeamDetail() {
               <h1 className="text-3xl md:text-4xl font-bold font-serif text-foreground tracking-tight leading-tight">
                 {team.name}
               </h1>
-              <p className="text-muted-foreground text-sm md:text-base leading-relaxed">{team.description}</p>
+              <p className="text-foreground/80 text-sm md:text-base leading-relaxed">{team.description}</p>
             </div>
 
             {/* Quick Metrics */}

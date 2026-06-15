@@ -84,7 +84,7 @@ export default function Home() {
       <TeamsPreview />
       <PublicationsList />
 
-      <section className="py-16 bg-secondary/10 border-b border-border" aria-label={t('newsTitle')}>
+      <section className="py-16 bg-background border-b border-border" aria-label={t('newsTitle')}>
         <div className="container-custom">
           <SectionTitle title={t('newsTitle')} subtitle={t('newsSubtitle')} />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 flex-row-reverse-rtl">

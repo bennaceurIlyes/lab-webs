@@ -9,11 +9,11 @@ export default function Header() {
   const { user } = useAuth();
 
   return (
-    <header className="bg-secondary/40 border-b border-border py-2 text-xs" role="banner">
+    <header className="bg-background border-b border-border py-2 text-xs" role="banner">
       <div className="container-custom flex items-center justify-between flex-row-reverse-rtl">
         {/* Left: University Name */}
         <div>
-          <span className="text-muted-foreground font-medium">
+          <span className="text-foreground/80 font-medium">
             {lang === 'ar' ? 'جامعة طاهري محمد، بشار' : (lang === 'fr' ? 'Université TAHRI Mohammed, Béchar' : 'Tahri Mohammed University, Béchar')}
           </span>
         </div>
@@ -22,7 +22,7 @@ export default function Header() {
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5 font-semibold">
             <button
-              className={`hover:text-primary transition-colors px-1 ${lang === 'ar' ? 'text-primary' : 'text-muted-foreground'}`}
+              className={`hover:text-primary transition-colors px-1 ${lang === 'ar' ? 'text-primary' : 'text-foreground/70'}`}
               onClick={() => setLang('ar')}
               aria-label="Arabic"
             >
@@ -30,7 +30,7 @@ export default function Header() {
             </button>
             <span className="text-border select-none">|</span>
             <button
-              className={`hover:text-primary transition-colors px-1 ${lang === 'fr' ? 'text-primary' : 'text-muted-foreground'}`}
+              className={`hover:text-primary transition-colors px-1 ${lang === 'fr' ? 'text-primary' : 'text-foreground/70'}`}
               onClick={() => setLang('fr')}
               aria-label="French"
             >
@@ -38,7 +38,7 @@ export default function Header() {
             </button>
             <span className="text-border select-none">|</span>
             <button
-              className={`hover:text-primary transition-colors px-1 ${lang === 'en' ? 'text-primary' : 'text-muted-foreground'}`}
+              className={`hover:text-primary transition-colors px-1 ${lang === 'en' ? 'text-primary' : 'text-foreground/70'}`}
               onClick={() => setLang('en')}
               aria-label="English"
             >
@@ -58,7 +58,7 @@ export default function Header() {
           ) : (
             <Link
               to="/login"
-              className="text-muted-foreground hover:text-primary font-medium transition-colors"
+              className="text-foreground/70 hover:text-primary font-medium transition-colors"
             >
               {lang === 'ar' ? 'بوابة الدخول' : (lang === 'fr' ? 'Portail' : 'Portal Login')}
             </Link>

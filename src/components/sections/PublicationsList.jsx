@@ -18,7 +18,7 @@ export default function PublicationsList() {
   };
 
   return (
-    <section className="py-16 bg-secondary/10 border-b border-border" aria-label={t('latestArticles')}>
+    <section className="py-16 bg-background border-b border-border" aria-label={t('latestArticles')}>
       <div className="container-custom">
         <SectionTitle
           title={t('latestArticles')}

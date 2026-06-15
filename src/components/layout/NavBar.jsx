@@ -41,22 +41,19 @@ export default function NavBar() {
   const isRtl = lang === 'ar';
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur py-3" role="navigation" aria-label="Main navigation">
+    <nav className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur py-2" role="navigation" aria-label="Main navigation">
       <div className="container-custom flex items-center justify-between flex-row-reverse-rtl">
-        {/* Brand/Logo */}
-        <div className="flex items-center">
+        {/* Logo brand in NavBar */}
+        <div className="flex items-center font-sans">
           <Link to="/" className="flex items-center gap-3" aria-label="LDERAS Home">
-            <LdreasLogo variant="dark" className="h-11 w-auto" />
-            <div className="flex flex-col text-start">
-              <span className="font-bold text-sm sm:text-base text-primary leading-none tracking-wide">LDERAS</span>
-              <span className="text-[9px] sm:text-[10px] text-muted-foreground font-semibold leading-normal mt-0.5">
-                {lang === 'ar' ? 'جامعة طاهري محمد، بشار' : (lang === 'fr' ? 'Université TAHRI Mohammed, Béchar' : 'TAHRI Mohammed University, Béchar')}
-              </span>
-            </div>
+            <LdreasLogo variant="dark" className="h-12 w-auto" />
+            <span className="font-extrabold text-base text-primary tracking-wider uppercase">
+              LDERAS
+            </span>
           </Link>
         </div>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center">
           <NavigationMenu dir={isRtl ? "rtl" : "ltr"}>
             <NavigationMenuList className="flex items-center gap-1">

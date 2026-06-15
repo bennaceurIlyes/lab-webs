@@ -5,34 +5,34 @@
 @layer base {
   :root {
     --background: 0 0% 100%; /* Pure White */
-    --foreground: 210 35% 12.5%; /* Deep Navy Charcoal */
+    --foreground: 215 28% 17%; /* Deep Charcoal */
 
     --card: 0 0% 100%;
-    --card-foreground: 210 35% 12.5%;
+    --card-foreground: 215 28% 17%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 35% 12.5%;
+    --popover-foreground: 215 28% 17%;
 
-    --primary: 200 85% 24%; /* Deep Saharan Sky Blue */
+    --primary: 211 100% 14%; /* Professional Institutional Navy Blue (#001f40) */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 20% 96%; /* Neutral Slate Light Gray */
-    --secondary-foreground: 210 35% 12.5%;
+    --secondary: 210 20% 98%; /* Light slate grey for secondary surfaces */
+    --secondary-foreground: 215 28% 17%;
 
-    --muted: 210 15% 95%;
-    --muted-foreground: 210 15% 45%;
+    --muted: 210 20% 98%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 24 95% 95%; /* Solar Orange tint */
-    --accent-foreground: 24 95% 30%;
+    --accent: 211 100% 98%; /* Light tint of navy */
+    --accent-foreground: 211 100% 14%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 15% 90%; /* Slate border */
-    --input: 210 15% 90%;
-    --ring: 200 85% 24%;
+    --border: 214 32% 91%; /* Crisp light grey border */
+    --input: 214 32% 91%;
+    --ring: 211 100% 14%;
 
-    --radius: 6px; /* Modern sleek border radius */
+    --radius: 0px; /* Sharp academic/corporate look */
 
     --font-display: "Merriweather", Georgia, serif;
     --font-body: "Inter", system-ui, sans-serif;

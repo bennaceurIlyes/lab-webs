@@ -45,8 +45,14 @@ export default function NavBar() {
       <div className="container-custom flex items-center justify-between flex-row-reverse-rtl">
         {/* Brand/Logo */}
         <div className="flex items-center">
-          <Link to="/" className="flex items-center gap-2" aria-label="LDREAS Home">
-            <LdreasLogo variant="dark" className="h-9 w-auto text-foreground" />
+          <Link to="/" className="flex items-center gap-3" aria-label="LDERAS Home">
+            <LdreasLogo variant="dark" className="h-11 w-auto" />
+            <div className="flex flex-col text-start">
+              <span className="font-bold text-sm sm:text-base text-primary leading-none tracking-wide">LDERAS</span>
+              <span className="text-[9px] sm:text-[10px] text-muted-foreground font-semibold leading-normal mt-0.5">
+                {lang === 'ar' ? 'جامعة طاهري محمد، بشار' : (lang === 'fr' ? 'Université TAHRI Mohammed, Béchar' : 'TAHRI Mohammed University, Béchar')}
+              </span>
+            </div>
           </Link>
         </div>
 
@@ -112,7 +118,7 @@ export default function NavBar() {
             </SheetTrigger>
             <SheetContent side={isRtl ? "left" : "right"} className="w-[300px] sm:w-[350px]">
               <SheetHeader className="text-start">
-                <SheetTitle className="font-bold text-primary">LDREAS</SheetTitle>
+                <SheetTitle className="font-bold text-primary">LDERAS</SheetTitle>
               </SheetHeader>
               <div className="mt-8 flex flex-col gap-4">
                 {navItems.map((item) => (

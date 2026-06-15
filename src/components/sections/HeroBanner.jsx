@@ -16,19 +16,20 @@ export default function HeroBanner() {
           {/* Text Content */}
           <div className="lg:col-span-7 flex flex-col space-y-6 text-start">
             <div className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[#EA580C] animate-pulse" aria-hidden="true" />
-              <span className="text-xs font-bold uppercase tracking-wider text-primary">
-                {t('heroTag')}
+              <span className="h-2.5 w-2.5 rounded-full bg-[#EA580C] animate-pulse" aria-hidden="true" />
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-primary">
+                {t('universityLabel')}
               </span>
             </div>
             
-            <h1 id="hero-title" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-serif text-foreground tracking-tight leading-tight">
-              {t('heroTitle')}
+            <h1 id="hero-title" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold font-serif text-foreground tracking-tight leading-tight">
+              {t('instituteName')}
             </h1>
             
-            <p className="text-muted-foreground text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl">
-              {t('heroSubtitle')}
-            </p>
+            <div className="border-l-4 border-accent pl-4 py-1 italic text-muted-foreground text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-4">
+              <p className="font-bold text-primary not-italic mb-1">{t('heroTitle')}</p>
+              <p>{t('heroSubtitle')}</p>
+            </div>
             
             <div className="flex flex-wrap items-center gap-4 pt-4 text-sm font-semibold">
               <Link 

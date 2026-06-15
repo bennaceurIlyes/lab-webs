@@ -28,7 +28,7 @@ const UI_TRANSLATIONS = {
     outreachTitle: "Scientific Outreach",
     outreachDesc: "Follow our academic progress, research networks, and joint collaborations worldwide.",
     noNews: "No articles found matching your criteria.",
-    editorial: "LDREAS Editorial"
+    editorial: "LDERAS Editorial"
   },
   ar: {
     featured: "خبر مميز",
@@ -47,7 +47,7 @@ const UI_TRANSLATIONS = {
     outreachTitle: "الترابط العلمي",
     outreachDesc: "تابع منشوراتنا، شبكاتنا الأكاديمية، والتعاون البحثي المشترك دولياً.",
     noNews: "لم يتم العثور على مقالات تطابق معايير البحث الخاصة بك.",
-    editorial: "إدارة التحرير LDREAS"
+    editorial: "إدارة التحرير LDERAS"
   },
   fr: {
     featured: "À la Une",
@@ -66,7 +66,7 @@ const UI_TRANSLATIONS = {
     outreachTitle: "Rayonnement Scientifique",
     outreachDesc: "Suivez nos progrès académiques, nos réseaux de recherche et nos collaborations internationales.",
     noNews: "Aucun article ne correspond à vos critères de recherche.",
-    editorial: "Rédaction LDREAS"
+    editorial: "Rédaction LDERAS"
   }
 };
 

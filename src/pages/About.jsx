@@ -16,24 +16,54 @@ export default function About() {
     articles: publications.length
   };
 
-  const axes = [
+  const themes = [
     {
-      title: lang === 'ar' ? 'الطاقة الشمسية الكهروضوئية في الصحراء' : (lang === 'fr' ? 'Photovoltaïque Solaire Saharien' : 'Saharan Solar Photovoltaics'),
+      title: lang === 'ar' ? 'تحسين أداء المكونات الكهروضوئية' : (lang === 'fr' ? 'Optimisation des composants optoélectroniques' : 'Optoelectronic Components Optimization'),
       desc: lang === 'ar'
-        ? 'تحسين مردودية الخلايا الشمسية ودراسة طبقات طاردة الغبار وحماية الألواح من درجات الحرارة العالية.'
-        : (lang === 'fr' ? 'Optimisation des rendements PV et développement de couches anti-poussière sous hautes chaleurs.' : 'PV panel yield optimization and anti-soiling coatings under extreme dry climates.')
+        ? 'تحسين أداء الخلايا الشمسية من خلال دراسة جودة التلامسات والواجهات والناقلية والمردود الكمي والطاقوي.'
+        : (lang === 'fr' ? 'Amélioration des performances des cellules solaires : qualité des contacts, interfaces, conductivité et rendement quantique.' : 'Improving solar cell performance: contact quality, interfaces, conductivity, quantum and energy efficiency.')
     },
     {
-      title: lang === 'ar' ? 'أنظمة الطاقة الشمسية المركزة والتخزين الحراري' : (lang === 'fr' ? 'Solaire Concentré (CSP) & Stockage' : 'Concentrated Solar (CSP) & Thermal Storage'),
+      title: lang === 'ar' ? 'المحاكاة بالطرق الأولى (ab-Initio)' : (lang === 'fr' ? 'Simulation ab-Initio des matériaux' : 'Ab-Initio Materials Simulation'),
       desc: lang === 'ar'
-        ? 'تصميم لواقط حرارية للمحطات المركزة واختبار الأملاح الذائبة لتخزين الطاقة واستغلالها ليلاً.'
-        : (lang === 'fr' ? 'Conception de récepteurs thermiques CSP et expérimentation de sels fondus pour le stockage nocturne.' : 'Designing high-temp receivers and molten salt materials for thermal capture and dispatch.')
+        ? 'نمذجة ودراسة الخصائص الفيزيائية للمواد المستعملة في الطاقات المتجددة باستخدام طرق المبادئ الأولى.'
+        : (lang === 'fr' ? 'Simulation et étude par méthodes ab-Initio des propriétés physiques des matériaux pour les énergies renouvelables.' : 'Simulation and ab-Initio study of physical properties of materials for renewable energy applications.')
     },
     {
-      title: lang === 'ar' ? 'طاقة الرياح والشبكات الذكية المعزولة' : (lang === 'fr' ? 'Énergie Éolienne & Micro-Réseaux' : 'Wind Energy & Hybrid Micro-Grids'),
+      title: lang === 'ar' ? 'محاكاة الخلايا الشمسية متعددة الأطياف' : (lang === 'fr' ? 'Simulation des cellules solaires avancées' : 'Advanced Solar Cell Simulation'),
       desc: lang === 'ar'
-        ? 'نمذجة التيارات الهوائية المنخفضة وتصميم شفرات توربينات ملائمة للصحراء والتحكم بالشبكات الصغيرة.'
-        : (lang === 'fr' ? 'Modélisation des courants éoliens sahariens et conception de micro-réseaux intelligents autonomes.' : 'Saharan wind profiling and dynamic controllers for off-grid hybrid power platforms.')
+        ? 'محاكاة خصائص الخلايا الشمسية القائمة على السيليكون (Si)، ومركبات IV-IV، والمواد III-V و II-VI بتكوينات متعددة الأطياف.'
+        : (lang === 'fr' ? 'Simulation des caractérisations des cellules solaires à base de Si, IV-IV et les matériaux III-V et II-VI de différentes configurations multi-spectrales.' : 'Simulation of solar cell characterizations based on Si, IV-IV, and III-V / II-VI materials in multi-spectral configurations.')
+    },
+    {
+      title: lang === 'ar' ? 'خلايا شمسية ذات طبقات رقيقة (Chalcopyrites)' : (lang === 'fr' ? 'Cellules solaires à couches minces chalcopyrites' : 'Thin-Film Chalcopyrite Solar Cells'),
+      desc: lang === 'ar'
+        ? 'دراسة وتحسين كفاءة وأداء الخلايا الشمسية ذات الطبقات الرقيقة المصنوعة من مواد النحاس والإنديوم والسيلينيوم.'
+        : (lang === 'fr' ? 'Études et optimisation des performances des cellules solaires à couches minces à base de matériaux chalcopyrites.' : 'Study and optimization of thin-film solar cell performance based on chalcopyrite materials.')
+    },
+    {
+      title: lang === 'ar' ? 'خلايا شمسية عضوية بصبغات' : (lang === 'fr' ? 'Caractérisation des cellules solaires à colorant' : 'Dye-Sensitized Solar Cells (DSSC)'),
+      desc: lang === 'ar'
+        ? 'دراسة وتحديد خصائص الخلايا الشمسية العضوية الحساسة للأصباغ لتقييم كفاءتها واستقرارها.'
+        : (lang === 'fr' ? 'Caractérisation expérimentale des cellules solaires organiques à colorant pour évaluer leur rendement.' : 'Characterization of organic dye-sensitized solar cells to evaluate their efficiency and stability.')
+    },
+    {
+      title: lang === 'ar' ? 'دراسة تدهور الأنظمة الكهروضوئية' : (lang === 'fr' ? 'Dégradation des composants sous climat saharien' : 'PV Component Saharan Degradation'),
+      desc: lang === 'ar'
+        ? 'دراسة تأثير الظروف المناخية القاسية والعواصف الرملية والحرارة في الصحراء على تدهور الألواح والأنظمة الكهروضوئية.'
+        : (lang === 'fr' ? 'Étude de la dégradation des composants et des systèmes photovoltaïques vis-à-vis des conditions climatiques et atmosphériques.' : 'Investigation of PV component and system degradation under Saharan climatic, sand, and atmospheric conditions.')
+    },
+    {
+      title: lang === 'ar' ? 'التحكم وتحسين أنظمة الطاقة' : (lang === 'fr' ? 'Dimensionnement et contrôle des systèmes' : 'Energy System Sizing & Control'),
+      desc: lang === 'ar'
+        ? 'حساب الحجم، ومراقبة وتحسين أداء أنظمة الطاقة المتجددة والهجينة لضمان كفاءة عالية واستمرارية التغذية.'
+        : (lang === 'fr' ? 'Dimensionnement, contrôle et optimisation des systèmes d\'énergies renouvelables pour une efficacité optimale.' : 'Sizing, smart control, and optimization of renewable and hybrid energy systems for micro-grids.')
+    },
+    {
+      title: lang === 'ar' ? 'تحضير الخلايا بطرق الطلاء الكيميائي' : (lang === 'fr' ? 'Réalisation par voies chimiques et physiques' : 'Chemical Thin-Film Deposition Methods'),
+      desc: lang === 'ar'
+        ? 'تحضير الخلايا الشمسية ذات الطبقات الرقيقة (العادية وتحت التركيز) باستعمال طرق الطلاء الدوار، الجل-محلول، والرش الكيميائي الحراري.'
+        : (lang === 'fr' ? 'Réalisation des cellules solaires à couches minces standard, multispectrales et sous concentration par les méthodes sol-gel, spin coating et spray pyrolyse.' : 'Fabrication of standard and multi-spectral thin-film solar cells via sol-gel, spin coating, and spray pyrolysis.')
     }
   ];
 
@@ -49,26 +79,60 @@ export default function About() {
       <section className="py-16 bg-background">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start flex-row-reverse-rtl">
-            <div className="lg:col-span-2 space-y-8">
+            <div className="lg:col-span-2 space-y-8 text-start">
               <div>
                 <h2 className="text-2xl md:text-3xl font-bold font-serif text-foreground mb-4">{t('aboutIntroTitle')}</h2>
-                <p className="text-muted-foreground text-sm md:text-base leading-relaxed">{t('aboutIntroText')}</p>
+                <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-6">{t('aboutIntroText')}</p>
               </div>
 
-              <blockquote className="border-l-4 border-primary pl-4 py-1 italic my-6 text-sm text-foreground bg-secondary/20 rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-4">
-                <p className="leading-relaxed">{t('missionText')}</p>
+              <blockquote className="border-l-4 border-primary pl-4 py-2 italic my-6 text-sm text-foreground bg-secondary/35 rounded-r-[var(--radius)] rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-4 rtl:rounded-l-[var(--radius)] rtl:rounded-r-none">
+                <p className="font-semibold text-primary not-italic mb-1">{t('missionTitle')}</p>
+                <p className="leading-relaxed">"{t('missionText')}"</p>
               </blockquote>
 
+              {/* Identification Table Card */}
+              <div className="bg-secondary/15 border border-border p-6 rounded-[var(--radius)] space-y-4">
+                <h3 className="font-serif font-bold text-lg text-foreground border-b border-border pb-3 flex items-center gap-2">
+                  <span className="h-2.5 w-2.5 rounded-full bg-primary" />
+                  {t('idTitle')}
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-xs sm:text-sm">
+                  <div>
+                    <span className="text-muted-foreground block text-[11px] uppercase tracking-wider font-semibold">{lang === 'ar' ? 'الاسم بالفرنسية' : 'Nom du Laboratoire'}</span>
+                    <span className="text-foreground font-medium">Laboratoire de Développement des Energies Renouvelables et Leurs Applications dans les Zones Sahariennes</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground block text-[11px] uppercase tracking-wider font-semibold">{lang === 'ar' ? 'الاسم بالعربية' : 'Nom National'}</span>
+                    <span className="text-foreground font-medium font-arabic">مخبر تطوير الطاقات المتجددة وتطبيقاتها في المناطق الصحراوية</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground block text-[11px] uppercase tracking-wider font-semibold">{lang === 'ar' ? 'المؤسسة الوصية' : 'Établissement de rattachement'}</span>
+                    <span className="text-foreground font-medium">{t('universityLabel')}</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <span className="text-muted-foreground block text-[11px] uppercase tracking-wider font-semibold">{lang === 'ar' ? 'تاريخ التأسيس' : 'Date de création'}</span>
+                      <span className="text-foreground font-medium">10 Février 2020</span>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground block text-[11px] uppercase tracking-wider font-semibold">{lang === 'ar' ? 'رقم القرار' : 'N° d\'arrêté'}</span>
+                      <span className="text-foreground font-medium">N° 05</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Stats Bar */}
               <div className="grid grid-cols-3 gap-6 pt-4 border-t border-border">
-                <div className="text-center p-4 bg-secondary/20">
+                <div className="text-center p-4 bg-secondary/20 rounded-[var(--radius)]">
                   <span className="block text-2xl md:text-3xl font-bold text-primary font-serif">{counts.members || 6}</span>
                   <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mt-1 block">{t('statMembers')}</span>
                 </div>
-                <div className="text-center p-4 bg-secondary/20">
-                  <span className="block text-2xl md:text-3xl font-bold text-primary font-serif">{counts.teams || 3}</span>
+                <div className="text-center p-4 bg-secondary/20 rounded-[var(--radius)]">
+                  <span className="block text-2xl md:text-3xl font-bold text-primary font-serif">{counts.teams || 4}</span>
                   <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mt-1 block">{t('statTeams')}</span>
                 </div>
-                <div className="text-center p-4 bg-secondary/20">
+                <div className="text-center p-4 bg-secondary/20 rounded-[var(--radius)]">
                   <span className="block text-2xl md:text-3xl font-bold text-primary font-serif">{counts.articles || 3}</span>
                   <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mt-1 block">{t('navPublications')}</span>
                 </div>
@@ -76,35 +140,53 @@ export default function About() {
             </div>
 
             {/* Director Message Card */}
-            <Card className="border-border bg-card p-6 md:p-8 space-y-4 shadow-none">
-              <div className="h-16 w-16 bg-primary text-primary-foreground flex items-center justify-center font-bold font-serif text-lg mx-auto rounded-none">
+            <Card className="border-border bg-card p-6 md:p-8 space-y-4 shadow-none text-center">
+              <div className="h-16 w-16 bg-primary text-primary-foreground flex items-center justify-center font-bold font-serif text-lg mx-auto rounded-full">
                 AN
               </div>
-              <div className="text-center space-y-1">
+              <div className="space-y-1">
                 <h3 className="font-serif font-bold text-lg text-foreground">{t('directorLabel')}</h3>
                 <p className="text-xs font-semibold text-primary uppercase tracking-wider">{t('directorTitle')}</p>
               </div>
-              <p className="text-xs text-muted-foreground text-center leading-relaxed italic border-t border-border pt-4">
+              <p className="text-xs text-muted-foreground leading-relaxed italic border-t border-border pt-4">
                 "{t('directorText')}"
               </p>
+              <div className="pt-3 border-t border-border/50 space-y-2 text-xs text-start">
+                <div>
+                  <span className="text-muted-foreground block text-[10px] uppercase font-semibold">Email</span>
+                  <a href="mailto:nouri.abdelkader@univ-bechar.dz" className="text-primary hover:underline font-medium">nouri.abdelkader@univ-bechar.dz</a>
+                </div>
+                <div className="pt-1">
+                  <a 
+                    href="http://www.univ-bechar.dz/sm/pdf/CV-nouri.pdf" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="inline-flex items-center justify-center w-full bg-primary text-primary-foreground py-2 px-3 shadow-sm hover:bg-primary/95 transition-colors duration-150 rounded-[var(--radius)] font-semibold text-center"
+                  >
+                    {lang === 'ar' ? 'السيرة الذاتية للمدير ↗' : (lang === 'fr' ? 'CV du Directeur ↗' : "Director's CV ↗")}
+                  </a>
+                </div>
+              </div>
             </Card>
           </div>
 
           {/* Research Axes Section */}
           <div className="mt-20 border-t border-border pt-16">
-            <h2 className="text-2xl md:text-3xl font-bold font-serif text-foreground text-center mb-12">{t('researchAxesTitle')}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 flex-row-reverse-rtl">
-              {axes.map((ax, idx) => (
-                <Card key={idx} className="hover:border-primary/50 transition-colors duration-150">
-                  <CardHeader className="space-y-3 p-6">
+            <h2 className="text-2xl md:text-3xl font-bold font-serif text-foreground text-center mb-12">
+              {lang === 'ar' ? 'محاور وثيمات البحث العلمي' : (lang === 'fr' ? 'Thématiques de Recherche' : 'Scientific Research Themes')}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 flex-row-reverse-rtl">
+              {themes.map((th, idx) => (
+                <Card key={idx} className="hover:border-primary/50 transition-all duration-150 shadow-none hover:shadow-md flex flex-col justify-between text-start">
+                  <CardHeader className="space-y-3 p-6 flex-1">
                     <span className="text-3xl font-bold font-serif text-primary/20 block">
                       {String(idx + 1).padStart(2, '0')}
                     </span>
                     <CardTitle className="text-base font-serif font-bold leading-snug">
-                      {ax.title}
+                      {th.title}
                     </CardTitle>
-                    <CardDescription className="text-xs mt-2 leading-relaxed text-muted-foreground line-clamp-4">
-                      {ax.desc}
+                    <CardDescription className="text-xs mt-2 leading-relaxed text-muted-foreground">
+                      {th.desc}
                     </CardDescription>
                   </CardHeader>
                 </Card>

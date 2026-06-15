@@ -4,23 +4,23 @@
 
 @layer base {
   :root {
-    --background: 36 28% 97.5%; /* Warm Saharan Sand Cream */
+    --background: 0 0% 100%; /* Pure White */
     --foreground: 210 35% 12.5%; /* Deep Navy Charcoal */
 
-    --card: 36 20% 99%;
+    --card: 0 0% 100%;
     --card-foreground: 210 35% 12.5%;
 
-    --popover: 36 20% 99%;
+    --popover: 0 0% 100%;
     --popover-foreground: 210 35% 12.5%;
 
     --primary: 200 85% 24%; /* Deep Saharan Sky Blue */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 36 20% 94%; /* Sandy Gray */
+    --secondary: 210 20% 96%; /* Neutral Slate Light Gray */
     --secondary-foreground: 210 35% 12.5%;
 
-    --muted: 36 15% 94%;
-    --muted-foreground: 210 15% 40%;
+    --muted: 210 15% 95%;
+    --muted-foreground: 210 15% 45%;
 
     --accent: 24 95% 95%; /* Solar Orange tint */
     --accent-foreground: 24 95% 30%;
@@ -28,8 +28,8 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 36 12% 88%; /* Subtle sand-slate border */
-    --input: 36 12% 88%;
+    --border: 210 15% 90%; /* Slate border */
+    --input: 210 15% 90%;
     --ring: 200 85% 24%;
 
     --radius: 6px; /* Modern sleek border radius */

@@ -54,13 +54,13 @@ export function usePublications() {
   }, [lang]);
 
   // Dynamic formatting of citations
-  const getCitationText = useCallback((art, format, primaryAuthorName = 'LDREAS Researchers') => {
+  const getCitationText = useCallback((art, format, primaryAuthorName = 'LDERAS Researchers') => {
     if (!art) return '';
     const year = art.published_at ? new Date(art.published_at).getFullYear() : '2026';
     const authors = [primaryAuthorName, ...(art.coAuthors || [])].join(', ');
 
     if (format === 'bibtex') {
-      return `@article{ldreas_${art.id},\n  author = {${authors}},\n  title = {${art.name}},\n  journal = {${art.journal_name || 'Saharan Energy Journal'}},\n  year = {${year}},\n  volume = {${art.volume || '1'}},\n  number = {${art.issue || '1'}},\n  pages = {${art.pages || '1-10'}},\n  doi = {${art.doi || ''}}\n}`;
+      return `@article{lderas_${art.id},\n  author = {${authors}},\n  title = {${art.name}},\n  journal = {${art.journal_name || 'Saharan Energy Journal'}},\n  year = {${year}},\n  volume = {${art.volume || '1'}},\n  number = {${art.issue || '1'}},\n  pages = {${art.pages || '1-10'}},\n  doi = {${art.doi || ''}}\n}`;
     }
     if (format === 'ris') {
       const authorBlock = [primaryAuthorName, ...(art.coAuthors || [])].map(a => `AU  - ${a}`).join('\n');

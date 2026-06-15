@@ -104,7 +104,7 @@ export default function Publications() {
   });
 
   const handleCopyCitation = () => {
-    const primaryName = getAuthorName(activeCitation?.primary_author_id) || 'LDREAS Researchers';
+    const primaryName = getAuthorName(activeCitation?.primary_author_id) || 'LDERAS Researchers';
     const text = getCitationText(activeCitation, activeTab, primaryName);
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true);
@@ -247,7 +247,7 @@ export default function Publications() {
               ) : sortedArticles.length > 0 ? (
                 <div className="divide-y divide-border border-y border-border">
                   {sortedArticles.map((art) => {
-                    const primaryName = getAuthorName(art.primary_author_id) || 'LDREAS';
+                    const primaryName = getAuthorName(art.primary_author_id) || 'LDERAS';
                     const secondAuthor = art.coAuthors && art.coAuthors[0];
                     const authorsText = secondAuthor ? `${primaryName}, ${secondAuthor}` : primaryName;
 
@@ -320,7 +320,7 @@ export default function Publications() {
                     {getCitationText(
                       activeCitation,
                       activeTab,
-                      getAuthorName(activeCitation?.primary_author_id) || 'LDREAS Researchers'
+                      getAuthorName(activeCitation?.primary_author_id) || 'LDERAS Researchers'
                     )}
                   </pre>
                 </div>

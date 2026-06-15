@@ -5,12 +5,12 @@ const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
   const [lang, setLangState] = useState(() => {
-    return localStorage.getItem('ldreas_lang') || 'ar';
+    return localStorage.getItem('lderas_lang') || 'ar';
   });
 
   const setLang = (newLang) => {
     setLangState(newLang);
-    localStorage.setItem('ldreas_lang', newLang);
+    localStorage.setItem('lderas_lang', newLang);
   };
 
   useEffect(() => {

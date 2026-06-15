@@ -5,121 +5,133 @@ import { supabase, hasSupabase } from './supabase';
 const SEED_DATA = {
   lab: {
     id: '00000000-0000-0000-0000-000000000001',
-    name: 'Laboratory for the Development of Renewable Energies and their Applications in Saharan Areas (LDREAS)',
-    description: 'LDREAS research laboratory at Béchar University is dedicated to developing efficient renewable energy conversion and storage platforms designed specifically for Saharan desert environments.',
+    name: 'Laboratoire de Développement des Energies Renouvelables et Leurs Applications dans les Zones Sahariennes (LDERAS)',
+    description: 'La mission du laboratoire LDERAS est orientée vers les études expérimentales et théoriques des propriétés physiques des matériaux et dispositifs pour les énergies renouvelables.',
     logo_url: null,
-    director: 'Prof. Abdelkader NOURI',
-    address: 'Faculty of Exact Sciences, TAHRI Mohammed University, BP 417, Béchar, Algeria',
+    director: 'Pr. NOURI Abdelkader',
+    email: 'nouri.abdelkader@univ-bechar.dz',
+    cv_url: 'http://www.univ-bechar.dz/sm/pdf/CV-nouri.pdf',
+    address: 'Faculté des Sciences Exactes, Université TAHRI Mohammed, BP 417, Béchar, Algérie',
     phone: '+213 49 23 89 74 / 84 / 86',
-    fax: '+213 49 23 89 86 / 94'
+    fax: '+213 49 23 89 86 / 94',
+    creation_date: '10 Février 2020',
+    creation_decree: 'Arrêté de création N° 05'
   },
   teams: [
     {
-      id: 'team_solar_concentrated',
-      name: 'Thermal Systems & Concentrated Solar',
-      acronym: 'TER',
-      description: 'Research team focused on applied thermodynamics, concentrated solar power receivers, solar desalination, and thermal storage.',
-      team_leader_id: 'member_leader_1'
+      id: 'team_msi',
+      name: 'Matériaux surfaces et interfaces',
+      acronym: 'MSI',
+      description: 'Cette équipe s\'intéresse à la préparation, à la caractérisation et à l\'optimisation des propriétés physiques des matériaux et de leurs interfaces pour des applications photovoltaïques.',
+      team_leader_id: 'member_director'
     },
     {
-      id: 'team_photovoltaic_storage',
-      name: 'Photovoltaic Systems & Energy Storage',
-      acronym: 'PVES',
-      description: 'Researching solar cell physics, advanced battery energy storage, anti-soiling, and smart controller design for hybrid micro-grids.',
-      team_leader_id: 'member_leader_2'
+      id: 'team_mos',
+      name: 'Modélisation et Simulation',
+      acronym: 'MoS',
+      description: 'Spécialisée dans la simulation et l\'étude par les méthodes de calcul ab-Initio des propriétés physiques des matériaux pour les énergies propres.',
+      team_leader_id: 'member_ghezali'
     },
     {
-      id: 'team_wind_dynamics',
-      name: 'Wind Energy & Saharan Applications',
-      acronym: 'WEAS',
-      description: 'Assessing high/low altitude wind potential, aerodynamics simulation in sandstorm conditions, and blade performance in dry hot climates.',
-      team_leader_id: 'member_leader_3'
+      id: 'team_cs',
+      name: 'Cellules solaires',
+      acronym: 'CS',
+      description: 'Dédiée à l\'amélioration des performances des composants optoélectroniques, la conductivité, le rendement quantique et l\'optimisation des cellules solaires à couches minces.',
+      team_leader_id: 'member_khachab'
+    },
+    {
+      id: 'team_sen',
+      name: 'Système Energétique',
+      acronym: 'SEn',
+      description: 'Concentrée sur le dimensionnement, le contrôle, l\'optimisation et l\'étude de la dégradation des composants et des systèmes photovoltaïques sous contraintes sahariennes.',
+      team_leader_id: 'member_dennai'
     }
   ],
   members: [
     {
       id: 'member_director',
-      email: 'a.nouri@univ-bechar.dz',
+      email: 'nouri.abdelkader@univ-bechar.dz',
       password_hash: '$2b$10$abcdefghijklmnopqrstuv',
-      full_name: 'Prof. Abdelkader NOURI',
+      full_name: 'Pr. NOURI Abdelkader',
       role: 'lab_leader',
-      grade: 'Prof.',
-      degree: 'Ph.D',
-      specialty: 'Solar Thermal Systems',
+      grade: 'Professeur',
+      degree: 'Doctorat',
+      specialty: 'Physique des Matériaux & Solaire',
       photo_url: null,
-      bio: 'Laboratory Director. 20+ years of expertise in thermal solar receiver simulation and high-temperature fluid dynamics modeling.',
-      joined_at: '2007-06-15T00:00:00Z',
-      team_id: 'team_solar_concentrated',
+      bio: 'Directeur du laboratoire LDERAS et chef d\'équipe MSI. Plus de 20 ans d\'expérience dans l\'analyse des capteurs et propriétés physiques des matériaux photovoltaïques.',
+      joined_at: '2020-02-10T00:00:00Z',
+      team_id: 'team_msi',
+      cv_url: 'http://www.univ-bechar.dz/sm/pdf/CV-nouri.pdf',
       orcid: '0000-0002-1823-4456',
       google_scholar_url: 'https://scholar.google.com/citations?user=anouri_mock',
       research_gate_url: 'https://www.researchgate.net/profile/Abdelkader_Nouri_mock',
       h_index: 34,
       citations_count: 4210,
       publications_count: 58,
-      research_topics: ['Solar Thermal', 'CSP', 'Fluid Dynamics']
+      research_topics: ['Solar Thermal', 'Photovoltaic Materials', 'Thin Films', 'Surfaces & Interfaces']
     },
     {
-      id: 'member_leader_1',
-      email: 'm.kadi@univ-bechar.dz',
+      id: 'member_ghezali',
+      email: 'ghezali.mohammed@univ-bechar.dz',
       password_hash: '$2b$10$abcdefghijklmnopqrstuv',
-      full_name: 'Dr. Mohamed KADI',
+      full_name: 'Pr. GHEZALI Mohammed',
       role: 'team_leader',
-      grade: 'MCA',
-      degree: 'Ph.D',
-      specialty: 'Concentrated Solar Power',
+      grade: 'Professeur',
+      degree: 'Doctorat',
+      specialty: 'Modélisation et Simulation Physique',
       photo_url: null,
-      bio: 'Team Leader of Thermal Systems. Focusing on CSP mirror degradation models and thermal fluid efficiency under desert environments.',
-      joined_at: '2012-09-10T00:00:00Z',
-      team_id: 'team_solar_concentrated',
+      bio: 'Chef d\'équipe Modélisation et Simulation (MoS). Expert en méthodes ab-Initio et calculs théoriques des propriétés physiques pour le stockage d\'énergie.',
+      joined_at: '2020-02-10T00:00:00Z',
+      team_id: 'team_mos',
       orcid: '0000-0003-8842-1011',
-      google_scholar_url: 'https://scholar.google.com/citations?user=mkadi_mock',
-      research_gate_url: 'https://www.researchgate.net/profile/Mohamed_Kadi_mock',
+      google_scholar_url: 'https://scholar.google.com/citations?user=mghezali_mock',
+      research_gate_url: 'https://www.researchgate.net/profile/Mohammed_Ghezali_mock',
       h_index: 22,
       citations_count: 1840,
       publications_count: 26,
-      research_topics: ['CSP Mirrors', 'Thermal Fluids', 'Saharan Heat']
+      research_topics: ['ab-Initio Simulation', 'Materials Modeling', 'Renewable Energy']
     },
     {
-      id: 'member_leader_2',
-      email: 'f.zaidi@univ-bechar.dz',
+      id: 'member_khachab',
+      email: 'khachab.hamid@univ-bechar.dz',
       password_hash: '$2b$10$abcdefghijklmnopqrstuv',
-      full_name: 'Dr. Fatima ZAIDI',
+      full_name: 'Pr. KHACHAB Hamid',
       role: 'team_leader',
-      grade: 'MCA',
-      degree: 'Ph.D',
-      specialty: 'Photovoltaic Physics',
+      grade: 'Professeur',
+      degree: 'Doctorat',
+      specialty: 'Physique des Cellules Solaires',
       photo_url: null,
-      bio: 'Team Leader of PV Systems. Expert in thin-film coatings, nano-structuring, and anti-soiling technologies for Saharan solar installations.',
-      joined_at: '2014-04-18T00:00:00Z',
-      team_id: 'team_photovoltaic_storage',
+      bio: 'Chef d\'équipe Cellules solaires (CS). Spécialisé dans les performances des composants optoélectroniques, les jonctions et les configurations multi-spectrales.',
+      joined_at: '2020-02-10T00:00:00Z',
+      team_id: 'team_cs',
       orcid: '0000-0001-9988-1234',
-      google_scholar_url: 'https://scholar.google.com/citations?user=fzaidi_mock',
-      research_gate_url: 'https://www.researchgate.net/profile/Fatima_Zaidi_mock',
+      google_scholar_url: 'https://scholar.google.com/citations?user=hkhachab_mock',
+      research_gate_url: 'https://www.researchgate.net/profile/Hamid_Khachab_mock',
       h_index: 18,
       citations_count: 1120,
       publications_count: 19,
-      research_topics: ['PV Anti-Soiling', 'Thin-Film Physics', 'Solar Clean Tech']
+      research_topics: ['Solar Cells', 'Optoelectronics', 'Thin Films', 'Chalcopyrites']
     },
     {
-      id: 'member_leader_3',
-      email: 'y.bensaad@univ-bechar.dz',
+      id: 'member_dennai',
+      email: 'dennai.benmoussa@univ-bechar.dz',
       password_hash: '$2b$10$abcdefghijklmnopqrstuv',
-      full_name: 'Dr. Youcef BENSAAD',
+      full_name: 'Pr. DENNAI Benmoussa',
       role: 'team_leader',
-      grade: 'MCB',
-      degree: 'Ph.D',
-      specialty: 'Saharan Wind Dynamics',
+      grade: 'Professeur',
+      degree: 'Doctorat',
+      specialty: 'Génie Énergétique & PV',
       photo_url: null,
-      bio: 'Team Leader of Wind Energy. Working on aerodynamic simulation profiles and wind turbines designed for low-speed Saharan plateau winds.',
-      joined_at: '2016-02-05T00:00:00Z',
-      team_id: 'team_wind_dynamics',
+      bio: 'Chef d\'équipe Système Energétique (SEn). Travaille sur le dimensionnement, le contrôle des systèmes PV, et la dégradation vis-à-vis des conditions sahariennes.',
+      joined_at: '2020-02-10T00:00:00Z',
+      team_id: 'team_sen',
       orcid: '0000-0002-3344-5566',
-      google_scholar_url: 'https://scholar.google.com/citations?user=ybensaad_mock',
-      research_gate_url: 'https://www.researchgate.net/profile/Youcef_Bensaad_mock',
+      google_scholar_url: 'https://scholar.google.com/citations?user=bdennai_mock',
+      research_gate_url: 'https://www.researchgate.net/profile/Benmoussa_Dennai_mock',
       h_index: 12,
       citations_count: 640,
       publications_count: 14,
-      research_topics: ['Aerodynamics', 'Wind Turbines', 'Sandstorm Simulations']
+      research_topics: ['Energy Systems', 'PV Degradation', 'Optimization', 'Control Loops']
     },
     {
       id: 'member_researcher_1',
@@ -127,20 +139,20 @@ const SEED_DATA = {
       password_hash: '$2b$10$abcdefghijklmnopqrstuv',
       full_name: 'Dr. Amel BOUDJEMILA',
       role: 'member',
-      grade: 'MAA',
-      degree: 'Ph.D',
-      specialty: 'Thermal Storage Materials',
+      grade: 'Maitre de Conférences',
+      degree: 'Doctorat',
+      specialty: 'Dépôts et Couches Minces',
       photo_url: null,
-      bio: 'Research member in Thermal Systems. Investigating phase-change materials (PCM) and molten salts for high capacity night thermal storage.',
-      joined_at: '2018-09-01T00:00:00Z',
-      team_id: 'team_solar_concentrated',
+      bio: 'Chercheuse au sein de l\'équipe MSI. Spécialisée dans les méthodes expérimentales de dépôt par Spin Coating et Spray Pyrolyse pour cellules minces.',
+      joined_at: '2020-09-01T00:00:00Z',
+      team_id: 'team_msi',
       orcid: '0000-0002-1122-3344',
       google_scholar_url: 'https://scholar.google.com/citations?user=aboudjemila_mock',
       research_gate_url: 'https://www.researchgate.net/profile/Amel_Boudjemila_mock',
       h_index: 9,
       citations_count: 310,
       publications_count: 11,
-      research_topics: ['PCM Materials', 'Molten Salt Storage', 'Night Thermal Recovery']
+      research_topics: ['Spin Coating', 'Spray Pyrolysis', 'Thin-Film Fabrication']
     },
     {
       id: 'member_researcher_2',
@@ -148,61 +160,61 @@ const SEED_DATA = {
       password_hash: '$2b$10$abcdefghijklmnopqrstuv',
       full_name: 'Dr. Karim SLIMANI',
       role: 'member',
-      grade: 'MAB',
-      degree: 'Ph.D',
-      specialty: 'Hybrid Smart Grids',
+      grade: 'Maitre Assistant',
+      degree: 'Doctorat',
+      specialty: 'Optimisation Énergétique',
       photo_url: null,
-      bio: 'Research member in PV Systems. Optimizing energy dispatch algorithms and control loops for off-grid hybrid PV-wind-battery installations.',
-      joined_at: '2020-01-10T00:00:00Z',
-      team_id: 'team_photovoltaic_storage',
+      bio: 'Chercheur en génie des systèmes. Développe des algorithmes de contrôle intelligent pour optimiser les installations photovoltaïques isolées.',
+      joined_at: '2021-01-10T00:00:00Z',
+      team_id: 'team_sen',
       orcid: '0000-0003-5566-7788',
       google_scholar_url: 'https://scholar.google.com/citations?user=kslimani_mock',
       research_gate_url: 'https://www.researchgate.net/profile/Karim_Slimani_mock',
       h_index: 7,
       citations_count: 195,
       publications_count: 8,
-      research_topics: ['Smart Grids', 'Energy Dispatch', 'Off-grid Systems']
+      research_topics: ['Smart Control', 'PV Optimization', 'Saharan Micro-grids']
     }
   ],
   projects: [
     {
       id: 'project_1',
-      team_id: 'team_solar_concentrated',
-      name: 'Desert CSP Receiver Prototype',
-      description: 'Developing high-temperature receivers resistant to severe Saharan dust storms.',
+      team_id: 'team_msi',
+      name: 'Thin Film Solar Cell Fabrication',
+      description: 'Realization of standard and multi-spectral thin-film solar cells using Spin Coating and Spray Pyrolysis chemical routes.',
       started_at: '2025-01-15',
       expected_end_date: '2027-12-31',
       state: 'ongoing',
       photo_url: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=600&auto=format&fit=crop&q=80',
-      member_ids: ['member_leader_1', 'member_researcher_1']
+      member_ids: ['member_director', 'member_researcher_1']
     },
     {
       id: 'project_2',
-      team_id: 'team_photovoltaic_storage',
-      name: 'Anti-Soiling PV Coatings',
-      description: 'Testing hydrophobic and anti-static coatings on silicon panels in Béchar.',
+      team_id: 'team_mos',
+      name: 'Ab-Initio Simulation of Materials',
+      description: 'Theoretical investigations and electronic properties calculations of materials for energy storage and PV cells using DFT models.',
       started_at: '2024-06-01',
       expected_end_date: '2026-11-30',
       state: 'ongoing',
       photo_url: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&auto=format&fit=crop&q=80',
-      member_ids: ['member_leader_2', 'member_researcher_2']
+      member_ids: ['member_ghezali']
     },
     {
       id: 'project_3',
-      team_id: 'team_wind_dynamics',
-      name: 'Low-Speed Desert Wind Turbines',
-      description: 'Designing turbine blades optimized for the slow but steady wind currents of the Saharan plateaus.',
+      team_id: 'team_sen',
+      name: 'PV System Sizing & Optimization',
+      description: 'Optimization of control algorithms and analysis of dust and high temperature degradation profiles on Saharan solar panels.',
       started_at: '2025-05-10',
       expected_end_date: '2028-05-10',
       state: 'planned',
       photo_url: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&auto=format&fit=crop&q=80',
-      member_ids: ['member_leader_3']
+      member_ids: ['member_dennai', 'member_researcher_2']
     }
   ],
   news: [
     {
       id: 'news_1',
-      title: 'LDREAS Inaugurates Saharan Solar Testing Platform in Béchar',
+      title: 'LDERAS Inaugurates Saharan Solar Testing Platform in Béchar',
       content: 'This experimental solar tracking station will gather continuous, high-fidelity solar radiation and environmental datasets (GHI, DNI, humidity) to evaluate photovoltaic thermal stress under extreme desert conditions.',
       description: 'The Rector of Béchar University officially launched the high-resolution meteorological solar station.',
       photo_url: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=800&auto=format&fit=crop&q=80',
@@ -214,8 +226,8 @@ const SEED_DATA = {
     {
       id: 'news_2',
       title: '4th International Workshop on Renewable Energies in Saharan Regions',
-      content: 'LDREAS will host the 4th international workshop on Saharan Energy transition in October 2026. Experts will present papers on molten salt storage capacity, solar-powered water desalination, and low-speed turbine physics.',
-      description: 'LDREAS invites physicists and energy experts globally to Béchar for our solar-wind integration symposium.',
+      content: 'LDERAS will host the 4th international workshop on Saharan Energy transition in October 2026. Experts will present papers on molten salt storage capacity, solar-powered water desalination, and low-speed turbine physics.',
+      description: 'LDERAS invites physicists and energy experts globally to Béchar for our solar-wind integration symposium.',
       photo_url: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80',
       published_at: '2026-06-01T08:30:00Z',
       author_id: 'member_director',
@@ -231,7 +243,7 @@ const SEED_DATA = {
       pdf_link: '#',
       description: 'This paper establishes mathematical degradation equations for parabolic CSP mirror reflectors subject to ambient sand and dust storms in North Africa.',
       published_at: '2025-03-14T00:00:00Z',
-      primary_author_id: 'member_leader_1',
+      primary_author_id: 'member_director',
       doi: '10.1016/j.solmat.2025.03.114',
       citations_count: 142,
       downloads_count: 531,
@@ -289,49 +301,49 @@ const SEED_DATA = {
     }
   ],
   article_co_authors: [
-    { article_id: 'art_1', member_id: 'member_director' },
-    { article_id: 'art_2', member_id: 'member_leader_2' },
+    { article_id: 'art_1', member_id: 'member_researcher_1' },
+    { article_id: 'art_2', member_id: 'member_dennai' },
     { article_id: 'art_3', member_id: 'member_director' }
   ]
 };
 
 // Multilingual translations map for DB-driven text fields.
-// In a real Supabase production app, we would translate columns or use metadata JSON.
-// For the showcase, we translate strings dynamically in the dbService layer based on active lang!
 const LOCALIZED_DICTS = {
   ar: {
     // Lab
-    '00000000-0000-0000-0000-000000000001_name': 'مخبر تطوير الطاقات المتجددة وتطبيقاتها في المناطق الصحراوية',
-    '00000000-0000-0000-0000-000000000001_description': 'تأسس مخبر LDREAS بجامعة بشار ليكون صرحاً علمياً لبحث وتقييم إمكانيات الطاقات المتجددة وتطبيقاتها في البيئة الصحراوية بالجزائر، والعمل على ملاءمة التكنولوجيا مع الظروف المناخية القاسية.',
+    '00000000-0000-0000-0000-000000000001_name': 'مخبر تطوير الطاقات المتجددة وتطبيقاتها في المناطق الصحراوية (LDERAS)',
+    '00000000-0000-0000-0000-000000000001_description': 'تتوجه مهمة مخبر LDERAS نحو الدراسات التجريبية والنظرية للخصائص الفيزيائية للمواد والأجهزة الخاصة بالطاقات المتجددة.',
     '00000000-0000-0000-0000-000000000001_director': 'أ.د. عبد القادر نوري',
     '00000000-0000-0000-0000-000000000001_address': 'كلية العلوم الدقيقة، جامعة طاهري محمد، ص.ب 417، بشار، الجزائر',
     // Teams
-    'team_solar_concentrated_name': 'الأنظمة الحرارية والطاقة الشمسية المركزة',
-    'team_solar_concentrated_description': 'فرقة بحثية متخصصة في الديناميكا الحرارية التطبيقية، اللواقط الشمسية المركزة (CSP)، ومواد تخزين الطاقة الحرارية وتحلية المياه.',
-    'team_photovoltaic_storage_name': 'الأنظمة الكهرومائية وأنظمة التخزين',
-    'team_photovoltaic_storage_description': 'أبحاث حول فيزياء الخلايا الشمسية، الشبكات الذكية المصغرة، وأنظمة الحماية من الغبار والرمال في البيئات الجافة.',
-    'team_wind_dynamics_name': 'طاقة الرياح وتطبيقاتها الصحراوية',
-    'team_wind_dynamics_description': 'تقييم ودراسة الإمكانات الهوائية في الهضاب الصحراوية وتطوير توربينات ريحية ملائمة لسرعات الرياح والعواصف الترابية.',
+    'team_msi_name': 'فيزياء المواد، الأسطح والواجهات',
+    'team_msi_description': 'فرقة بحثية تهتم بتحضير ودراسة الخصائص الفيزيائية والكيميائية للمواد والواجهات المستعملة في الخلايا الشمسية وطرق الطلاء الكيميائي.',
+    'team_mos_name': 'النمذجة والمحاكاة',
+    'team_mos_description': 'تهتم الفرقة بالمحاكاة والدراسة عن طريق طرق المبادئ الأولى (ab-Initio) للخصائص الفيزيائية للمواد من أجل تطبيقات الطاقات المتجددة.',
+    'team_cs_name': 'الخلايا الشمسية',
+    'team_cs_description': 'فرقة بحثية تهتم بتحسين أداء المكونات الكهرومغناطيسية الضوئية ودراسة الخلايا الشمسية ذات الطبقات الرقيقة (السيليكون، المركبات الثنائية والثلاثية).',
+    'team_sen_name': 'أنظمة الطاقة',
+    'team_sen_description': 'تهتم الفرقة بدراسة تدهور الأنظمة الشمسية، ومراقبتها وتحسينها، والتحكم بالأجهزة وتأثير المناخ الصحراوي والعوامل الجوية.',
     // Members
-    'member_director_bio': 'مدير المخبر. يمتلك خبرة تفوق 20 عاماً في نمذجة وتطوير اللواقط الشمسية الحرارية والتحليل الهيدروديناميكي للموائع تحت درجات حرارة مرتفعة.',
-    'member_leader_1_bio': 'رئيس فرقة الأنظمة الحرارية. يركز في أبحاثه على مقاومة المواد المستخدمة في اللواقط المركزة للزوابع الرملية وتأثيرها على انعكاس المرايا.',
-    'member_leader_2_bio': 'رئيسة فرقة الألواح الكهروضوئية. متخصصة في تطوير طبقات رقيقة طاردة للأتربة والرمال لرفع كفاءة الألواح الشمسية.',
-    'member_leader_3_bio': 'رئيس فرقة طاقة الرياح. يقوم بدراسة توزيع سرعات الرياح في الجنوب الغربي الجزائري وتصميم عنفات تلائم الرياح المنخفضة.',
-    'member_researcher_1_bio': 'عضو باحث بفرقة الأنظمة الحرارية، مهتمة بدراسة الأملاح الذائبة والمواد ذات الطور المتغير لتخزين الحرارة ليلاً.',
-    'member_researcher_2_bio': 'عضو باحث بفرقة الألواح الكهروضوئية. أبحاثه تتركز على أنظمة التحكم الذكي للشبكات المعزولة التي تدمج الطاقة الشمسية والرياح والبطاريات.',
+    'member_director_bio': 'مدير المخبر ورئيس فرقة MSI. يمتلك خبرة تفوق 20 عاماً في دراسة ونمذجة الخصائص الفيزيائية للمواد الضوئية وتطبيقاتها.',
+    'member_ghezali_bio': 'رئيس فرقة النمذجة والمحاكاة (MoS). خبير في حسابات المبادئ الأولى والدراسات النظرية لخصائص المواد الكهروضوئية.',
+    'member_khachab_bio': 'رئيس فرقة الخلايا الشمسية (CS). متخصص في تحسين مردود الخلايا الشمسية والوصلات وتطوير مركبات التشالكوبيريت.',
+    'member_dennai_bio': 'رئيس فرقة أنظمة الطاقة (SEn). متخصص في نمذجة ومراقبة أداء الأنظمة الكهروضوئية وتأثرها بالظروف البيئية الصحراوية.',
+    'member_researcher_1_bio': 'عضو باحث بفرقة MSI. مهتمة بتحضير الخلايا الشمسية ذات الطبقات الرقيقة باستعمال طرق الطلاء الدوار والرش الكيميائي الحراري.',
+    'member_researcher_2_bio': 'عضو باحث بفرقة SEn. أبحاثه تتركز على أنظمة التحكم الذكي وتطوير خوارزميات تحسين مردود الشبكات المعزولة.',
     // Projects
-    'project_1_name': 'نموذج لاقط شمس مركّز صحراوي مقاوم للرمال',
-    'project_1_description': 'تصميم نموذج أولي للاقط شمس حراري مركّز يستعمل السوائل الحرارية ومغلف بطبقات خاصة تحميه من حت الرمال الطائرة.',
-    'project_2_name': 'تقييم طلاءات النانو الطاردة للغبار للألواح الشمسية بشار',
-    'project_2_description': 'اختبار كفاءة عدة أنواع من طلاءات النانو المضادة للكهرباء الساكنة لتقليل تراكم الغبار على الألواح وتجنب خسائر الكفاءة.',
-    'project_3_name': 'عنفات رياح ذات سرعة بدء منخفضة للمناطق الصحراوية',
-    'project_3_description': 'تصميم شفرات ريحية ديناميكية تبدأ في الدوران عند سرعة رياح تبلغ 1.5 م/ث، ومزودة بأنظمة حماية مغلقة ضد تسرب الرمال.',
+    'project_1_name': 'تصنيع الخلايا الشمسية ذات الطبقات الرقيقة',
+    'project_1_description': 'إعداد وتصنيع خلايا شمسية ذات طبقات رقيقة قياسية ومتعددة الأطياف بالاعتماد على طريقتي الطلاء الدوار والرش الكيميائي الحراري.',
+    'project_2_name': 'محاكاة المواد باستخدام حسابات المبادئ الأولى',
+    'project_2_description': 'دراسة المحاكاة للخصائص الفيزيائية والإلكترونية للمواد المستعملة في الطاقات المتجددة باستخدام نموذج نظرية الكثافة الوظيفية (DFT).',
+    'project_3_name': 'تحسين وحساب حجم الأنظمة الكهروضوئية',
+    'project_3_description': 'تطوير خوارزميات تحكم ومحاكاة تدهور المكونات الكهروضوئية بفعل العوامل الجوية والحرارة العالية والغبار في بشار.',
     // News
-    'news_1_title': 'مخبر LDREAS يدشن المحطة التجريبية للطاقة الشمسية الصحراوية',
+    'news_1_title': 'مخبر LDERAS يدشن المحطة التجريبية للطاقة الشمسية الصحراوية',
     'news_1_description': 'أشرف السيد رئيس جامعة بشار على التدشين الرسمي للمحطة التجريبية لمتابعة الإشعاع الشمسي والظروف البيئية بمقر الكلية.',
     'news_1_content': 'ستمكن هذه المحطة التجريبية من جمع بيانات عالية الدقة حول الإشعاع الشمسي الكلي والمشتت وحالة الطقس كسرعة الرياح ودرجة الرطوبة والحرارة، وذلك لمقارنة واختبار نماذج الألواح الكهروضوئية والحرارية تحت درجات الحرارة المرتفعة بالساورة.',
     'news_2_title': 'الندوة الدولية الرابعة حول الطاقات المتجددة في الصحراء',
-    'news_2_description': 'ينظم مخبر LDREAS الندوة الدولية الرابعة حول الانتقال الطاقوي في المناطق الصحراوية أكتوبر المقبل بمشاركة دولية.',
+    'news_2_description': 'ينظم مخبر LDERAS الندوة الدولية الرابعة حول الانتقال الطاقوي في المناطق الصحراوية أكتوبر المقبل بمشاركة دولية.',
     'news_2_content': 'ستشهد الفعالية مشاركة خبراء وباحثين من عدة دول لمناقشة أحدث تقنيات تحلية المياه باستخدام الطاقة الشمسية، التخزين الحراري الذكي، ومحاكاة حقول الرياح في الهضاب الصحراوية. الورشة فرصة لطلبة الدكتوراه لعرض نتائج أبحاثهم.',
     // Articles
     'art_1_name': 'تقييم تأثير تراكم الغبار على اللواقط الشمسية المركزة في المناخات الصحراوية',
@@ -343,37 +355,39 @@ const LOCALIZED_DICTS = {
   },
   fr: {
     // Lab
-    '00000000-0000-0000-0000-000000000001_name': 'Laboratoire de Développement des Energies Renouvelables et leurs Applications dans les Zones Sahariennes',
-    '00000000-0000-0000-0000-000000000001_description': 'Le laboratoire LDREAS de l\'Université de Béchar est dédié au développement de systèmes efficaces de conversion et de stockage des énergies renouvelables adaptés aux conditions climatiques sahariennes.',
-    '00000000-0000-0000-0000-000000000001_director': 'Prof. Abdelkader NOURI',
+    '00000000-0000-0000-0000-000000000001_name': 'Laboratoire de Développement des Energies Renouvelables et Leurs Applications dans les Zones Sahariennes (LDERAS)',
+    '00000000-0000-0000-0000-000000000001_description': 'La mission du laboratoire LDERAS est orientée vers les études expérimentales et théoriques des propriétés physiques des matériaux et dispositifs pour les énergies renouvelables.',
+    '00000000-0000-0000-0000-000000000001_director': 'Pr. NOURI Abdelkader',
     '00000000-0000-0000-0000-000000000001_address': 'Faculté des Sciences Exactes, Université TAHRI Mohammed, BP 417, Béchar, Algérie',
     // Teams
-    'team_solar_concentrated_name': 'Systèmes Thermiques et Solaire Concentré',
-    'team_solar_concentrated_description': 'Équipe de recherche axée sur la thermodynamique appliquée, le solaire thermique à concentration (CSP), le dessalement solaire et le stockage thermique.',
-    'team_photovoltaic_storage_name': 'Systèmes Photovoltaïques et Systèmes de Stockage',
-    'team_photovoltaic_storage_description': 'Recherches sur la physique des cellules PV, les micro-réseaux intelligents et la dégradation sous l\'action des poussières sahariennes.',
-    'team_wind_dynamics_name': 'Énergie Éolienne et Applications Sahariennes',
-    'team_wind_dynamics_description': 'Évaluation du gisement éolien saharien et modélisation de turbines adaptées aux vents faibles et fortes rafales sableuses.',
+    'team_msi_name': 'Matériaux surfaces et interfaces',
+    'team_msi_description': 'Équipe axée sur la préparation, la caractérisation et l\'optimisation des propriétés physiques et chimiques des matériaux et de leurs interfaces pour cellules solaires.',
+    'team_mos_name': 'Modélisation et Simulation',
+    'team_mos_description': 'Équipe dédiée à la simulation et à l\'étude par les méthodes de calcul ab-Initio des propriétés physiques des matériaux pour les énergies propres.',
+    'team_cs_name': 'Cellules solaires',
+    'team_cs_description': 'Dédiée à l\'amélioration des performances des composants optoélectroniques, la conductivité, le rendement quantique et les configurations multi-spectrales.',
+    'team_sen_name': 'Système Energétique',
+    'team_sen_description': 'Concentrée sur le dimensionnement, le contrôle, l\'optimisation et l\'étude de la dégradation des composants et systèmes PV sous conditions sahariennes.',
     // Members
-    'member_director_bio': 'Directeur du labo. Plus de 20 ans d\'expérience dans la modélisation des capteurs solaires thermiques et l\'analyse hydrodynamique en climat aride.',
-    'member_leader_1_bio': 'Chef de l\'équipe Systèmes Thermiques. Ses travaux portent sur la durabilité des miroirs de concentrateurs solaires face aux tempêtes de sable.',
-    'member_leader_2_bio': 'Chef de l\'équipe Photovoltaïque. Spécialisée dans les revêtements hydrophobes et antistatiques empêchant la fixation des poussières.',
-    'member_leader_3_bio': 'Chef de l\'équipe Éolienne. Modélisation et évaluation du potentiel éolien à basse altitude dans le sud-ouest de l\'Algérie.',
-    'member_researcher_1_bio': 'Chercheuse au sein de l\'équipe thermique, elle étudie les sels fondus et les matériaux à changement de phase pour le stockage nocturne.',
-    'member_researcher_2_bio': 'Chercheur en micro-réseaux. Spécialiste du contrôle intelligent pour les systèmes hybrides solaires-éoliens hors réseau.',
+    'member_director_bio': 'Directeur du laboratoire LDERAS et chef de l\'équipe MSI. Plus de 20 ans d\'expérience dans l\'analyse des capteurs et propriétés physiques des matériaux photovoltaïques.',
+    'member_ghezali_bio': 'Chef de l\'équipe Modélisation et Simulation (MoS). Expert en calculs ab-Initio et études théoriques des semi-conducteurs.',
+    'member_khachab_bio': 'Chef de l\'équipe Cellules solaires (CS). Travaille sur l\'optimisation du rendement énergétique et la qualité des interfaces des cellules.',
+    'member_dennai_bio': 'Chef de l\'équipe Système Energétique (SEn). Recherche orientée vers l\'étude du comportement et de la dégradation des installations solaires en milieu désertique.',
+    'member_researcher_1_bio': 'Chercheuse au sein de l\'équipe MSI. Spécialisée dans les dépôts par Spin Coating et Spray Pyrolyse de couches minces standard et multispectrales.',
+    'member_researcher_2_bio': 'Chercheur en génie des systèmes. Développe des algorithmes de contrôle intelligent pour optimiser les installations photovoltaïques isolées.',
     // Projects
-    'project_1_name': 'Prototype de Récepteur CSP Désertique et Résistant',
-    'project_1_description': 'Conception d\'un récepteur CSP expérimental doté d\'une enveloppe en verre résistant à l\'abrasion du sable.',
-    'project_2_name': 'Évaluation de Revêtements Nano Anti-Poussière sur Panneaux PV',
-    'project_2_description': 'Mise en place de tests comparatifs de revêtements hydrophobes sur des modules PV exposés au climat aride de Béchar.',
-    'project_3_name': 'Éoliennes à Basse Vitesse de Démarrage pour Zones Semi-Désertiques',
-    'project_3_description': 'Conception aérodynamique de pales optimisées pour démarrer par vents légers (1.5 m/s) tout en protégeant le rotor des poussières.',
+    'project_1_name': 'Réalisation de Cellules Solaires en Couches Minces',
+    'project_1_description': 'Préparation et réalisation de cellules photovoltaïques en couches minces par les méthodes sol-gel, spin coating et spray pyrolyse.',
+    'project_2_name': 'Simulation Ab-Initio des Propriétés Physiques des Matériaux',
+    'project_2_description': 'Calculs quantiques et modélisation ab-initio des propriétés structurales et électroniques de nouveaux matériaux pour énergies vertes.',
+    'project_3_name': 'Dimensionnement et Optimisation de Systèmes PV',
+    'project_3_description': 'Développement d\'algorithmes de régulation et analyse de la durabilité des modules solaires face aux tempêtes et températures extrêmes.',
     // News
-    'news_1_title': 'Le LDREAS Inaugure la Plateforme Solaire Saharienne de Béchar',
+    'news_1_title': 'Le LDERAS Inaugure la Plateforme Solaire Saharienne de Béchar',
     'news_1_description': 'Le Recteur de l\'Université a inauguré la nouvelle station de mesure solaire haute fidélité.',
     'news_1_content': 'Cette station collectera des données de haute résolution sur le rayonnement solaire (direct, diffus, global) et les variables environnementales afin d\'optimiser la durabilité des installations photovoltaïques.',
     'news_2_title': '4ème Atelier International sur les Énergies Renouvelables en Zones Sahariennes',
-    'news_2_description': 'Le LDREAS organise la 4e édition de son atelier international sur le stockage et le dessalement solaire.',
+    'news_2_description': 'Le LDERAS organise la 4e édition de son atelier international sur le stockage et le dessalement solaire.',
     'news_2_content': 'Cet atelier rassemblera des experts internationaux pour débattre des solutions d\'intégration photovoltaïque, de stockage thermique par sels fondus et de dessalement d\'eau saumâtre.',
     // Articles
     'art_1_name': 'Évaluation de l\'Impact du Dépôt de Poussière sur les Collecteurs Solaires Concentrés en Climat Saharien',
@@ -387,7 +401,7 @@ const LOCALIZED_DICTS = {
 
 // LocalDB initialization helper
 function getLocalDB() {
-  const existing = localStorage.getItem('ldreas_showcase_db');
+  const existing = localStorage.getItem('lderas_showcase_db');
   if (existing) {
     try {
       return JSON.parse(existing);
@@ -395,12 +409,12 @@ function getLocalDB() {
       // ignore and fall back to seed
     }
   }
-  localStorage.setItem('ldreas_showcase_db', JSON.stringify(SEED_DATA));
+  localStorage.setItem('lderas_showcase_db', JSON.stringify(SEED_DATA));
   return SEED_DATA;
 }
 
 function saveLocalDB(db) {
-  localStorage.setItem('ldreas_showcase_db', JSON.stringify(db));
+  localStorage.setItem('lderas_showcase_db', JSON.stringify(db));
 }
 
 // Translate record fields helper

@@ -246,7 +246,7 @@ export default function MemberProfile() {
                  {articles.length > 0 ? (
                   <div className="divide-y divide-border border-y border-border">
                     {articles.map(art => {
-                      const primaryName = members.find(m => m.id === art.primary_author_id)?.full_name || member?.full_name || 'LDREAS';
+                      const primaryName = members.find(m => m.id === art.primary_author_id)?.full_name || member?.full_name || 'LDERAS';
                       const secondAuthor = art.coAuthors && art.coAuthors[0];
                       const authorsText = secondAuthor ? `${primaryName}, ${secondAuthor}` : primaryName;
                       return (

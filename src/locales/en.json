@@ -1,8 +1,8 @@
 {
-  "instituteName": "Laboratory for the Development of Renewable Energies and their Applications in Saharan Areas",
-  "instituteAcronym": "LDREAS",
-  "directorLabel": "Lab Director: Prof. Abdelkader NOURI",
-  "universityLabel": "Faculty of Exact Sciences, TAHRI Mohammed University, Béchar",
+  "instituteName": "Laboratory of Development of Renewable Energies and Their Applications in Saharan Zones",
+  "instituteAcronym": "LDERAS",
+  "directorLabel": "Lab Director: Pr. NOURI Abdelkader",
+  "universityLabel": "TAHRI Mohammed University, Béchar",
   "addressLabel": "BP 417, Béchar, Algeria",
   "phoneLabel": "Phone: +213 49 23 89 74 / 84 / 86",
   "faxLabel": "Fax: +213 49 23 89 86 / 94",
@@ -10,7 +10,7 @@
   "navHome": "Home",
   "navAbout": "About",
   "navResearch": "Research",
-  "navTeam": "Team",
+  "navTeam": "Teams",
   "navTeamsProjects": "Teams & Projects",
   "navEquipment": "Equipment",
   "navNews": "News",
@@ -27,7 +27,15 @@
   "heroCta2": "Latest News",
 
   "missionTitle": "Laboratory Mission & Objectives",
-  "missionText": "LDREAS is dedicated to advancing scientific knowledge and creating technological solutions for clean energy generation, conversion, and storage in Saharan environments. Our research core centers on solar photovoltaics, solar thermal conversion, wind resources, water desalination, and graduate student training.",
+  "missionText": "The laboratory's mission is oriented towards experimental and theoretical studies of the physical properties of materials and devices for renewable energies.",
+  "homeAboutTitle": "Presentation of LDERAS Laboratory",
+  "homeAboutText": "The Laboratory of Development of Renewable Energies and Their Applications in Saharan Zones (LDERAS) at TAHRI Mohammed University, Béchar is a research center of excellence dedicated to clean technologies, solar development, and wind energy applications in desert environments.",
+  "idTitle": "Identification details",
+  "idEstablishment": "Affiliation institution",
+  "idDirector": "Director",
+  "idCreated": "Date of creation",
+  "idDecree": "Creation decree",
+  "btnMore": "Learn more about the laboratory →",
   
   "statTeams": "Research Teams",
   "statMembers": "Researchers",
@@ -43,12 +51,12 @@
   "latestArticles": "Recent Publications",
   "partnerLogos": "Supervisory Bodies & Partners",
 
-  "aboutTitle": "About the Laboratory",
-  "aboutBreadcrumb": "Home / About",
+  "aboutTitle": "Laboratory Presentation",
+  "aboutBreadcrumb": "Home / Presentation",
   "aboutIntroTitle": "Who are we?",
-  "aboutIntroText": "The Laboratory for the Development of Renewable Energies and their Applications in Saharan Areas (LDREAS) at TAHRI Mohammed University of Béchar was founded to serve as a hub of excellence in solar, wind, and green technology. Our research teams conduct fundamental and applied investigations that directly address energy sustainability in desert regions.",
+  "aboutIntroText": "The Laboratory of Development of Renewable Energies and Their Applications in Saharan Zones (LDERAS) at TAHRI Mohammed University of Béchar was founded to serve as a hub of excellence in solar, wind, and green technology. Our research teams conduct fundamental and applied investigations that directly address energy sustainability in desert regions.",
   "directorTitle": "Director's Message",
-  "directorText": "Welcome to the LDREAS portal. The specific energy challenges of Saharan climates motivate us to conduct impactful research. We work closely with economic and academic partners to deploy local green solutions and cultivate the next generation of doctoral candidates.",
+  "directorText": "Welcome to the LDERAS portal. The specific energy challenges of Saharan climates motivate us to conduct impactful research. We work closely with economic and academic partners to deploy local green solutions and cultivate the next generation of doctoral candidates.",
   "researchAxesTitle": "Main Research Axes",
   
   "teamTitle": "Laboratory Team",
@@ -157,6 +165,6 @@
   "loginBtn": "Login",
   "loginError": "Invalid credentials. Please try again.",
   "unauthorized": "Unauthorized access to this page.",
-  "footerLegal": "© 2026 LDREAS — Tahri Mohammed University Béchar. All rights reserved.",
+  "footerLegal": "© 2026 LDERAS — TAHRI Mohammed University, Béchar. All rights reserved.",
   "pubViewHal": "View on HAL"
 }

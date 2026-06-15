@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
 
   // Initialize from localStorage
   useEffect(() => {
-    const saved = localStorage.getItem('ldreas_active_user');
+    const saved = localStorage.getItem('lderas_active_user');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
           const fresh = members.find(m => m.id === parsed.id);
           if (fresh) {
             setUser(fresh);
-            localStorage.setItem('ldreas_active_user', JSON.stringify(fresh));
+            localStorage.setItem('lderas_active_user', JSON.stringify(fresh));
           } else {
             setUser(parsed);
           }
@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
     
     if (found && (password === 'password' || found.password_hash)) {
       setUser(found);
-      localStorage.setItem('ldreas_active_user', JSON.stringify(found));
+      localStorage.setItem('lderas_active_user', JSON.stringify(found));
       return found;
     }
     throw new Error('Invalid email or password. Use "password" as the password.');
@@ -50,7 +50,7 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(() => {
     setUser(null);
-    localStorage.removeItem('ldreas_active_user');
+    localStorage.removeItem('lderas_active_user');
   }, []);
 
   const refreshUser = useCallback(async () => {
@@ -59,7 +59,7 @@ export function AuthProvider({ children }) {
     const fresh = members.find(m => m.id === user.id);
     if (fresh) {
       setUser(fresh);
-      localStorage.setItem('ldreas_active_user', JSON.stringify(fresh));
+      localStorage.setItem('lderas_active_user', JSON.stringify(fresh));
     }
   }, [user]);
 

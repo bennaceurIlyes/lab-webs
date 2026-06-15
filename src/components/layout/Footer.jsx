@@ -41,7 +41,7 @@ export default function Footer() {
           <p className="text-muted-foreground">{t('phoneLabel')}</p>
           <p className="text-muted-foreground">{t('faxLabel')}</p>
           <p className="text-muted-foreground">
-            <a href="mailto:contact@ldreas.dz" className="hover:text-primary transition-colors">contact@ldreas.dz</a>
+            <a href="mailto:contact@lderas.dz" className="hover:text-primary transition-colors">contact@lderas.dz</a>
           </p>
         </div>
       </div>

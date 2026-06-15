@@ -1,8 +1,8 @@
 {
-  "instituteName": "Laboratoire de Développement des Energies Renouvelables et leurs Applications dans les Zones Sahariennes",
-  "instituteAcronym": "LDREAS",
-  "directorLabel": "Directeur du Labo: Prof. Abdelkader NOURI",
-  "universityLabel": "Faculté des Sciences Exactes, Université TAHRI Mohammed, Béchar",
+  "instituteName": "Laboratoire de Développement des Energies Renouvelables et Leurs Applications dans les Zones Sahariennes",
+  "instituteAcronym": "LDERAS",
+  "directorLabel": "Directeur du Labo: Pr. NOURI Abdelkader",
+  "universityLabel": "Université TAHRI Mohammed, Béchar",
   "addressLabel": "BP 417, Béchar, Algérie",
   "phoneLabel": "Tél: +213 49 23 89 74 / 84 / 86",
   "faxLabel": "Fax: +213 49 23 89 86 / 94",
@@ -10,7 +10,7 @@
   "navHome": "Accueil",
   "navAbout": "À Propos",
   "navResearch": "Recherche",
-  "navTeam": "Équipe",
+  "navTeam": "Équipes",
   "navTeamsProjects": "Équipes & Projets",
   "navEquipment": "Équipements",
   "navNews": "Actualités",
@@ -27,7 +27,15 @@
   "heroCta2": "Dernières Actualités",
 
   "missionTitle": "Mission et Objectifs du Laboratoire",
-  "missionText": "Le laboratoire LDREAS s'efforce d'apporter des réponses scientifiques et des innovations technologiques pour la production, la conversion et le stockage des énergies renouvelables en zones sahariennes. Nos travaux couvrent le photovoltaïque, le solaire thermique, le gisement éolien, le dessalement d'eau et la formation doctorale.",
+  "missionText": "La mission du laboratoire LDERAS est orientée vers les études expérimentales et théoriques des propriétés physiques des matériaux et dispositifs pour les énergies renouvelables.",
+  "homeAboutTitle": "Présentation du Laboratoire LDERAS",
+  "homeAboutText": "Le Laboratoire de Développement des Energies Renouvelables et Leurs Applications dans les Zones Sahariennes (LDERAS) de l'Université TAHRI Mohammed, Béchar est un pôle d'excellence dédié à la recherche sur les technologies vertes et l'exploitation des énergies solaires et éoliennes en milieu désertique.",
+  "idTitle": "Fiche d'identification",
+  "idEstablishment": "Établissement de rattachement",
+  "idDirector": "Directeur",
+  "idCreated": "Date de création",
+  "idDecree": "Arrêté de création",
+  "btnMore": "En savoir plus sur le laboratoire →",
   
   "statTeams": "Équipes de Recherche",
   "statMembers": "Chercheurs",
@@ -43,12 +51,12 @@
   "latestArticles": "Dernières Publications",
   "partnerLogos": "Tutelles & Partenaires",
 
-  "aboutTitle": "À Propos du Laboratoire",
-  "aboutBreadcrumb": "Accueil / À Propos",
+  "aboutTitle": "Présentation du Laboratoire",
+  "aboutBreadcrumb": "Accueil / Présentation",
   "aboutIntroTitle": "Qui sommes-nous ?",
-  "aboutIntroText": "Le Laboratoire de Développement des Énergies Renouvelables et leurs Applications dans les Zones Sahariennes (LDREAS) de l'Université de Béchar a été créé pour constituer un pôle d'excellence en énergies vertes. Nos équipes mènent des recherches fondamentales et appliquées adaptées aux contraintes climatiques du Sahara.",
+  "aboutIntroText": "Le Laboratoire de Développement des Energies Renouvelables et Leurs Applications dans les Zones Sahariennes (LDERAS) de l'Université TAHRI Mohammed de Béchar a été créé pour constituer un pôle d'excellence en énergies vertes. Nos équipes mènent des recherches fondamentales et appliquées adaptées aux contraintes climatiques du Sahara.",
   "directorTitle": "Mot du Directeur",
-  "directorText": "Bienvenue sur le portail du laboratoire LDREAS. Les défis énergétiques des régions sahariennes nous incitent à proposer des solutions durables et de haut niveau scientifique. Nous œuvrons en synergie avec le secteur économique pour transférer nos technologies et former la relève académique.",
+  "directorText": "Bienvenue sur le portail du laboratoire LDERAS. Les défis énergétiques des régions sahariennes nous incitent à proposer des solutions durables et de haut niveau scientifique. Nous œuvrons en synergie avec le secteur économique pour transférer nos technologies et former la relève académique.",
   "researchAxesTitle": "Nos Grands Axes de Recherche",
   
   "teamTitle": "Membres du Laboratoire",
@@ -157,6 +165,6 @@
   "loginBtn": "Se connecter",
   "loginError": "Identifiants incorrects. Veuillez réessayer.",
   "unauthorized": "Accès non autorisé à cette page.",
-  "footerLegal": "© 2026 LDREAS — Université TAHRI Mohammed Béchar. Tous droits réservés.",
+  "footerLegal": "© 2026 LDERAS — Université TAHRI Mohammed Béchar. Tous droits réservés.",
   "pubViewHal": "Voir sur HAL"
 }

@@ -1,7 +1,6 @@
 import { useTranslation } from '../../hooks/useTranslation';
 import { Link } from 'react-router-dom';
 import heroImg from '../../assets/hero.png';
-import LdreasLogo from '../ui/LdreasLogo';
 
 export default function HeroBanner() {
   const { t, lang } = useTranslation();
@@ -17,21 +16,12 @@ export default function HeroBanner() {
           {/* Text Content */}
           <div className="lg:col-span-7 flex flex-col space-y-6 text-start">
             <div className="flex flex-col space-y-4">
-              {/* Institution Header Lockup */}
-              <div className="flex items-center gap-4 flex-row-reverse-rtl border-b border-border pb-4 mb-2">
-                <LdreasLogo className="h-16 w-16 md:h-20 md:w-20 border border-border bg-white p-1.5 rounded-full shrink-0 shadow-sm" />
-                <div className="flex flex-col text-start">
-                  <span className="text-[10px] md:text-xs text-[#c2410c] font-bold uppercase tracking-widest leading-none mb-1.5">
-                    {lang === 'ar' ? 'مخبر بحث معتمد' : 'Accredited Research Laboratory'}
-                  </span>
-                  <span className="text-base sm:text-lg md:text-xl font-extrabold text-primary tracking-wide leading-tight">
-                    {t('universityLabel')}
-                  </span>
-                  {/* Bilingual sub-tag */}
-                  <span className="text-xs text-muted-foreground font-medium mt-1">
-                    {lang === 'ar' ? 'Université TAHRI Mohammed, Béchar' : 'جامعة طاهري محمد، بشار'}
-                  </span>
-                </div>
+              {/* Simple Clean University Tag */}
+              <div className="flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-[#c2410c] animate-pulse" aria-hidden="true" />
+                <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-primary">
+                  {t('universityLabel')}
+                </span>
               </div>
 
               {/* Lab Title Lockup */}

@@ -27,7 +27,7 @@ export default function PublicationsList() {
         />
         <div className="divide-y divide-border border-y border-border">
           {recentPublications.map((pub) => {
-            const primaryName = getAuthorName(pub.primary_author_id) || 'LDERAS';
+            const primaryName = getAuthorName(pub.primary_author_id) || 'Lab Researchers';
             const secondAuthor = pub.coAuthors && pub.coAuthors[0];
             const authorsText = secondAuthor ? `${primaryName}, ${secondAuthor}` : primaryName;
 

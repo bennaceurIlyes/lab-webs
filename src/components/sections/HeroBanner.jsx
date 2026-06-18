@@ -29,15 +29,14 @@ export default function HeroBanner() {
               {/* Lab Title Lockup */}
               <div className="space-y-3">
                 <h1 id="hero-title" className="text-2xl sm:text-3xl md:text-4xl lg:text-[36px] xl:text-[40px] font-extrabold font-serif text-foreground tracking-tight leading-[1.25]">
-                  {t('instituteName')}{' '}
-                  <span className="text-primary font-sans font-bold">({t('instituteAcronym')})</span>
+                  {t('instituteName')}
                 </h1>
                 
-                {/* Bilingual subtitle for high prestige */}
+                {/* Lab descriptor */}
                 <p className="text-xs sm:text-sm md:text-base font-medium text-muted-foreground leading-relaxed italic font-serif">
                   {lang === 'fr' 
-                    ? 'Laboratoire de Développement des Energies Renouvelables et Leurs Applications dans les Zones Sahariennes' 
-                    : 'Laboratory of Development of Renewable Energies and Their Applications in Saharan Zones'
+                    ? 'Laboratoire de Recherche Agréé — Énergies Renouvelables et Applications Sahariennes' 
+                    : 'Accredited Research Laboratory — Renewable Energies and Saharan Applications'
                   }
                 </p>
               </div>

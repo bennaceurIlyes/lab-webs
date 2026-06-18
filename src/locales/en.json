@@ -1,6 +1,5 @@
 {
   "instituteName": "Laboratory of Development of Renewable Energies and Their Applications in Saharan Zones",
-  "instituteAcronym": "LDERAS",
   "directorLabel": "Lab Director: Pr. NOURI Abdelkader",
   "universityLabel": "TAHRI Mohammed University, Béchar",
   "addressLabel": "BP 417, Béchar, Algeria",
@@ -28,8 +27,8 @@
 
   "missionTitle": "Laboratory Mission & Objectives",
   "missionText": "The laboratory's mission is oriented towards experimental and theoretical studies of the physical properties of materials and devices for renewable energies.",
-  "homeAboutTitle": "Presentation of LDERAS Laboratory",
-  "homeAboutText": "The Laboratory of Development of Renewable Energies and Their Applications in Saharan Zones (LDERAS) at TAHRI Mohammed University, Béchar is a research center of excellence dedicated to clean technologies, solar development, and wind energy applications in desert environments.",
+  "homeAboutTitle": "Presentation of the Laboratory",
+  "homeAboutText": "The Laboratory of Development of Renewable Energies and Their Applications in Saharan Zones at TAHRI Mohammed University, Béchar is a research center of excellence dedicated to clean technologies, solar development, and wind energy applications in desert environments.",
   "idTitle": "Identification details",
   "idEstablishment": "Affiliation institution",
   "idDirector": "Director",
@@ -54,9 +53,9 @@
   "aboutTitle": "Laboratory Presentation",
   "aboutBreadcrumb": "Home / Presentation",
   "aboutIntroTitle": "Who are we?",
-  "aboutIntroText": "The Laboratory of Development of Renewable Energies and Their Applications in Saharan Zones (LDERAS) at TAHRI Mohammed University of Béchar was founded to serve as a hub of excellence in solar, wind, and green technology. Our research teams conduct fundamental and applied investigations that directly address energy sustainability in desert regions.",
+  "aboutIntroText": "The Laboratory of Development of Renewable Energies and Their Applications in Saharan Zones at TAHRI Mohammed University of Béchar was founded to serve as a hub of excellence in solar, wind, and green technology. Our research teams conduct fundamental and applied investigations that directly address energy sustainability in desert regions.",
   "directorTitle": "Director's Message",
-  "directorText": "Welcome to the LDERAS portal. The specific energy challenges of Saharan climates motivate us to conduct impactful research. We work closely with economic and academic partners to deploy local green solutions and cultivate the next generation of doctoral candidates.",
+  "directorText": "Welcome to the laboratory portal. The specific energy challenges of Saharan climates motivate us to conduct impactful research. We work closely with economic and academic partners to deploy local green solutions and cultivate the next generation of doctoral candidates.",
   "researchAxesTitle": "Main Research Axes",
   
   "teamTitle": "Laboratory Team",
@@ -166,6 +165,6 @@
   "loginBtn": "Login",
   "loginError": "Invalid credentials. Please try again.",
   "unauthorized": "Unauthorized access to this page.",
-  "footerLegal": "© 2026 LDERAS — TAHRI Mohammed University, Béchar. All rights reserved.",
+  "footerLegal": "© 2026 TAHRI Mohammed University, Béchar. All rights reserved.",
   "pubViewHal": "View on HAL"
 }

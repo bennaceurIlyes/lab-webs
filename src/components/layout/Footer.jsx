@@ -16,8 +16,7 @@ export default function Footer() {
             <LdreasLogo variant="dark" className="h-10 w-auto text-primary" />
           </Link>
           <div>
-            <h3 className="font-semibold text-foreground">{t('instituteAcronym')}</h3>
-            <p className="text-foreground/80 text-xs mt-1 leading-relaxed">{t('instituteName')}</p>
+            <h3 className="font-semibold text-foreground text-xs">{t('instituteName')}</h3>
           </div>
           <p className="text-foreground/80 text-xs leading-relaxed">{t('addressLabel')}</p>
           <p className="text-foreground/80 text-xs leading-relaxed font-medium">{t('universityLabel')}</p>
@@ -41,7 +40,7 @@ export default function Footer() {
           <p className="text-foreground/80">{t('phoneLabel')}</p>
           <p className="text-foreground/80">{t('faxLabel')}</p>
           <p className="text-foreground/80">
-            <a href="mailto:contact@lderas.dz" className="hover:text-primary transition-colors">contact@lderas.dz</a>
+            <a href="mailto:nouri.abdelkader@univ-bechar.dz" className="hover:text-primary transition-colors">nouri.abdelkader@univ-bechar.dz</a>
           </p>
         </div>
       </div>
@@ -49,7 +48,7 @@ export default function Footer() {
       <div className="border-t border-border pt-6 mt-6">
         <div className="container-custom flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-foreground/70">
           <div>
-            <span>© {new Date().getFullYear()} {t('instituteAcronym')} — {t('universityLabel')}</span>
+            <span>© {new Date().getFullYear()} {t('universityLabel')}</span>
             <span className="mx-2 select-none text-border">|</span>
             <a href="#legal" className="hover:text-primary transition-colors">{t('footerLegal')}</a>
           </div>

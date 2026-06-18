@@ -5,7 +5,7 @@ export default function LdreasLogo({ variant = 'dark', className = '', ...props 
   return (
     <img 
       src={logoImg} 
-      alt="LDERAS Logo" 
+      alt="Laboratory Logo" 
       className={`object-contain bg-white rounded-full ${className}`}
       {...props}
     />

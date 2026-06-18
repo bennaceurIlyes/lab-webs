@@ -31,7 +31,7 @@ export default function Contact() {
 
   return (
     <main id="main-content">
-      <PageHero title={t('contactTitle')} subtitle={lang === 'fr' ? 'Contactez le laboratoire LDERAS' : 'Reach out to the LDERAS administration team'}>
+      <PageHero title={t('contactTitle')} subtitle={lang === 'fr' ? 'Contactez le laboratoire' : 'Reach out to the laboratory administration team'}>
         <Link to="/">{t('navHome')}</Link>
         <span aria-hidden="true" className="mx-1.5 select-none text-muted-foreground/60"> / </span>
         <span>{t('navContact')}</span>
@@ -176,20 +176,26 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Map Placeholder */}
+              {/* Map Section */}
               <div className="space-y-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
                   {t('contactMapTitle')}
                 </h3>
-                <div className="w-full h-56 bg-secondary border border-border relative flex items-center justify-center flex-col p-6 text-center">
-                  <div className="absolute inset-0 bg-[#001f40]/5 mix-blend-multiply" />
-                  <MapPin className="h-10 w-10 text-accent animate-bounce z-10" />
-                  <p className="text-xs font-bold text-[#001f40] mt-3 z-10 font-serif">
-                    TAHRI Mohammed University Campus
-                  </p>
-                  <p className="text-[10px] text-muted-foreground z-10 max-w-xs mt-1">
-                    Béchar, Algeria (Coordinates: 31.6214° N, 2.2152° W)
-                  </p>
+                <div className="w-full bg-secondary border border-border relative flex flex-col items-center justify-center text-center overflow-hidden">
+                  <div className="w-full h-[300px] md:h-[400px] relative">
+                    <iframe 
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2588.4320949931916!2d-2.2321236000000004!3d31.602438400000008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd8ff606bc3a62df%3A0xca52c859210e2e93!2z2LfYsdmK2YIg2YXZhtmI2YbZiiwgQsOpY2hhcg!5e1!3m2!1sfr!2sdz!4v1781776872791!5m2!1sfr!2sdz" 
+                      className="absolute inset-0 w-full h-full border-0" 
+                      allowFullScreen="" 
+                      loading="lazy" 
+                      referrerPolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                  </div>
+                  <div className="p-4 bg-secondary/50 w-full flex flex-col items-center gap-1 border-t border-border">
+                    <p className="text-xs font-bold text-[#001f40] font-serif">
+                      Nouveau bâtiment des laboratoires de recherche 2 -ème étage, UTMB
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
